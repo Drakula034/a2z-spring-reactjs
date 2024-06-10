@@ -10,12 +10,19 @@ spring:
     properties:
       hibernate:
         format_sql: true
-        dialect: org.hibernate.dialect.PostgreSQLDialect
+        dialect: org.hibernate.dialect.MySQL8Dialect
+#        dialect: org.hibernate.dialect.H2Dialect
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/LocalUsersDb
-    username: postgres
-    password: root
+        url: jdbc:mysql://localhost:3307/usersdb
+        username: root
+        password: root
+#      url: jdbc:h2:mem:testdb
+#      driver-class-name: org.h2.Driver
+#      username: sa
+#      password: ''
+#  h2:
+#    console.enabled: true
 
 server:
   port: 8080
