@@ -10,4 +10,6 @@ public interface UserService {
 
     public List<User> getAllUsers();
     public boolean createNewUser(User user);
+
+    public boolean checkDuplicateEmail(String email);
 }

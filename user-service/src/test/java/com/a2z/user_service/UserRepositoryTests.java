@@ -139,4 +139,12 @@ public class UserRepositoryTests {
             Integer userDeleteUser = 1035;
             userRepository.deleteById(userDeleteUser);
     }
+
+    @Test
+    public void testUserByEmail(){
+        String email = "ravi3@test.com";
+        User user = userRepository.findByEmail(email);
+        assertThat(user.getUserId()).isNotNull();
+//        System.out.println(user);
+    }
 }

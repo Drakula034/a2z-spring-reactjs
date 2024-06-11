@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Set;
 
 @Service
+@Transactional
 public class UserServiceImpl implements UserService {
 
     @Autowired
@@ -26,17 +27,8 @@ public class UserServiceImpl implements UserService {
         return allUsers;
     }
 
-//    public boolean createNewUser(User user) {
-//         boolean isSuccessfull = false;
-//        User savedUser = userRepository.save(user);
-//        if (savedUser.getUserId() != null) {
-//            isSuccessfull = true;
-//        }
-//
-//        return isSuccessfull;
-//    }
 
-    @Transactional
+
     public boolean createNewUser(User user) {
         try {
 //            segregate the user info into 2 parts
@@ -72,6 +64,12 @@ public class UserServiceImpl implements UserService {
             return false; // Return false to indicate failure
         }
         return true;
+    }
+
+    public boolean checkDuplicateEmail(String email){
+        User user = userRepository.findByEmail(email);
+//        System.out.println("checkDuplicate:" + user);
+        return user != null && user.getUserId() >= 0;
     }
 
 }
