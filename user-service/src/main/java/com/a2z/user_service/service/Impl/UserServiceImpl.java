@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -26,7 +27,6 @@ public class UserServiceImpl implements UserService {
         List<User> allUsers = userRepository.findAll();
         return allUsers;
     }
-
 
 
     public boolean createNewUser(User user) {
@@ -66,10 +66,70 @@ public class UserServiceImpl implements UserService {
         return true;
     }
 
-    public boolean checkDuplicateEmail(String email){
+    public boolean checkDuplicateEmail(String email) {
         User user = userRepository.findByEmail(email);
 //        System.out.println("checkDuplicate:" + user);
         return user != null && user.getUserId() >= 0;
+    }
+
+    @Override
+    public Optional<User> getUserById(String id) {
+        Optional<User> user = userRepository.findById(Integer.parseInt(id));
+        return user;
+    }
+
+    @Override
+    public Optional<User> editUserInfo(User user, String userId) {
+        Optional<User> getUserOptional = userRepository.findById(Integer.parseInt(userId));
+
+        User updatedUser = null;
+        if (getUserOptional.isPresent()) {
+            // Get the user object from the Optional
+            User existingUser = getUserOptional.get();
+
+            // Update user details only if they are not empty or null
+            if (user.getFirstName() != null && !user.getFirstName().isEmpty()) {
+                existingUser.setFirstName(user.getFirstName());
+            }
+            if (user.getLastName() != null && !user.getLastName().isEmpty()) {
+                existingUser.setLastName(user.getLastName());
+            }
+            if (user.getEmail() != null && !user.getEmail().isEmpty()) {
+                existingUser.setEmail(user.getEmail());
+            }
+            if (user.getPassword() != null && !user.getPassword().isEmpty()) {
+                existingUser.setPassword(user.getPassword());
+            }
+            if (user.getMobileNumber() != null && !user.getMobileNumber().isEmpty()) {
+                existingUser.setMobileNumber(user.getMobileNumber());
+            }
+
+            if (user.getEnabled() != existingUser.getEnabled()) {
+                existingUser.setEnabled(user.getEnabled());
+            }
+
+            // Save the updated user to the repository
+            updatedUser = userRepository.save(existingUser);
+
+            if (user.getRoles().size() > 0) {
+                Set<Role> roles = existingUser.getRoles();
+                roles.clear();
+                for (Role role : user.getRoles()) {
+                    // Retrieve the role entity from the database based on the role name
+                    Role existingRole = roleRepository.findByName(role.getName());
+                    if (existingRole != null) {
+                        // Create association between user and role
+                        updatedUser.addRole(existingRole);
+                    }
+                }
+                // Update the user with the associations
+                userRepository.save(updatedUser);
+            }
+            return Optional.of(updatedUser);
+        } else {
+            // User with the provided ID not found
+            return Optional.empty();
+        }
     }
 
 }

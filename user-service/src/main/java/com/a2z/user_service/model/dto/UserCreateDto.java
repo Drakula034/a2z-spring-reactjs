@@ -11,7 +11,7 @@ import java.util.*;
 @Setter
 @Getter
 
-public class UserDetailsDto {
+public class UserCreateDto {
 //    private Integer id;
 
     @Column(length = 64, nullable = false, unique = true)
@@ -21,9 +21,9 @@ public class UserDetailsDto {
     @Column(name = "last_name", length = 40, nullable = false)
     private String lastName;
 
-//    @Column(nullable = false)
-//    @Size(min = 6, max = 12)
-//    private String password;
+    @Column(nullable = false)
+    @Size(min = 6, max = 12)
+    private String password;
 
     @Column(nullable = false)
     @Size(min = 10, max = 10)
