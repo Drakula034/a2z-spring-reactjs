@@ -9,6 +9,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -46,6 +47,7 @@ public class UserServiceImpl implements UserService {
 
             // Extract roles from the user object
             Set<Role> roles = user.getRoles();
+            Set<Role>existingRoles = new HashSet<>();
 
             // Save associations between the user and roles in 'users_roles' table
             for (Role role : roles) {
@@ -53,10 +55,12 @@ public class UserServiceImpl implements UserService {
                 Role existingRole = roleRepository.findByName(role.getName());
                 if (existingRole != null) {
                     // Create association between user and role
-                    savedUser.addRole(existingRole);
+//                    savedUser.addRole(existingRole);
+                    existingRoles.add(existingRole);
                 }
             }
             // Update the user with the associations
+            savedUser.setRoles(existingRoles);
             userRepository.save(savedUser);
         } catch (Exception ex) {
             // Handle any exceptions that may occur during the save operation
@@ -130,6 +134,24 @@ public class UserServiceImpl implements UserService {
             // User with the provided ID not found
             return Optional.empty();
         }
+    }
+
+    @Override
+    public boolean deleteUser(Integer userId) {
+        Optional<User> getUser = userRepository.findById(userId);
+        if(getUser.isPresent()){
+            User user = getUser.get();
+            Set<Role> roles = user.getRoles();
+
+            roles.clear();
+            userRepository.save(user);
+
+            // Delete the user from the database
+            userRepository.delete(user);
+
+            return true; // Deletion successful
+        }
+        return false;
     }
 
 }

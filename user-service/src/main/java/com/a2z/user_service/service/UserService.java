@@ -1,6 +1,7 @@
 package com.a2z.user_service.service;
 
 import com.a2z.user_service.model.entity.User;
+import org.springframework.data.relational.core.sql.In;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,4 +18,5 @@ public interface UserService {
     Optional<User> getUserById(String id);
 
      Optional<User> editUserInfo(User user, String userId);
+     boolean deleteUser(Integer userId);
 }

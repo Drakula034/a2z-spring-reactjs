@@ -30,8 +30,8 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(allUsersDetailsDto);
     }
 
-    @PostMapping("/create-user")
-    public ResponseEntity<Boolean> createNewuser(@RequestBody UserCreateDto userCreateDto){
+    @PostMapping("/users/create")
+    public ResponseEntity<Boolean> createNewUser(@RequestBody UserCreateDto userCreateDto){
         System.out.println(userCreateDto);
         User user = UserMapper.userCreateDtoMapToUser(userCreateDto, new User());
         boolean isUserCreated = userService.createNewUser(user);
@@ -73,6 +73,19 @@ public class UserController {
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
+
+    @DeleteMapping("/users/{id}")
+    public ResponseEntity<String> deleteUser(@PathVariable String id){
+        Integer userId = Integer.parseInt(id);
+        boolean isDeleteionSuccessful = userService.deleteUser(userId);
+
+        if(isDeleteionSuccessful){
+            return ResponseEntity.status(HttpStatus.OK).body("Deletion Succesfull");
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("user id is not found");
+    }
+
+
 
 
 }
