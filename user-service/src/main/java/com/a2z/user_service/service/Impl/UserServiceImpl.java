@@ -33,6 +33,9 @@ public class UserServiceImpl implements UserService {
     public boolean createNewUser(User user) {
         try {
 //            segregate the user info into 2 parts
+            // Extract roles from the user object
+            Set<Role> roles = user.getRoles();
+
             User newUser = new User();
             newUser.setEmail(user.getEmail());
             newUser.setFirstName(user.getFirstName());
@@ -45,22 +48,22 @@ public class UserServiceImpl implements UserService {
 // Save user information to 'users' database
             User savedUser = userRepository.save(newUser);
 
-            // Extract roles from the user object
-            Set<Role> roles = user.getRoles();
-            Set<Role>existingRoles = new HashSet<>();
 
-            // Save associations between the user and roles in 'users_roles' table
-            for (Role role : roles) {
-                // Retrieve the role entity from the database based on the role name
-                Role existingRole = roleRepository.findByName(role.getName());
-                if (existingRole != null) {
-                    // Create association between user and role
-//                    savedUser.addRole(existingRole);
-                    existingRoles.add(existingRole);
-                }
-            }
+//            Set<Role>existingRoles = new HashSet<>();
+//
+//            // Save associations between the user and roles in 'users_roles' table
+//            for (Role role : roles) {
+//                // Retrieve the role entity from the database based on the role name
+//                Role existingRole = roleRepository.findByName(role.getName());
+//                if (existingRole != null) {
+//                    // Create association between user and role
+////                    savedUser.addRole(existingRole);
+//                    existingRoles.add(existingRole);
+//                }
+//            }
             // Update the user with the associations
-            savedUser.setRoles(existingRoles);
+//            savedUser.setRoles(existingRoles);
+            savedUser.setRoles(roles);
             userRepository.save(savedUser);
         } catch (Exception ex) {
             // Handle any exceptions that may occur during the save operation
@@ -139,7 +142,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean deleteUser(Integer userId) {
         Optional<User> getUser = userRepository.findById(userId);
-        if(getUser.isPresent()){
+        if (getUser.isPresent()) {
             User user = getUser.get();
             Set<Role> roles = user.getRoles();
 

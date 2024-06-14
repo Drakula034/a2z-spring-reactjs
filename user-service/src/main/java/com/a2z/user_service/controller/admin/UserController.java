@@ -17,8 +17,14 @@ import java.util.*;
 @Controller
 @RequestMapping("/api/admin")
 public class UserController {
-    @Autowired
-    private UserService userService;
+
+    private final UserService userService;
+    private final UserMapper userMapper;
+
+    public UserController(UserService userService, UserMapper userMapper){
+        this.userService = userService;
+        this.userMapper = userMapper;
+    }
 
 
     @GetMapping("/users")
@@ -33,7 +39,7 @@ public class UserController {
     @PostMapping("/users/create")
     public ResponseEntity<Boolean> createNewUser(@RequestBody UserCreateDto userCreateDto){
         System.out.println(userCreateDto);
-        User user = UserMapper.userCreateDtoMapToUser(userCreateDto, new User());
+        User user = userMapper.userCreateDtoMapToUser(userCreateDto, new User());
         boolean isUserCreated = userService.createNewUser(user);
 //        System.out.println("check: " + isUserCreated);
 //        System.out.println(user);
@@ -62,11 +68,11 @@ public class UserController {
 
     @PatchMapping("/users/edit/{id}")
     public ResponseEntity<UserCreateDto> editUserInfo(@PathVariable String id, @RequestBody UserCreateDto userCreateDto){
-        User user = UserMapper.userCreateDtoMapToUser(userCreateDto, new User());
+        User user = userMapper.userCreateDtoMapToUser(userCreateDto, new User());
         Optional<User> userOptional = userService.editUserInfo(user, id);
         if(userOptional.isPresent()){
             User updatedUser = userOptional.get();
-            UserCreateDto updatedUserCreateDto = UserMapper.userMapToUserCreateDto(updatedUser, new UserCreateDto());
+            UserCreateDto updatedUserCreateDto = userMapper.userMapToUserCreateDto(updatedUser, new UserCreateDto());
             return ResponseEntity.status(HttpStatus.OK).body(updatedUserCreateDto);
 
         }

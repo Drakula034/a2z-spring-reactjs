@@ -2,12 +2,26 @@ package com.a2z.user_service.mapper;
 
 import com.a2z.user_service.model.dto.UserCreateDto;
 import com.a2z.user_service.model.dto.UserDetailsDto;
+import com.a2z.user_service.model.entity.Role;
 import com.a2z.user_service.model.entity.User;
+import com.a2z.user_service.repository.RoleRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
+@Component
 public class UserMapper {
+
+    private final RoleRepository roleRepository;
+
+    @Autowired
+    public UserMapper(RoleRepository roleRepository) {
+        this.roleRepository = roleRepository;
+    }
 
     public static UserDetailsDto usersMapToUserDetailsDto(User user, UserDetailsDto userDetailsDto) {
 //        userDetailsDto.setId(user.getUserId());
@@ -38,19 +52,24 @@ public class UserMapper {
         return user;
     }
 
-    public static UserCreateDto userMapToUserCreateDto(User user, UserCreateDto userCreateDto){
+    public UserCreateDto userMapToUserCreateDto(User user, UserCreateDto userCreateDto) {
         userCreateDto.setEmail(user.getEmail());
         userCreateDto.setFirstName(user.getFirstName());
         userCreateDto.setLastName(user.getLastName());
         userCreateDto.setMobileNumber(user.getMobileNumber());
         userCreateDto.setPhotos(user.getPhotos());
         userCreateDto.setEnabled(user.getEnabled());
-        userCreateDto.setRoles(new ArrayList<>(user.getRoles()));
+        List<String> roleList = new ArrayList<>();
+        Set<Role>roles = user.getRoles();
+        for (Role role : roles) {
+            roleList.add(role.getName());
+        }
+        userCreateDto.setRoles(roleList);
 
         return userCreateDto;
     }
 
-    public static User userCreateDtoMapToUser(UserCreateDto userCreateDto, User user) {
+    public User userCreateDtoMapToUser(UserCreateDto userCreateDto, User user) {
         user.setEmail(userCreateDto.getEmail());
         user.setFirstName(userCreateDto.getFirstName());
         user.setLastName(userCreateDto.getLastName());
@@ -58,7 +77,15 @@ public class UserMapper {
         user.setPhotos(userCreateDto.getPhotos());
         user.setEnabled(userCreateDto.getEnabled());
         user.setPassword(userCreateDto.getPassword());
-        user.setRoles(new HashSet<>(userCreateDto.getRoles()));
+        List<String> roles = userCreateDto.getRoles();
+        Set<Role> roleToAdd = new HashSet<Role>();
+        for (String role : roles) {
+            Role existingRole = roleRepository.findByName(role);
+            if (existingRole != null) {
+                roleToAdd.add(existingRole);
+            }
+        }
+        user.setRoles(roleToAdd);
 
         user.setPassword(userCreateDto.getPassword());
 

@@ -32,7 +32,7 @@ public class UserCreateDto {
     private String photos;
     @Column(nullable = false)
     private boolean enabled;
-    private List<Role> roles;
+    private List<String> roles;
 
     public boolean getEnabled() {
         return enabled;

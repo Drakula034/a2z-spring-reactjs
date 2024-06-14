@@ -19,10 +19,10 @@ import java.util.*;
 @Getter
 @Entity
 //@MappedSuperclass
-@Component
+//@Component
 @Table(name = "users")
 @ToString
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+//@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "native")

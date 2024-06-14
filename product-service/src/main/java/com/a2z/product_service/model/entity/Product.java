@@ -3,6 +3,7 @@ package com.a2z.product_service.model.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.*;
 import java.util.Date;
 
 @Entity
@@ -54,8 +55,18 @@ public class Product {
     @JoinColumn(name="brand_id")
     private Brand brand;
 
+    @Column(name = "main_image")
+    private String mainImage;
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    private List<ProductImage> images = new ArrayList<>();
+
 
     public boolean getInStock() {
         return inStock;
+    }
+
+    public void addExtraImage(String imageName){
+        this.images.add(new ProductImage(imageName, this));
     }
 }
