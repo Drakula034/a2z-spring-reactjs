@@ -1,10 +1,7 @@
 package com.a2z.product_service.model.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.Date;
 
@@ -14,6 +11,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "products")
+@Builder
 public class Product {
 
     @Id
@@ -21,7 +19,7 @@ public class Product {
     private Integer id;
     @Column(unique = true, length = 256, nullable = false)
     private String name;
-    @Column(unique = true, length = 256, nullable = false)
+    @Column(unique = true, length = 256, nullable = true)
     private String alias;
     @Column(length = 512, nullable = true, name = "short_description")
     private String shortDescription;
@@ -57,6 +55,7 @@ public class Product {
     private Brand brand;
 
 
-
-
+    public boolean getInStock() {
+        return inStock;
+    }
 }
