@@ -31,20 +31,20 @@ public class Customer {
     private String phoneNumber;
     @Column(name = "password", nullable = false, length = 40)
     private String password;
+
     @Column(name = "address_line_1")
     private String addressLine1;
     @Column(name = "address_line_2")
     private String addressLine2;
-
-
-    private String photo;
     private String city;
     private String state;
     @Column(name = "postal_code")
     private String postalCode;
+
     @Column(name = "verification_code")
     private String verificationCode;
     private boolean enabled;
+    private String photo;
 
     @Column(name = "created_at")
     private Date createdAt;
