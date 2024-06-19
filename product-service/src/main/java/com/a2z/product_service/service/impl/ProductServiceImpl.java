@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.Optional;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -70,5 +71,12 @@ public class ProductServiceImpl implements ProductService {
 
         Product savedProduct = productRepository.save(newProduct);
         return savedProduct.getId();
+    }
+
+    @Override
+    public Product getProductById(Integer productId) {
+        Optional<Product> product = productRepository.findById(productId);
+
+        return product.get();
     }
 }

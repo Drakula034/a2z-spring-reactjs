@@ -1,6 +1,7 @@
 package com.a2z.product_service.mapper;
 
 import com.a2z.product_service.model.dto.ProductDto;
+import com.a2z.product_service.model.dto.ProductDtoForOrder;
 import com.a2z.product_service.model.entity.Brand;
 import com.a2z.product_service.model.entity.Category;
 import com.a2z.product_service.model.entity.Product;
@@ -48,5 +49,14 @@ public class ProductMapper {
 //        product.setCategory(productDto.getCategory());
 //        product.setBrand(productDto.getBrand());
         return product;
+    }
+
+    public static ProductDtoForOrder productMapToProductDtoForOrder(Product product, ProductDtoForOrder productDtoForOrder){
+        productDtoForOrder.setName(product.getName());
+        productDtoForOrder.setCost(product.getCost());
+        productDtoForOrder.setPrice(product.getPrice());
+        productDtoForOrder.setDiscountPercent(product.getDiscountPercent());
+
+        return productDtoForOrder;
     }
 }

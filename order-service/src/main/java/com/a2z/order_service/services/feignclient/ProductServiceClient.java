@@ -1,0 +1,14 @@
+package com.a2z.order_service.services.feignclient;
+
+import com.a2z.order_service.model.serviceDto.ProductDto;
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+
+@FeignClient("product-service")
+public interface ProductServiceClient {
+
+    @GetMapping(value = "/api/admin/products/{productId}", consumes = "application/json")
+    public ResponseEntity<ProductDto> getProductByIdForOrderService(@PathVariable String productId);
+}
