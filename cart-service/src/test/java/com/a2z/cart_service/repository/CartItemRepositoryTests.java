@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.data.relational.core.sql.In;
 import org.springframework.test.annotation.Rollback;
 
 import java.util.List;
@@ -51,5 +52,37 @@ public class CartItemRepositoryTests {
 
         Iterable<CartItem> savedItem = cartItemRepository.saveAll(List.of(cartItem1, cartItem2));
         assertThat(savedItem).size().isGreaterThan(0);
+    }
+
+    @Test
+    public void findCartByCustomerIdTest(){
+        String customerId = "2";
+        List<CartItem> carts = cartItemRepository.findByCustomerId(customerId);
+        carts.forEach(cart -> System.out.println(cart));
+        assertThat(carts).size().isEqualTo(2);
+    }
+
+    @Test
+    public void findCartByCustomerIdAndProductIdTest(){
+        String customerId = "2";
+        String productId = "2";
+        CartItem cart = cartItemRepository.findByCustomerIdAndProductId(customerId, productId);
+        System.out.println(cart);
+
+        assertThat(cart).isNotNull();
+
+    }
+
+    @Test
+    public void updateCartItemForCustomerAndProductWithQuantity(){
+        String customerId = "2";
+        String productId = "2";
+        Integer quantity = 8;
+        cartItemRepository.updateQuantity(customerId, productId, quantity);
+
+        CartItem updatedCart = cartItemRepository.findByCustomerIdAndProductId(customerId,productId);
+
+        assertThat(updatedCart.getQuantity()).isEqualTo(quantity);
+
     }
 }
