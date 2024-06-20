@@ -29,7 +29,7 @@ public class OrderServiceRepositoryTests {
     TestEntityManager testEntityManager;
 
     @Test
-    public void addNewOrderTestWithoutCustomer(){
+    public void addNewOrderTest(){
         String productId = "1";
         Order newOrder = new Order();
         newOrder.setFirstName("Abhishek");
