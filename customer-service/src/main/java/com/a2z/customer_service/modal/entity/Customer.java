@@ -51,6 +51,10 @@ public class Customer {
     @Column(name = "updated_at")
     private Date updatedAt;
 
+    public Customer(Integer customerId) {
+        this.id = customerId;
+    }
+
 //    private Country country;
 
     @Override
