@@ -35,4 +35,15 @@ public class AddressServiceImpl implements AddressService {
         Address address = addressRepository.findDefaultByCustomer(Integer.parseInt(customerId));
         return addressMapper.addressmapToAddressDto(address, new AddressDto());
     }
+
+    @Override
+    public AddressDto getAddress(Integer addressId, Integer customerId) {
+        Address address = addressRepository.findByAddressIdAndCustomerId(addressId, customerId);
+        return addressMapper.addressmapToAddressDto(address, new AddressDto());
+    }
+
+    @Override
+    public boolean setDefaultAddress(Integer defaultAddressId, Integer customerId) {
+        return false;
+    }
 }

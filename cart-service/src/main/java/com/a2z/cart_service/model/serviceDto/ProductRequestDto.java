@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.beans.Transient;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -16,4 +18,23 @@ public class ProductRequestDto {
 
     private float price;
     private float discountPercent;
+
+    public String toString() {
+        return "ProductRequestDto{" +
+                "name='" + name + '\'' +
+                ", cost=" + cost +
+                ", price=" + price +
+                ", discountPercent=" + discountPercent +
+                '}';
+    }
+
+    @Transient
+    public float getDiscountedPrice() {
+        if (discountPercent < 100)
+            return price - (price * (discountPercent / 100));
+
+        return price;
+    }
+
+
 }

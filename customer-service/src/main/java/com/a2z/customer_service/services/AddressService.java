@@ -10,4 +10,7 @@ public interface AddressService {
 
     public List<AddressDto> getAllAddress(String customerId);
     AddressDto getDefaultAddress(String customerId);
+    AddressDto getAddress(Integer addressId, Integer customerId);
+
+    boolean setDefaultAddress(Integer defaultAddressId, Integer customerId);
 }
