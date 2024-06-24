@@ -15,4 +15,7 @@ public interface AddressRepository extends JpaRepository<Address,Integer> {
     Address findByAddressIdAndCustomerId(Integer addressId, Integer customerId);
 
     public List<Address> findByCustomer(Customer customer);
+
+    @Query("select a from Address a where a.customer.id =?1 and a.defaultAddress=true")
+    Address findDefaultByCustomer(Integer customerId);
 }

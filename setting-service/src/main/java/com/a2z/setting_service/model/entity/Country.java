@@ -1,5 +1,6 @@
 package com.a2z.setting_service.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,7 +23,12 @@ public class Country {
     private String name;
     private String code;
     @OneToMany(mappedBy = "country")
+    @JsonManagedReference
     private List<State> states;
+
+    public Country(int id) {
+        this.id = id;
+    }
 
     @Override
     public String toString() {

@@ -22,7 +22,7 @@ public class AddressRepositoryTests {
     private AddressRepository addressRepository;
 
     @Test
-    public void addAddressTest(){
+    public void addAddressTest() {
 
         String countryId = "11";
         Integer customerId = 1;
@@ -34,8 +34,8 @@ public class AddressRepositoryTests {
         address.setLastName("Cena");
         address.setPhoneNumber("1234567890");
         address.setAddressLine1("123 NeyYork City");
-        address.setCity("Mountain View");
-        address.setState("California");
+        address.setCity("LA");
+        address.setState("Los Angles");
         address.setPostalCode("94043");
 
         Address savedAddress = addressRepository.save(address);
@@ -45,7 +45,7 @@ public class AddressRepositoryTests {
     }
 
     @Test
-    public void findAddressByAddressIdAndCustomerId(){
+    public void findAddressByAddressIdAndCustomerId() {
         Integer customerId = 1;
         Integer addressId = 2;
         Address address = addressRepository.findByAddressIdAndCustomerId(addressId, customerId);
@@ -54,7 +54,7 @@ public class AddressRepositoryTests {
     }
 
     @Test
-    public void updateAddressTest(){
+    public void updateAddressTest() {
         Integer addressId = 2;
 
         String firstName = "Abhishek";
@@ -73,7 +73,7 @@ public class AddressRepositoryTests {
     }
 
     @Test
-    public  void findCustomerByCustomerId(){
+    public void findCustomerByCustomerId() {
         Integer customerId = 1;
         List<Address> addresses = addressRepository.findByCustomer(new Customer(customerId));
         addresses.forEach(address -> {
@@ -84,11 +84,52 @@ public class AddressRepositoryTests {
     }
 
     @Test
-    public void deleteAddressTest(){
+    public void deleteAddressTest() {
         Integer addressId = 2;
         Address address = addressRepository.findById(addressId).get();
         addressRepository.delete(address);
         Optional<Address> deletedAddress = addressRepository.findById(addressId);
         assertThat(deletedAddress).isEmpty();
+    }
+
+    @Test
+    public void setDefaultAddressTest() {
+        Integer addressId = 3;
+        Address address = addressRepository.findById(addressId).get();
+        address.setDefaultAddress(true);
+        Address updatedAddress = addressRepository.save(address);
+
+        assertThat(updatedAddress.isDefaultAddress()).isEqualTo(true);
+
+    }
+
+    @Test
+    public void setNonDefaultAddressTest() {
+        Integer addressId = 4;
+        List<Address> addresses = addressRepository.findByCustomer(new Customer((1)));
+        addresses.forEach(address -> {
+            if (address.getId().equals(addressId)) {
+                address.setDefaultAddress(true);
+
+
+            } else {
+                address.setDefaultAddress(false);
+            }
+            addressRepository.save(address);
+        });
+
+
+        assertThat(addressRepository.findById(addressId).get().isDefaultAddress()).isEqualTo(true);
+
+    }
+
+    @Test
+    public void getDefaultAddressTest(){
+        Integer customerId = 1;
+        Address address = addressRepository.findDefaultByCustomer(customerId);
+        assertThat(address.isDefaultAddress()).isEqualTo(true);
+        System.out.println(address);
+
+
     }
 }

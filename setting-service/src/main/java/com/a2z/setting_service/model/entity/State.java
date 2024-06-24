@@ -1,5 +1,6 @@
 package com.a2z.setting_service.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,6 +22,7 @@ public class State {
 
     @ManyToOne
     @JoinColumn(name = "country_id")
+    @JsonBackReference
     private Country country;
 
     @Override

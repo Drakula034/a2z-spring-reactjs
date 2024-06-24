@@ -22,11 +22,17 @@ public class AddressServiceImpl implements AddressService {
     public List<AddressDto> getAllAddress(String customerId) {
         Customer customer = new Customer(Integer.parseInt(customerId));
         List<Address> addresses = addressRepository.findByCustomer(customer);
-        List<AddressDto>addressDtoList = new ArrayList<AddressDto>();
+        List<AddressDto> addressDtoList = new ArrayList<AddressDto>();
         addresses.forEach(address -> {
             addressDtoList.add(addressMapper.addressmapToAddressDto(address, new AddressDto()));
 
         });
         return addressDtoList;
+    }
+
+    @Override
+    public AddressDto getDefaultAddress(String customerId) {
+        Address address = addressRepository.findDefaultByCustomer(Integer.parseInt(customerId));
+        return addressMapper.addressmapToAddressDto(address, new AddressDto());
     }
 }
