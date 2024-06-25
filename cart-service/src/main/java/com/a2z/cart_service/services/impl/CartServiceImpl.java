@@ -1,5 +1,6 @@
 package com.a2z.cart_service.services.impl;
 
+import com.a2z.cart_service.mapper.CartItemMapper;
 import com.a2z.cart_service.model.dto.CartItemDto;
 import com.a2z.cart_service.model.entity.CartItem;
 import com.a2z.cart_service.model.serviceDto.ProductRequestDto;
@@ -12,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -21,12 +23,14 @@ public class CartServiceImpl implements CartService {
     CartItemRepository cartItemRepository;
     @Autowired
     private ProductServiceClient productServiceClient;
+    @Autowired
+    private CartItemMapper cartItemMapper;
 
-    public Integer addProduct(String productId, String customerId, int quantity){
+    public Integer addProduct(String productId, String customerId, int quantity) {
         CartItem cartItem = cartItemRepository.findByCustomerIdAndProductId(customerId, productId);
-        if(cartItem != null){
+        if (cartItem != null) {
             cartItem.setQuantity(cartItem.getQuantity() + quantity);
-        }else{
+        } else {
             cartItem = new CartItem();
             cartItem.setCustomerId(customerId);
             cartItem.setProductId(productId);
@@ -40,7 +44,12 @@ public class CartServiceImpl implements CartService {
         return cartItemRepository.save(cartItem).getQuantity();
     }
 
-    public List<CartItemDto> getCartItemsOfCustomer(String customerId){
+    public List<CartItemDto> getCartItemsOfCustomer(String customerId) {
+
+        List<CartItem> carts = cartItemRepository.findByCustomerId(customerId);
+        List<CartItemDto> cartsDto = carts.stream().map(cartItem -> CartItemMapper.cartItemMapToCartItemDto(cartItem, new CartItemDto())).toList();
+
+        return cartsDto;
 
     }
 

@@ -13,10 +13,11 @@ public class CheckoutServiceImpl {
     @Autowired
     CalculateProductCost calculateProductCost;
 
-    public CheckoutInfo prepareCheckout(List<CartItemRequest> cartItems, ShippingRate shippingRate){
+    public CheckoutInfo prepareCheckout(List<CartItemRequest> cartItems){
+//        , ShippingRate shippingRate
         CheckoutInfo checkoutInfo = new CheckoutInfo();
         float productCost = CalculateProductCost.calculateProductCost(cartItems);
-        float
+//        float productTotal = CalculateProductCost.calculateProductTotal(cartItems);
         checkoutInfo.setProductCost(productCost);
 
         return checkoutInfo;

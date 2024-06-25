@@ -19,10 +19,10 @@ public class CalculateProductCost {
         return cost;
     }
 
-//    public static float calculateProductTotalCost(List<CartItemRequest> cartItems){
-//        float cost = 0.0f;
+//    public static float calculateProductTotal(List<CartItemRequest> cartItems){
+//        float total = 0.0f;
 //        for(CartItemRequest cart : cartItems){
-//            cost += cart.get
+//            total += cart.
 //        }
 //    }
 }
