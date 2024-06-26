@@ -7,7 +7,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.annotation.Rollback;
 
 @DataJpaTest
-@Rollback(false)
+@Rollback(true)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 public class CountryRestControllerTests {
 

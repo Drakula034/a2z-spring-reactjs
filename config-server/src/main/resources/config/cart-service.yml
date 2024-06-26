@@ -1,0 +1,39 @@
+spring:
+  application:
+    name: cart-service
+
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.MySQL8Dialect
+  #        dialect: org.hibernate.dialect.H2Dialect
+
+  datasource:
+    url: jdbc:mysql://localhost:3342/cartsdb
+    username: root
+    password: root
+#  cloud:
+#    config:
+#      enabled: true
+
+    loadbalancer:
+      ribbon:
+        enabled: false
+    #      url: jdbc:h2:mem:testdb
+#      driver-class-name: org.h2.Driver
+#      username: sa
+#      password: ''
+#  h2:
+#    console.enabled: true
+
+
+server:
+  port: 8105
+
+
+

@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: configserver
+  profiles:
+    active: native
+  cloud:
+    config:
+      server:
+        native:
+          search-locations: "classpath:/config"
+#        import:
+#        - "optional:config-server:http://localhost:8071/"
+server:
+  port: 8071

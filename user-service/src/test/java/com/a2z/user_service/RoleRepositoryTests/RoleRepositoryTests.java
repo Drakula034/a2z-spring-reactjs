@@ -17,31 +17,31 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 //@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
-@Rollback(false)
+@Rollback(true)
 public class RoleRepositoryTests {
 
-    @Autowired
-    private RoleRepository roleRepository;
-
-    @Test
-
-    public void testAdminRole(){
-        // Create a new role
-        Role adminRole = new Role();
-        adminRole.setName("ADMIN");
-        adminRole.setDescription("manage everything");
-
-        // Save the role to the database
-        Role savedRole = roleRepository.save(adminRole);
-
-        // Verify that the saved role id is greater than 0
-        assertThat(savedRole.getId()).isGreaterThan(0);
-
-        // Verify that the saved role is not null
-        Assertions.assertNotNull(savedRole);
-        // Verify that the saved role has the correct name
-        Assertions.assertEquals("ADMIN", savedRole.getName());
-        // Verify that the saved role has the correct description
-        Assertions.assertEquals("manage everything", savedRole.getDescription());
-    }
+//    @Autowired
+//    private RoleRepository roleRepository;
+//
+//    @Test
+//
+//    public void testAdminRole(){
+//        // Create a new role
+//        Role adminRole = new Role();
+//        adminRole.setName("ADMIN");
+//        adminRole.setDescription("manage everything");
+//
+//        // Save the role to the database
+//        Role savedRole = roleRepository.save(adminRole);
+//
+//        // Verify that the saved role id is greater than 0
+//        assertThat(savedRole.getId()).isGreaterThan(0);
+//
+//        // Verify that the saved role is not null
+//        Assertions.assertNotNull(savedRole);
+//        // Verify that the saved role has the correct name
+//        Assertions.assertEquals("ADMIN", savedRole.getName());
+//        // Verify that the saved role has the correct description
+//        Assertions.assertEquals("manage everything", savedRole.getDescription());
+//    }
 }

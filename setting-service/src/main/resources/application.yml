@@ -1,6 +1,9 @@
 spring:
   application:
     name: setting-service
+  cloud:
+    config:
+      enabled: false
 
   jpa:
     show-sql: true
@@ -26,3 +29,4 @@ spring:
 
 server:
   port: 8085
+

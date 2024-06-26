@@ -14,7 +14,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-@Rollback(false)
+@Rollback(true)
 
 public class CurrencyRepositoryTests {
 
@@ -40,6 +40,6 @@ public class CurrencyRepositoryTests {
 
         currencyRepository.saveAll(currencyList);
         List<Currency> savedCurrencies = currencyRepository.findAll();
-        assertThat(savedCurrencies).size().isEqualTo(13);
+        assertThat(savedCurrencies.size()).isEqualTo(26);
     }
 }

@@ -1,13 +1,15 @@
 package com.a2z.user_service.service;
 
 import com.a2z.user_service.model.entity.User;
+import jakarta.transaction.Transactional;
 import org.springframework.data.relational.core.sql.In;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
-@Service
+
 public interface UserService {
 
     public List<User> getAllUsers();

@@ -5,23 +5,32 @@ import com.a2z.user_service.model.entity.User;
 import com.a2z.user_service.repository.RoleRepository;
 import com.a2z.user_service.repository.UserRepository;
 import com.a2z.user_service.service.UserService;
+import jakarta.persistence.EntityManagerFactory;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-@Service
+
+//@AutoConfiguration
 @Transactional
+@Service
 public class UserServiceImpl implements UserService {
 
+    private final UserRepository userRepository;
+
+    private final RoleRepository roleRepository;
+
+
     @Autowired
-    UserRepository userRepository;
-    @Autowired
-    RoleRepository roleRepository;
+    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository) {
+        this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
+    }
 
     @Override
     public List<User> getAllUsers() {
@@ -88,6 +97,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public Optional<User> editUserInfo(User user, String userId) {
         Optional<User> getUserOptional = userRepository.findById(Integer.parseInt(userId));
+
 
         User updatedUser = null;
         if (getUserOptional.isPresent()) {

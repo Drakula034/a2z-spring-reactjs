@@ -5,8 +5,16 @@ import com.a2z.user_service.model.dto.UserCreateDto;
 import com.a2z.user_service.model.dto.UserDetailsDto;
 import com.a2z.user_service.model.entity.User;
 import com.a2z.user_service.service.UserService;
+
+import jakarta.transaction.Transactional;
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+//import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
@@ -15,29 +23,35 @@ import org.springframework.web.bind.annotation.*;
 import java.util.*;
 
 @Controller
-@RequestMapping("/api/admin")
+@RequestMapping("/api/admin/users")
+@Slf4j
 public class UserController {
 
     private final UserService userService;
     private final UserMapper userMapper;
 
-    public UserController(UserService userService, UserMapper userMapper){
+
+    @Autowired
+    public UserController(UserService userService, UserMapper userMapper) {
         this.userService = userService;
         this.userMapper = userMapper;
     }
 
+    private final Logger logger = LoggerFactory.getLogger(UserController.class);
 
-    @GetMapping("/users")
+
+    @GetMapping("/all")
     public ResponseEntity<List<UserDetailsDto>> getAllUsers() {
+//        logger.info("active");
         List<User> allUsers = userService.getAllUsers();
         List<UserDetailsDto> allUsersDetailsDto = new ArrayList<>();
         allUsers.forEach(user -> allUsersDetailsDto.add(UserMapper.usersMapToUserDetailsDto(user, new UserDetailsDto())));
-
+        System.out.println("fetching data");
         return ResponseEntity.status(HttpStatus.OK).body(allUsersDetailsDto);
     }
 
-    @PostMapping("/users/create")
-    public ResponseEntity<Boolean> createNewUser(@RequestBody UserCreateDto userCreateDto){
+    @PostMapping("/create")
+    public ResponseEntity<Boolean> createNewUser(@RequestBody UserCreateDto userCreateDto) {
         System.out.println(userCreateDto);
         User user = userMapper.userCreateDtoMapToUser(userCreateDto, new User());
         boolean isUserCreated = userService.createNewUser(user);
@@ -47,8 +61,8 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body(isUserCreated);
     }
 
-    @GetMapping("/users/{id}")
-    public ResponseEntity<UserDetailsDto> getUser(@PathVariable String id){
+    @GetMapping("/{id}")
+    public ResponseEntity<UserDetailsDto> getUser(@PathVariable String id) {
         Optional<User> userOptional = userService.getUserById(id);
         System.out.println(userOptional);
 
@@ -66,11 +80,11 @@ public class UserController {
 
     }
 
-    @PatchMapping("/users/edit/{id}")
-    public ResponseEntity<UserCreateDto> editUserInfo(@PathVariable String id, @RequestBody UserCreateDto userCreateDto){
+    @PatchMapping("/edit/{id}")
+    public ResponseEntity<UserCreateDto> editUserInfo(@PathVariable String id, @RequestBody UserCreateDto userCreateDto) {
         User user = userMapper.userCreateDtoMapToUser(userCreateDto, new User());
         Optional<User> userOptional = userService.editUserInfo(user, id);
-        if(userOptional.isPresent()){
+        if (userOptional.isPresent()) {
             User updatedUser = userOptional.get();
             UserCreateDto updatedUserCreateDto = userMapper.userMapToUserCreateDto(updatedUser, new UserCreateDto());
             return ResponseEntity.status(HttpStatus.OK).body(updatedUserCreateDto);
@@ -80,18 +94,16 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
-    @DeleteMapping("/users/{id}")
-    public ResponseEntity<String> deleteUser(@PathVariable String id){
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteUser(@PathVariable String id) {
         Integer userId = Integer.parseInt(id);
         boolean isDeleteionSuccessful = userService.deleteUser(userId);
 
-        if(isDeleteionSuccessful){
+        if (isDeleteionSuccessful) {
             return ResponseEntity.status(HttpStatus.OK).body("Deletion Succesfull");
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("user id is not found");
     }
-
-
 
 
 }

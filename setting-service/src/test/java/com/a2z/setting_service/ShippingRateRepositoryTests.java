@@ -14,7 +14,7 @@ import static org.springframework.test.web.servlet.result.StatusResultMatchersEx
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-@Rollback(false)
+@Rollback(true)
 public class ShippingRateRepositoryTests {
 
     @Autowired
@@ -61,8 +61,8 @@ public class ShippingRateRepositoryTests {
 
     @Test
     public void findByCountryAndStateTest(){
-        int countryId = 2;
-        String state = "Delhi";
+        int countryId = 11;
+        String state = "Berlin";
         ShippingRate shippingRate = shippingRateRepository.findByCountryAndState(countryId, state);
 
         assertThat(shippingRate).isNotNull();
