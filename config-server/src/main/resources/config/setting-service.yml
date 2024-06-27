@@ -1,6 +1,9 @@
 spring:
   application:
-   name : checkout-service
+    name: setting-service
+  cloud:
+    config:
+      enabled: false
 
   jpa:
     show-sql: true
@@ -14,7 +17,7 @@ spring:
   #        dialect: org.hibernate.dialect.H2Dialect
 
   datasource:
-    url: jdbc:mysql://localhost:3343/checkoutsdb
+    url: jdbc:mysql://localhost:3309/settingsdb
     username: root
     password: root
 #      url: jdbc:h2:mem:testdb
@@ -25,14 +28,11 @@ spring:
 #    console.enabled: true
 
 server:
-  port: 8110
+  port: 8085
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
 
-eureka:
-  instance:
-    prefer-ip-address: true
-  client:
-    registerWithEureka: true
-    fetchRegistry: true
-    serviceUrl:
-      defaultZone: http://localhost:8761/eureka/
