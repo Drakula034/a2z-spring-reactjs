@@ -25,6 +25,7 @@ import java.util.*;
 @Controller
 @RequestMapping("/api/admin/users")
 @Slf4j
+@CrossOrigin(origins = "*")
 public class UserController {
 
     private final UserService userService;
