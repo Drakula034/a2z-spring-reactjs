@@ -1,5 +1,6 @@
 package com.a2z.user_service.service;
 
+import com.a2z.user_service.model.dto.UserResponseForControl;
 import com.a2z.user_service.model.entity.User;
 import jakarta.transaction.Transactional;
 import org.springframework.data.relational.core.sql.In;
@@ -21,4 +22,6 @@ public interface UserService {
 
      Optional<User> editUserInfo(User user, String userId);
      boolean deleteUser(Integer userId);
+
+     UserResponseForControl getEnabledAndDisabledUserForControlPanel();
 }

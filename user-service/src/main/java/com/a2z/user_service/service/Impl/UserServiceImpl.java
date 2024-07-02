@@ -1,5 +1,6 @@
 package com.a2z.user_service.service.Impl;
 
+import com.a2z.user_service.model.dto.UserResponseForControl;
 import com.a2z.user_service.model.entity.Role;
 import com.a2z.user_service.model.entity.User;
 import com.a2z.user_service.repository.RoleRepository;
@@ -165,6 +166,15 @@ public class UserServiceImpl implements UserService {
             return true; // Deletion successful
         }
         return false;
+    }
+
+    @Override
+    public UserResponseForControl getEnabledAndDisabledUserForControlPanel() {
+        List<User> allUsers = userRepository.findAll();
+        int enabled = (int) allUsers.stream().filter(User::getEnabled).count();
+        int disabled = allUsers.size() - enabled;
+
+        return new UserResponseForControl(enabled, disabled);
     }
 
 }

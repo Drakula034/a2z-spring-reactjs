@@ -1,8 +1,8 @@
-import AdminHeader from "../../../ui/admin/AdminHeader";
-import { getUserInfo } from "../../../services/api/user-services/userApi";
+import AdminHeader from "../../ui/admin/AdminHeader";
+import { getUserInfo } from "../../services/api/user-services/userApi";
 import { useEffect, useState } from "react";
-import styled from "styled-components";
-import Layout from "./Layout";
+// import styled from "styled-components";
+import Layout from "../../features/control-panel/Layout";
 
 function ControlPage() {
   const [data, setData] = useState(null);
@@ -14,7 +14,7 @@ function ControlPage() {
     fetchData();
   }, []);
 
-  console.log(data);
+  // console.log(data);
   return (
     <>
       <AdminHeader />

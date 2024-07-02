@@ -1,6 +1,7 @@
 import { createGlobalStyle } from "styled-components";
 
 const GlobalStyles = createGlobalStyle`
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
   
   *,
   *::before,
@@ -30,7 +31,17 @@ const GlobalStyles = createGlobalStyle`
 
     --color-blue-100: #e0f2fe;
     --color-blue-700: #0369a1;
+    --color-blue-200: #99CCFF;
+    --color-blue-300: #66B2FF;
+    --color-blue-400: #3399FF;
+    --color-blue-500: #007FFF;
+    --color-blue-600: #0072E5;
     --color-green-100: #dcfce7;
+    --color-green-200: #bbf7d0;
+    --color-green-300: #86efac;
+    --color-green-400: #4ade80;
+    --color-green-500: #22c55e;
+    --color-green-600: #18a24c;
     --color-green-700: #15803d;
     --color-yellow-100: #fef9c3;
     --color-yellow-700: #a16207;
@@ -42,7 +53,7 @@ const GlobalStyles = createGlobalStyle`
     --color-red-100: #fee2e2;
     --color-red-700: #b91c1c;
     --color-red-800: #991b1b;
-    font-family: Arial, sans-serif;
+    font-family: Arial,'IBM Plex Sans', sans-serif;
   }
 `;
 

@@ -1,17 +1,18 @@
-import ControlPage from "./ControlPage/ControlPage.jsx";
+import { React } from "react";
+import ControlPage from "../ControlPage.jsx";
 import { Route, Routes } from "react-router-dom";
-import { UsersPage } from "./UsersPage.jsx";
-import BrandsPage from "./BrandsPage.jsx";
-import ShippingPage from "./ShippingPage.jsx";
-import ProductsPage from "./ProductsPage.jsx";
-import CustomersPage from "./CustomersPage.jsx";
-import OrdersPage from "./OrdersPage.jsx";
-import ReportsPage from "./ReportsPage.jsx";
-import ArticlesPage from "./ArticlesPage.jsx";
-import MenusPage from "./MenusPage.jsx";
-import SettingsPage from "./SettingsPage.jsx";
+import { UsersPage } from "../UsersPage.jsx";
+import BrandsPage from "../BrandsPage.jsx";
+import ShippingPage from "../ShippingPage.jsx";
+import ProductsPage from "../ProductsPage.jsx";
+import CustomersPage from "../CustomersPage.jsx";
+import OrdersPage from "../OrdersPage.jsx";
+import ReportsPage from "../ReportsPage.jsx";
+import ArticlesPage from "../ArticlesPage.jsx";
+import MenusPage from "../MenusPage.jsx";
+import SettingsPage from "../SettingsPage.jsx";
 
-export const AdminControl = () => {
+const AdminControl = () => {
   return (
     <Routes>
       <Route path="/" element={<ControlPage />} />
@@ -30,3 +31,5 @@ export const AdminControl = () => {
     </Routes>
   );
 };
+
+export default AdminControl;

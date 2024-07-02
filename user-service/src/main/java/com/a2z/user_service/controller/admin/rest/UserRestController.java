@@ -1,4 +1,4 @@
-package com.a2z.user_service.controller.admin;
+package com.a2z.user_service.controller.admin.rest;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 

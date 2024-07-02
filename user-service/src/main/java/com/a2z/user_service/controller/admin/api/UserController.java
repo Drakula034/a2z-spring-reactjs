@@ -1,23 +1,20 @@
-package com.a2z.user_service.controller.admin;
+package com.a2z.user_service.controller.admin.api;
 
 import com.a2z.user_service.mapper.UserMapper;
 import com.a2z.user_service.model.dto.UserCreateDto;
 import com.a2z.user_service.model.dto.UserDetailsDto;
+import com.a2z.user_service.model.dto.UserResponseForControl;
 import com.a2z.user_service.model.entity.User;
 import com.a2z.user_service.service.UserService;
 
-import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 //import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -104,6 +101,13 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.OK).body("Deletion Succesfull");
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("user id is not found");
+    }
+
+    @GetMapping("/control-panel")
+    public ResponseEntity<UserResponseForControl> getEnabledAndDisabledUserInfo(){
+        UserResponseForControl userResponseForControl = userService.getEnabledAndDisabledUserForControlPanel();
+
+        return ResponseEntity.status(HttpStatus.OK).body(userResponseForControl);
     }
 
 

@@ -1,5 +1,4 @@
 import AdminHeader from "../../ui/admin/AdminHeader";
-import { AdminControl } from "./AdminControl";
 
 function ArticlesPage() {
   return (

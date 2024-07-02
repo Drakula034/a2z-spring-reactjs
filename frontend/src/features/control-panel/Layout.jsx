@@ -1,4 +1,10 @@
 import styled from "styled-components";
+import { useEnabledDisabledUser } from "./useEnabledDisabledUser";
+import UserLayout from "./UserLayout";
+import BrandsLayout from "./BrandsLayout";
+import CategoriesLayout from "./CategoriesLayout";
+import ProductsLayout from "./ProductsLayout";
+import QuestionsLayout from "./QuestionsLayout";
 
 const Container = styled.div`
   display: grid;
@@ -18,29 +24,30 @@ const General_Information = styled.div`
 const Users = styled.div`
   grid-column: col-start 3 / col-end 3;
   grid-row: row-start 1 / row-end 1;
-  background-color: gray;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 `;
 
 const Categories = styled.div`
   grid-column: col-start 4 / col-end 4;
   grid-row: row-start 1 / row-end 1;
-  background-color: pink;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 `;
 const Brands = styled.div`
   grid-column: col-start 5 / col-end 5;
   grid-row: row-start 1 / row-end 1;
-  background-color: red;
+  /* background-color: red; */
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 `;
 
 const Products = styled.div`
   grid-column: col-start 1 / col-end 1;
   grid-row: row-start 2 / row-end 2;
-  background-color: blue;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 `;
 const Questions = styled.div`
   grid-column: col-start 2 / col-end 2;
   grid-row: row-start 2 / row-end 2;
-  background-color: #8f8f98;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 `;
 
 const Reviews = styled.div`
@@ -77,14 +84,32 @@ const Settings = styled.div`
   background-color: yellow;
 `;
 function Layout() {
+  const { data, isLoading: isUserLoading, error } = useEnabledDisabledUser();
+  // data = JSON.parse(data);
+  // console.log(data);
+  const enabled = data?.enabled;
+  const disabled = data?.disabled;
+  // console.log(enabled);
+  // console.log(disabled);
+
   return (
     <Container>
       <General_Information>Information</General_Information>
-      <Users>Users data</Users>
-      <Categories>Categories</Categories>
-      <Brands>Brands</Brands>
-      <Products>Products</Products>
-      <Questions>Questions</Questions>
+      <Users>
+        <UserLayout enabled={enabled} disabled={disabled} />
+      </Users>
+      <Categories>
+        <CategoriesLayout />
+      </Categories>
+      <Brands>
+        <BrandsLayout />
+      </Brands>
+      <Products>
+        <ProductsLayout />
+      </Products>
+      <Questions>
+        <QuestionsLayout />
+      </Questions>
       <Reviews>Reviews</Reviews>
       <Customers>Customers data</Customers>
       <ShippingRate>Shipping Rate</ShippingRate>
