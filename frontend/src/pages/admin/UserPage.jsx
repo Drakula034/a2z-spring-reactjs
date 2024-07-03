@@ -1,10 +1,13 @@
+import UsersManagement from "../../features/users-management/UsersManagement";
 import AdminHeader from "../../ui/admin/AdminHeader";
 
 function UserPage() {
+  console.log("working");
   return (
     <>
       <AdminHeader />
-      <div>User</div>
+      <UsersManagement />
+      <div>User Module</div>
     </>
   );
 }

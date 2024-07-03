@@ -11,13 +11,14 @@ import ReportsPage from "../ReportsPage.jsx";
 import ArticlesPage from "../ArticlesPage.jsx";
 import MenusPage from "../MenusPage.jsx";
 import SettingsPage from "../SettingsPage.jsx";
+import CategoriesPage from "../CategoriesPage.jsx";
 
 const AdminControl = () => {
   return (
     <Routes>
       <Route path="/" element={<ControlPage />} />
       <Route path="users" element={<UsersPage />} />
-      <Route path="categories" element={<ControlPage />} />
+      <Route path="categories" element={<CategoriesPage />} />
       <Route path="brands" element={<BrandsPage />} />
       <Route path="shipping" element={<ShippingPage />} />
       <Route path="products" element={<ProductsPage />} />

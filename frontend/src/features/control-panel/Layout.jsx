@@ -5,6 +5,12 @@ import BrandsLayout from "./BrandsLayout";
 import CategoriesLayout from "./CategoriesLayout";
 import ProductsLayout from "./ProductsLayout";
 import QuestionsLayout from "./QuestionsLayout";
+import ReviewLayout from "./ReviewLayout";
+import CustomersLayout from "./CustomersLayout";
+import ShippingRatesLayout from "./ShippingRatesLayout";
+import OrdersLayout from "./OrdersLayout";
+import ArticlesLayout from "./ArticlesLayout";
+import SettingsLayout from "./SettingsLayout";
 
 const Container = styled.div`
   display: grid;
@@ -53,35 +59,35 @@ const Questions = styled.div`
 const Reviews = styled.div`
   grid-column: col-start 3 / col-end 3;
   grid-row: row-start 2 / row-end 2;
-  background-color: purple;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 `;
 
 const Customers = styled.div`
   grid-column: col-start 4 / col-end 4;
   grid-row: row-start 2 / row-end 2;
-  background-color: indigo;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 `;
 
 const ShippingRate = styled.div`
   grid-column: col-start 5 / col-end 5;
   grid-row: row-start 2 / row-end 2;
-  background-color: violet;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 `;
 
 const Orders = styled.div`
   grid-column: col-start 1 / col-end 1;
   grid-row: row-start 3 / row-end 3;
-  background: salmon;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 `;
 const Articles = styled.div`
   grid-column: col-start 2 / col-end 2;
   grid-row: row-start 3 / row-end 3;
-  background: #464141;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 `;
 const Settings = styled.div`
   grid-column: col-start 3 / col-end 3;
   grid-row: row-start 3 / row-end 3;
-  background-color: yellow;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 `;
 function Layout() {
   const { data, isLoading: isUserLoading, error } = useEnabledDisabledUser();
@@ -110,12 +116,24 @@ function Layout() {
       <Questions>
         <QuestionsLayout />
       </Questions>
-      <Reviews>Reviews</Reviews>
-      <Customers>Customers data</Customers>
-      <ShippingRate>Shipping Rate</ShippingRate>
-      <Orders>Orders</Orders>
-      <Articles>Articles</Articles>
-      <Settings>Settings</Settings>
+      <Reviews>
+        <ReviewLayout />
+      </Reviews>
+      <Customers>
+        <CustomersLayout />
+      </Customers>
+      <ShippingRate>
+        <ShippingRatesLayout />
+      </ShippingRate>
+      <Orders>
+        <OrdersLayout />
+      </Orders>
+      <Articles>
+        <ArticlesLayout />
+      </Articles>
+      <Settings>
+        <SettingsLayout />
+      </Settings>
     </Container>
   );
 }

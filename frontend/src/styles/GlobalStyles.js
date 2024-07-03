@@ -51,6 +51,10 @@ const GlobalStyles = createGlobalStyle`
     --color-indigo-700: #4338ca;
 
     --color-red-100: #fee2e2;
+    --color-red-200: #fecaca;
+    --color-red-300: #fca5a5;
+    --color-red-400: #f87171;
+    --color-red-500: #ef4444;
     --color-red-700: #b91c1c;
     --color-red-800: #991b1b;
     font-family: Arial,'IBM Plex Sans', sans-serif;
