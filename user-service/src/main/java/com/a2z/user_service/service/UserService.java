@@ -14,6 +14,7 @@ import java.util.Optional;
 public interface UserService {
 
     public List<User> getAllUsers();
+    public List<User> getAllUsersByPage(int page);
     public boolean createNewUser(User user);
 
     public boolean checkDuplicateEmail(String email);

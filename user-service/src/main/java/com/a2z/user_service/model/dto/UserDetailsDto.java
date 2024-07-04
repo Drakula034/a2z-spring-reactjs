@@ -12,7 +12,7 @@ import java.util.*;
 @Getter
 
 public class UserDetailsDto {
-//    private Integer id;
+    private Integer userId;
 
     @Column(length = 64, nullable = false, unique = true)
     private String email;

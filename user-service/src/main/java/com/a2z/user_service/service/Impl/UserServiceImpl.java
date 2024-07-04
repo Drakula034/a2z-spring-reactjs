@@ -10,6 +10,9 @@ import jakarta.persistence.EntityManagerFactory;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,6 +29,8 @@ public class UserServiceImpl implements UserService {
 
     private final RoleRepository roleRepository;
 
+    private final int USERS_PER_PAGE = 4;
+
 
     @Autowired
     public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository) {
@@ -35,8 +40,16 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> getAllUsers() {
+
         List<User> allUsers = userRepository.findAll();
         return allUsers;
+    }
+
+    @Override
+    public List<User> getAllUsersByPage(int page) {
+        Pageable pageable = PageRequest.of(page, USERS_PER_PAGE);
+        Page<User> pageUsers = (Page<User>) userRepository.findAll(pageable);
+        return pageUsers.getContent();
     }
 
 

@@ -3,7 +3,15 @@ import Table from "../../ui/Table";
 import SearchButton from "../../ui/SearchButton";
 import ClearButton from "../../ui/ClearButton";
 import AddButton from "../../ui/AddButton";
+import { useQuery } from "react-query";
+import useGetUsersByPage from "./useGetUsersByPage";
+import { useState } from "react";
+import Pagination from "../../ui/Pagination";
 
+const Container = styled.div`
+  display: grid;
+  grid-template-rows: max-content max-content 1fr max-content;
+`;
 const Title = styled.div`
   font-size: 1.6rem;
   font-weight: bold;
@@ -47,8 +55,17 @@ function UsersManagement() {
     "Enabled",
     "temp",
   ];
+
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const { data, isError, isLoading } = useGetUsersByPage(currentPage);
+
+  const PreviousClick = () => {};
+  const NextClick = () => {};
+  // if (isLoading) alert("Loading...");
+  // console.log(data);
   return (
-    <div>
+    <Container>
       <Title>User&apos;s Management</Title>
       <StyledFeatures>
         <Search>
@@ -61,8 +78,10 @@ function UsersManagement() {
         </Search>
         <AddButton buttonText={"Create New user"} />
       </StyledFeatures>
-      <Table columnName={columnName} columns={columns} />
-    </div>
+      {/* <Table columnName={columnName} columns={columns} data={data} /> */}
+      <Table />
+      <Pagination />
+    </Container>
   );
 }
 

@@ -24,7 +24,7 @@ public class UserMapper {
     }
 
     public static UserDetailsDto usersMapToUserDetailsDto(User user, UserDetailsDto userDetailsDto) {
-//        userDetailsDto.setId(user.getUserId());
+        userDetailsDto.setUserId(user.getUserId());
         userDetailsDto.setEmail(user.getEmail());
         userDetailsDto.setFirstName(user.getFirstName());
         userDetailsDto.setLastName(user.getLastName());

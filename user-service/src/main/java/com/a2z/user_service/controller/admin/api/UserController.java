@@ -48,9 +48,20 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(allUsersDetailsDto);
     }
 
+    @GetMapping("/")
+    public ResponseEntity<List<UserDetailsDto>> getAllUsersByPage(@RequestParam(defaultValue = "0") Integer page) {
+//        logger.info("active");
+//        int pageNum = page;
+        List<User> allUsers = userService.getAllUsersByPage(page);
+        List<UserDetailsDto> allUsersDetailsDto = new ArrayList<>();
+        allUsers.forEach(user -> allUsersDetailsDto.add(UserMapper.usersMapToUserDetailsDto(user, new UserDetailsDto())));
+        System.out.println("fetching data");
+        return ResponseEntity.status(HttpStatus.OK).body(allUsersDetailsDto);
+    }
+
     @PostMapping("/create")
     public ResponseEntity<Boolean> createNewUser(@RequestBody UserCreateDto userCreateDto) {
-        System.out.println(userCreateDto);
+//        System.out.println(userCreateDto);
         User user = userMapper.userCreateDtoMapToUser(userCreateDto, new User());
         boolean isUserCreated = userService.createNewUser(user);
 //        System.out.println("check: " + isUserCreated);

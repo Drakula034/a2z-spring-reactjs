@@ -2,6 +2,7 @@ import { json } from "react-router-dom";
 
 import {
   ALL_USER_INFO,
+  GET_USERS_BY_PAGE,
   USER_CONTROL_ENABLED_INFO,
 } from "../../../constants/endpoint-constants";
 
@@ -34,6 +35,21 @@ export async function getEnabledDisabledUsers() {
     const data = await response.json();
     return data;
     // return JSON.stringify(data);
+  } catch (err) {
+    throw new Error(err.message);
+  }
+}
+
+export async function getUsersByPage(page) {
+  const url = GET_USERS_BY_PAGE(page);
+  // console.log(`fetching data from ${page}`);
+
+  try {
+    const response = await fetch(url, { mode: "cors", method: "GET" });
+    if (!response.ok) throw new Error(response.message);
+    const data = await response.json();
+    // console.log(data);
+    return data;
   } catch (err) {
     throw new Error(err.message);
   }
