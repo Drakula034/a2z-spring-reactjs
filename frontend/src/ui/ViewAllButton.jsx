@@ -10,13 +10,14 @@ const Button = styled.button`
   transition: all 150ms ease;
   cursor: pointer;
   margin: 0.3rem auto;
+  border-color: transparent;
 
   &:hover {
     background-color: var(--color-green-700);
   }
 `;
-function ViewAllButton() {
-  return <Button>View All</Button>;
+function ViewAllButton({ onClick }) {
+  return <Button onClick={onClick}>View All</Button>;
 }
 
 export default ViewAllButton;

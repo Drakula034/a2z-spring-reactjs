@@ -8,8 +8,6 @@ import useGetUsersByPage from "./useGetUsersByPage";
 import { useEffect, useState } from "react";
 import Pagination from "../../ui/Pagination";
 import { useEnabledDisabledUser } from "../control-panel/useEnabledDisabledUser";
-import { useLocation, useNavigate } from "react-router-dom";
-import Spinner from "../../ui/Spinner";
 
 const Container = styled.div`
   display: grid;
@@ -47,28 +45,37 @@ const Input = styled.input`
   }
 `;
 function UsersManagement() {
+  const columns = ".5fr 1fr 2fr 1fr 1fr 1fr 1fr 1fr";
+  const columnName = [
+    "User Id",
+    "Photo",
+    "Email",
+    "First Name",
+    "Last Name",
+    "Roles",
+    "Enabled",
+    "temp",
+  ];
+
   const queryClient = useQueryClient();
-  const location = useLocation();
-  const navigate = useNavigate();
 
   // Retrieve cached data from React Query
-  const { enabled = 0, disabled = 0 } =
-    queryClient.getQueryData("enabledDisabledUserCount") || {};
-
-  const params = new URLSearchParams(location.search);
-  const page = parseInt(params.get("page"), 10) || 1;
+  const { enabled, disabled } = queryClient.getQueryData(
+    "enabledDisabledUserCount"
+  );
+  // const { usersData } = useEnabledDisabledUser();
+  // let enabled = data?.enabled;
+  // let disabled = data?.disabled;
+  // enabled = isNaN(enabled) === true ? 0 : Number(enabled);
+  // disabled = isNaN(disabled) === true ? 0 : Number(disabled);
+  // console.log(enabled + disabled);
 
   const totalItemsCount = enabled + disabled;
   const itemsPerPage = 4;
+
   const totalPages = Math.ceil(totalItemsCount / itemsPerPage);
 
-  const [currentPage, setCurrentPage] = useState(page);
-
-  useEffect(() => {
-    if (page !== currentPage) {
-      setCurrentPage(page);
-    }
-  }, [page]);
+  const [currentPage, setCurrentPage] = useState(1);
 
   const { data, isError, isLoading } = useGetUsersByPage(currentPage);
 
@@ -80,25 +87,24 @@ function UsersManagement() {
     }
   }, [data]);
 
-  useEffect(() => {
-    navigate(`${location.pathname}?page=${currentPage}`, { replace: true });
-  }, [currentPage, location.pathname, navigate]);
-
   const previousClick = () => {
     if (currentPage > 1) setCurrentPage(currentPage - 1);
+    else {
+      setCurrentPage(1);
+    }
   };
-
   const nextClick = () => {
     if (currentPage < totalPages) setCurrentPage(currentPage + 1);
+    else {
+      setCurrentPage(totalPages);
+    }
   };
-
   const buttonClick = (page) => {
     setCurrentPage(page);
   };
-
-  if (isLoading) {
-    return <Spinner />;
-  }
+  // console.log(currentPage);
+  // // if (isLoading) alert("Loading...");
+  // console.log(data);
   return (
     <Container>
       <Title>User&apos;s Management</Title>

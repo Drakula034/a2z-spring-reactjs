@@ -43,7 +43,7 @@ const AddPhotoIfNotFound = () => {
   return <RectangularPhotoIcon />;
 };
 const ROW_HEIGHT = "100px";
-function Table() {
+function Table({ rowData }) {
   //   const containerStyle = useMemo(() => ({ width: "100%", height: "100%" }), []);
   const gridStyle = useMemo(() => ({ height: "65vh", width: "100vw" }), []);
   const [colDefs] = useState([
@@ -73,18 +73,18 @@ function Table() {
     },
   ]);
 
-  const [rowData, setRowData] = useState([]);
-  const { data, isLoading, isError } = useGetUsersByPage(1);
+  //   const [rowData, setRowData] = useState([]);
+  //   const { data, isLoading, isError } = useGetUsersByPage(1);
 
-  useEffect(() => {
-    if (data) {
-      setRowData(data);
-    }
-  }, [data]);
+  //   useEffect(() => {
+  //     if (data) {
+  //       setRowData(data);
+  //     }
+  //   }, [data]);
   //   console.log(data);
 
-  if (isLoading) return <div>Loading...</div>;
-  if (isError) return <div>Error loading data</div>;
+  //   if (isLoading) return <div>Loading...</div>;
+  //   if (isError) return <div>Error loading data</div>;
   const cellStyle = { textAlign: "center" };
 
   return (

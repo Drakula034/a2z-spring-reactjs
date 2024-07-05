@@ -38,9 +38,10 @@ import { Container, Data, Disabled, Enabled, Head } from "./LayoutStyles";
 //   color: var(--color-grey-400);
 //   font-weight: bold;
 // `;
-function UserLayout({ enabled, disabled }) {
+function UserLayout({ enabled, disabled, moveToUsersPage }) {
   enabled = isNaN(enabled) === true ? 0 : Number(enabled);
   disabled = isNaN(disabled) === true ? 0 : Number(disabled);
+  // console.log("user layout navigating");
   return (
     <Container>
       <Head>User: {enabled + disabled}</Head>
@@ -48,7 +49,7 @@ function UserLayout({ enabled, disabled }) {
         <Enabled>Enabled: {enabled}</Enabled>
         <Disabled>Disabled: {disabled}</Disabled>
         <AddButton buttonText="Add User" />
-        <ViewAllButton />
+        <ViewAllButton onClick={moveToUsersPage} />
       </Data>
     </Container>
   );

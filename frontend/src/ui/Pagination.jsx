@@ -18,17 +18,23 @@ const PaginationItem = styled.div`
   cursor: pointer;
 
   &:hover,
-  &:active {
+  &:focus {
     background-color: var(--color-blue-500);
     color: var(--color-grey-200);
   }
 `;
 
-function Pagination() {
-  const totalItemsCount = 40;
-  const itemsPerPage = 4;
+function Pagination({
+  setCurrentPage,
+  previousClick,
+  nextClick,
+  totalPages,
+  buttonClick,
+  //   totalItemsCount,
+  //   itemsPerPage,
+}) {
   let pageNumbers = [];
-  const totalPages = Math.ceil(totalItemsCount / itemsPerPage);
+  //   const totalPages = Math.ceil(totalItemsCount / itemsPerPage);
   for (let i = 0; i < totalPages; i++) {
     pageNumbers[i] = i + 1;
   }
@@ -36,14 +42,18 @@ function Pagination() {
     <PaginationContainer>
       <PaginationItem
         style={{ color: "var(--color-grey-400)", backgroundColor: "white" }}
+        onClick={previousClick}
       >
         Previous
       </PaginationItem>
       {pageNumbers.map((page, ind) => (
-        <PaginationItem key={ind}>{page}</PaginationItem>
+        <PaginationItem key={ind} onClick={() => buttonClick(page)}>
+          {page}
+        </PaginationItem>
       ))}
       <PaginationItem
         style={{ color: "var(--color-grey-400)", backgroundColor: "white" }}
+        onClick={nextClick}
       >
         Next
       </PaginationItem>

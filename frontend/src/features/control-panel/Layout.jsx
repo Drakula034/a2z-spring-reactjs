@@ -11,6 +11,7 @@ import ShippingRatesLayout from "./ShippingRatesLayout";
 import OrdersLayout from "./OrdersLayout";
 import ArticlesLayout from "./ArticlesLayout";
 import SettingsLayout from "./SettingsLayout";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Container = styled.div`
   display: grid;
@@ -90,6 +91,8 @@ const Settings = styled.div`
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 `;
 function Layout() {
+  const navigate = useNavigate();
+  const location = useLocation();
   const { data, isLoading: isUserLoading, error } = useEnabledDisabledUser();
   // data = JSON.parse(data);
   // console.log(data);
@@ -97,12 +100,20 @@ function Layout() {
   const disabled = data?.disabled;
   // console.log(enabled);
   // console.log(disabled);
-
+  const moveToUsersPage = () => {
+    // console.log("Navigating");
+    // console.log(`${location.pathname}/users`);
+    navigate(`${location.pathname}/users?page=1`);
+  };
   return (
     <Container>
       <General_Information>Information</General_Information>
       <Users>
-        <UserLayout enabled={enabled} disabled={disabled} />
+        <UserLayout
+          enabled={enabled}
+          disabled={disabled}
+          moveToUsersPage={moveToUsersPage}
+        />
       </Users>
       <Categories>
         <CategoriesLayout />

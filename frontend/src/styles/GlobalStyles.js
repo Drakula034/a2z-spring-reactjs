@@ -57,6 +57,8 @@ const GlobalStyles = createGlobalStyle`
     --color-red-500: #ef4444;
     --color-red-700: #b91c1c;
     --color-red-800: #991b1b;
+
+--color-brand-600: #4f46e5;
     font-family: Arial,'IBM Plex Sans', sans-serif;
   }
 `;
