@@ -11,13 +11,18 @@ spring:
         - id: USER-SERVICE
           uri: lb://USER-SERVICE
           predicates:
-            - Path=/api/admin/users/**
+            - Path=/api/admin/users/**, /api/admin/roles/**
 
 #        - id: USER-SERVICE
 #          uri: lb://USER-SERVICE
 #          predicates:
 #            - Path=/api/admin/users/**
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
 eureka:
   instance:
     prefer-ip-address: true

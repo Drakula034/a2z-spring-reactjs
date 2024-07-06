@@ -96,6 +96,8 @@ function UsersManagement() {
     setCurrentPage(page);
   };
 
+  const createNewUser = () => {};
+
   if (isLoading) {
     return <Spinner />;
   }
