@@ -47,17 +47,27 @@ const Input = styled.input`
   }
 `;
 function UsersManagement() {
-  const queryClient = useQueryClient();
   const location = useLocation();
   const navigate = useNavigate();
 
   // Retrieve cached data from React Query
-  const { enabled = 0, disabled = 0 } =
-    queryClient.getQueryData("enabledDisabledUserCount") || {};
+  // const { enabled = 0, disabled = 0 } =
+  //   queryClient.getQueryData(
+  //     "enabledDisabledUserCount",
+  //     useEnabledDisabledUser,
+  //     { staleTime: 0 }
+  //   ) || {};
+
+  const {
+    data: userData = { enabled: 0, disabled: 0 },
+    isLoading: usersCountLoading,
+  } = useQuery("enabledDisabledUserCount", useEnabledDisabledUser());
+
+  const { enabled = 0, disabled = 0 } = userData;
 
   const params = new URLSearchParams(location.search);
   const page = parseInt(params.get("page"), 10) || 1;
-
+  // console.log("enabled: " + enabled + " disabled: " + disabled);
   const totalItemsCount = enabled + disabled;
   const itemsPerPage = 4;
   const totalPages = Math.ceil(totalItemsCount / itemsPerPage);
@@ -96,7 +106,9 @@ function UsersManagement() {
     setCurrentPage(page);
   };
 
-  const createNewUser = () => {};
+  const createNewUser = () => {
+    navigate(`${location.pathname}/create`);
+  };
 
   if (isLoading) {
     return <Spinner />;
@@ -113,7 +125,10 @@ function UsersManagement() {
           <SearchButton />
           <ClearButton />
         </Search>
-        <AddButton buttonText={"Create New user"} />
+        <AddButton
+          buttonText={"Create New user"}
+          createNewUser={createNewUser}
+        />
       </StyledFeatures>
       {/* <Table columnName={columnName} columns={columns} data={data} /> */}
       <Table rowData={rowData} />

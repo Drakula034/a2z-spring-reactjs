@@ -17,8 +17,8 @@ const Button = styled.button`
     color: black;
   }
 `;
-function AddButton({ buttonText }) {
-  return <Button>{buttonText}</Button>;
+function AddButton({ buttonText, createNewUser }) {
+  return <Button onClick={createNewUser}>{buttonText}</Button>;
 }
 
 export default AddButton;

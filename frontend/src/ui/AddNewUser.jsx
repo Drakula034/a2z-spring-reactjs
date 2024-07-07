@@ -1,16 +1,19 @@
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import AddButton from "./AddButton";
 import CancelButton from "./CancelButton";
 import styled from "styled-components";
+import { useQuery } from "react-query";
+import useGetAllRoles from "../features/users-management/useGetAllRoles";
 const StyledForm = styled.form`
   border: 1px solid var(--color-grey-300);
-  margin: 3rem 10rem;
+  margin: 2rem 10rem;
   z-index: 2;
   box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
   display: grid;
   grid-auto-flow: row;
   justify-items: center;
   row-gap: 0.5rem;
+  font-family: "IBM Plex Sans", sans-serif;
 `;
 const Title = styled.h2`
   font-size: 1.6rem;
@@ -72,26 +75,179 @@ const StyledInput = styled.div`
     width: 70%; /* Adjust width to 100% to fill the container */
   }
 `;
+// const StyledRoles = styled.div`
+//   display: grid;
+//   grid-template-columns: 1fr 3fr;
+// `;
+// const StyledRoles = styled.div`
+//   display: grid;
+//   grid-template-columns: max-content 1fr;
+//   grid-template-rows: max-content 1fr;
+//   gap: 1rem;
+//   margin-top: 0.5rem;
+//   /* border: 1px solid var(--color-grey-300); */
+//   padding: 1rem;
+//   border-radius: 8px;
+//   background-color: var(--color-grey-50);
+
+//   label {
+//     grid-column: 1 / span 1;
+//     grid-row: 1/-1;
+//     align-self: start;
+//     font-weight: bold;
+//   }
+
+//   div {
+//     grid-column: 2 / span 1;
+//     grid-row: 1/-1;
+//     display: grid;
+//     gap: 0.5rem;
+//   }
+// `;
+// const StyledRole = styled.div`
+//   grid-auto-flow: row;
+//   font-size: 1rem;
+//   font-weight: normal;
+// `;
+// const StyledRole = styled.div`
+//   display: flex;
+//   flex-direction: column;
+//   /* display: grid;
+//   grid-auto-flow: column; */
+//   align-items: center;
+//   gap: 0.5rem;
+//   padding: 1rem;
+//   border: 1px solid var(--color-grey-200);
+//   border-radius: 8px;
+//   background-color: var(--color-white);
+
+//   h3,
+//   h4 {
+//     margin: 0;
+//     font-weight: normal;
+//   }
+
+//   h3 {
+//     font-size: 1rem;
+//     color: var(--color-grey-900);
+//   }
+
+//   h4 {
+//     font-size: 0.8rem;
+//     color: var(--color-grey-700);
+//   }
+// `;
 const StyledRoles = styled.div`
   display: grid;
   grid-template-columns: 1fr 3fr;
+  column-gap: 1rem;
+
+  width: 80%;
+  margin-top: 1rem;
+
+  label {
+    grid-column: 1 / span 1;
+    font-weight: bold;
+    margin-bottom: 0.25rem;
+    align-items: start;
+  }
+
+  div {
+    /* grid-column: 2 / span 1; */
+    display: grid;
+    /* flex-direction: column; */
+    grid-auto-flow: row;
+    gap: 0.5rem;
+    width: 90%;
+  }
+`;
+
+const StyledRole = styled.div`
+  /* display: flex; */
+  /* grid-template-columns: max-content max-content 1fr; */
+  /* flex-direction: row; */
+  display: grid;
+  grid-template-columns: max-content max-content auto;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.5rem;
+  border: 1px solid var(--color-grey-300);
+  border-radius: 4px;
+  background-color: var(--color-white);
+  /* width: 90%; */
+
+  h3,
+  h4 {
+    margin: 0;
+    font-weight: normal;
+  }
+
+  h3 {
+    font-size: 1rem;
+    color: var(--color-grey-900);
+  }
+
+  h4 {
+    font-size: 0.8rem;
+    color: var(--color-grey-700);
+  }
+`;
+const StyledEnabled = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  column-gap: 1rem;
+  justify-items: start; /* Align items vertically to the center */
+  width: 80%;
+
+  label {
+    grid-column: 1;
+    font-weight: bold;
+    margin-bottom: 0.25rem;
+  }
+
+  input {
+    grid-column: 2; /* Explicitly place input in the second column */
+    padding: 0.5rem;
+    border: 1px solid var(--color-grey-300);
+    border-radius: 4px;
+    width: 10%; /* Adjust width to fill the container */
+
+    /* justify-self: start; */
+    /* align-self: start; */
+    /* accent-color: var(--color-green-400); */
+
+    &:checked {
+      background-color: white;
+      accent-color: var(--color-green-400);
+    }
+  }
 `;
 const StyledPhoto = styled.div``;
 
 const StyledButtons = styled.div`
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
   margin-top: 1.5rem;
 `;
 function AddNewUser() {
+  const { data: rolesData = [] } = useQuery("getAllRoles", useGetAllRoles());
+  //   const { roles } = rolesData;
+  //   console.log(rolesData);
   const {
     register,
     handleSubmit,
     reset,
+    control,
     formState: { errors },
   } = useForm();
+
+  const handleSUbmit = (data) => {
+    console.log(data.photo[0]);
+    reset();
+  };
   return (
-    <StyledForm onSubmit={handleSubmit((data) => console.log(data))}>
+    <StyledForm onSubmit={handleSubmit(handleSUbmit)}>
       <Title>Add New User</Title>
       <StyledName>
         <StyledInputName>
@@ -116,7 +272,7 @@ function AddNewUser() {
       {/* <StyledInputGroup> */}
       <StyledInput>
         <label>Email</label>
-        <input type="email" name="email" {...register("email")} />
+        <input type="email" name="email" {...register("email")} required />
       </StyledInput>
       {/* </StyledInputGroup> */}
       {/* <StyledInputGroup> */}
@@ -137,18 +293,35 @@ function AddNewUser() {
       {/* </StyledInputGroup> */}
       <StyledRoles>
         <label>Roles</label>
-        <input type="text" name="roles" {...register("roles")} />
+        {/* <label>Roles</label>
+        <input type="text" name="roles" {...register("roles")} /> */}
+        <div>
+          {rolesData.map((role, id) => (
+            <StyledRole key={id}>
+              {/* <input type="checkbox" {...register} name="roles" />
+              <h3 style={{ fontWeight: "normal" }}>{role.roleName}</h3>
+              <h4 style={{ fontWeight: "normal" }}>{role.description}</h4> */}
+              <Controller
+                name={`roles.${role.roleName}`}
+                control={control}
+                render={({ field }) => <input type="checkbox" {...field} />}
+              />
+              <h3 style={{ fontWeight: "normal" }}>{role.roleName}</h3>
+              <h4 style={{ fontWeight: "normal" }}>{role.description}</h4>
+            </StyledRole>
+          ))}
+        </div>
       </StyledRoles>
-      <StyledInputGroup>
+      <StyledEnabled>
         <label>Enabled</label>
         <input type="checkbox" name="enabled" {...register("enabled")} />
-      </StyledInputGroup>
-      <StyledPhoto>
+      </StyledEnabled>
+      <StyledInput>
         <label>Photos</label>
         <input type="file" name="photo" {...register("photo")} />
-      </StyledPhoto>
+      </StyledInput>
       <StyledButtons>
-        <AddButton buttonText={"Save"} />
+        <AddButton buttonText={"Save"} type="submit" />
         <CancelButton buttonText={"Cancel"} />
       </StyledButtons>
     </StyledForm>
