@@ -5,18 +5,20 @@ import com.a2z.product_service.model.entity.Category;
 import com.a2z.product_service.repository.BrandsRepository;
 import com.a2z.product_service.repository.CategoryRepository;
 import com.a2z.product_service.service.BrandService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 
 @Service
+@RequiredArgsConstructor
 public class BrandServiceImpl implements BrandService {
 
-    @Autowired
-    BrandsRepository brandsRepository;
-    @Autowired
-    CategoryRepository categoryRepository;
+
+    private BrandsRepository brandsRepository;
+
+    private CategoryRepository categoryRepository;
 
     @Override
     public Brand addBrand(Brand brand) {

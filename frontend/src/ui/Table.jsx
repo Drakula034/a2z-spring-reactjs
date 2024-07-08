@@ -155,7 +155,7 @@ function Table({ rowData }) {
             const userId = params.data.userId;
             const userToEdit = params.data;
             const url = location.pathname;
-            navigate(`${url}/edit?userId=${userId}`, { state: userToEdit });
+            navigate(`${url}/edit?userId=${userId}`, { state: { userToEdit } });
           }}
         />
       ),

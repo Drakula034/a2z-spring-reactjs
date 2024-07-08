@@ -1,4 +1,3 @@
-import AddNewUser from "../../ui/AddNewUser";
 import UserForm from "../../ui/UserForm";
 
 function AddUser() {

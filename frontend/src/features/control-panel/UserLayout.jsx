@@ -2,6 +2,7 @@ import styled from "styled-components";
 import AddButton from "../../ui/AddButton";
 import ViewAllButton from "../../ui/ViewAllButton";
 import { Container, Data, Disabled, Enabled, Head } from "./LayoutStyles";
+import { useNavigate } from "react-router-dom";
 
 // const Container = styled.div`
 //   display: grid;
@@ -39,8 +40,15 @@ import { Container, Data, Disabled, Enabled, Head } from "./LayoutStyles";
 //   font-weight: bold;
 // `;
 function UserLayout({ enabled, disabled, moveToUsersPage }) {
+  const navigate = useNavigate();
   enabled = isNaN(enabled) === true ? 0 : Number(enabled);
   disabled = isNaN(disabled) === true ? 0 : Number(disabled);
+
+  const createNewUser = () => {
+    navigate(`${location.pathname}/users/create`, {
+      state: { from: "/admin" },
+    });
+  };
   // console.log("user layout navigating");
   return (
     <Container>
@@ -48,7 +56,7 @@ function UserLayout({ enabled, disabled, moveToUsersPage }) {
       <Data>
         <Enabled>Enabled: {enabled}</Enabled>
         <Disabled>Disabled: {disabled}</Disabled>
-        <AddButton buttonText="Add User" />
+        <AddButton buttonText="Add User" createNewUser={createNewUser} />
         <ViewAllButton onClick={moveToUsersPage} />
       </Data>
     </Container>

@@ -5,7 +5,6 @@ import styled from "styled-components";
 import { useQuery } from "react-query";
 import useGetAllRoles from "../features/users-management/useGetAllRoles";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useState } from "react";
 const StyledForm = styled.form`
   border: 1px solid var(--color-grey-300);
   margin: 2rem 10rem;
@@ -232,51 +231,30 @@ const StyledButtons = styled.div`
   justify-content: space-between;
   margin-top: 1.5rem;
 `;
-function UserForm({ title, onSubmit, userToEdit }) {
+function UserForm({ title, onSubmit }) {
   const { data: rolesData = [] } = useQuery("getAllRoles", useGetAllRoles());
   const navigate = useNavigate();
   const location = useLocation();
   //   const { roles } = rolesData;
   //   console.log(rolesData);
-
-  const [formValues, setFormValues] = useState({
-    firstName: userToEdit ? userToEdit.firstName : "",
-    lastName: userToEdit?.lastName || "",
-    email: userToEdit?.email || "",
-    enabled: userToEdit?.enabled || false,
-    photos: userToEdit?.photos || "",
-    roles: userToEdit?.roles.map((role) => role.name) || [],
-  });
-
   const {
     register,
     handleSubmit,
     reset,
     control,
-    watch,
     formState: { errors },
   } = useForm();
 
-  // const [password, setPassword] = useState("");
-
-  // const handlePasswordChange = (e) => {
-  //   setPassword(e.target.value);
-  // };
   const handleFormSubmit = (data) => {
     // console.log(data.photo[0]);
     onSubmit(data);
     reset();
-    navigate(-1);
   };
 
   const handleCancel = () => {
     reset();
-    // navigate(-1);
-    const previousPath = location.state.from || "/admin/users";
-    navigate(previousPath);
-    // navigate("/admin/users");
+    navigate(-1);
   };
-  const password = watch("password", "");
   return (
     <StyledForm onSubmit={handleSubmit(handleFormSubmit)}>
       <Title>{title}</Title>
@@ -287,7 +265,6 @@ function UserForm({ title, onSubmit, userToEdit }) {
             type="text"
             name="firstName"
             {...register("firstName")}
-            defaultValue={formValues.firstName}
             size={30}
           />
         </StyledInputName>
@@ -298,30 +275,19 @@ function UserForm({ title, onSubmit, userToEdit }) {
             name="lastName"
             {...register("lastName")}
             size={30}
-            defaultValue={formValues.lastName}
           />
         </StyledInputName>
       </StyledName>
       {/* <StyledInputGroup> */}
       <StyledInput>
         <label>Email</label>
-        <input
-          type="email"
-          name="email"
-          {...register("email")}
-          defaultValue={formValues.email}
-        />
+        <input type="email" name="email" {...register("email")} required />
       </StyledInput>
       {/* </StyledInputGroup> */}
       {/* <StyledInputGroup> */}
       <StyledInput>
         <label>Password</label>
-        <input
-          type="password"
-          name="password"
-          {...register("password")}
-          // onChange={handlePasswordChange}
-        />
+        <input type="password" name="password" {...register("password")} />
       </StyledInput>
       {/* </StyledInputGroup> */}
       {/* <StyledInputGroup> */}
@@ -331,7 +297,6 @@ function UserForm({ title, onSubmit, userToEdit }) {
           type="password"
           name="confirmPassword"
           {...register("confirmPassword")}
-          disabled={!password}
         />
       </StyledInput>
       {/* </StyledInputGroup> */}
@@ -348,16 +313,7 @@ function UserForm({ title, onSubmit, userToEdit }) {
               <Controller
                 name={`roles.${role.roleName}`}
                 control={control}
-                render={({ field }) => (
-                  <input
-                    type="checkbox"
-                    {...field}
-                    defaultChecked={
-                      formValues.roles &&
-                      formValues.roles.includes(role.roleName)
-                    }
-                  />
-                )}
+                render={({ field }) => <input type="checkbox" {...field} />}
               />
               <h3 style={{ fontWeight: "normal" }}>{role.roleName}</h3>
               <h4 style={{ fontWeight: "normal" }}>{role.description}</h4>
@@ -367,21 +323,11 @@ function UserForm({ title, onSubmit, userToEdit }) {
       </StyledRoles>
       <StyledEnabled>
         <label>Enabled</label>
-        <input
-          type="checkbox"
-          name="enabled"
-          {...register("enabled")}
-          defaultChecked={formValues.enabled}
-        />
+        <input type="checkbox" name="enabled" {...register("enabled")} />
       </StyledEnabled>
       <StyledInput>
         <label>Photos</label>
-        <input
-          type="file"
-          name="photo"
-          {...register("photo")}
-          defaultValue={formValues.photos}
-        />
+        <input type="file" name="photo" {...register("photo")} />
       </StyledInput>
       <StyledButtons>
         <AddButton buttonText={"Save"} type="submit" />
