@@ -11,3 +11,11 @@ export const GET_USERS_BY_PAGE = (page) =>
   `${USER_SERVICE_BASE_URL}/?page=${page}`;
 
 export const USER_ROLES_GET_ALL = `${USER_SERVICE_ROLES_BASE_URL}/all`;
+
+// product-service
+// categroy
+
+export const CATEGORY_SERVICE_BASE_URL =
+  "http://localhost:8000/api/admin/categories/";
+
+export const CATEGORY_SERVICE_ENABLED_DISABLED_URL = `${CATEGORY_SERVICE_BASE_URL}/control-panel`;

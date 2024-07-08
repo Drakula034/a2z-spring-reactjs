@@ -56,7 +56,7 @@ function UserLayout({ enabled, disabled, moveToUsersPage }) {
       <Data>
         <Enabled>Enabled: {enabled}</Enabled>
         <Disabled>Disabled: {disabled}</Disabled>
-        <AddButton buttonText="Add User" createNewUser={createNewUser} />
+        <AddButton buttonText="Add User" createNew={createNewUser} />
         <ViewAllButton onClick={moveToUsersPage} />
       </Data>
     </Container>

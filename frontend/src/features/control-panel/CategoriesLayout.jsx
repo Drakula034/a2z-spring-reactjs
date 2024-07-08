@@ -1,16 +1,22 @@
+import { useLocation, useNavigate } from "react-router-dom";
 import AddButton from "../../ui/AddButton";
 import ViewAllButton from "../../ui/ViewAllButton";
 import { Container, Data, Disabled, Enabled, Head } from "./LayoutStyles";
 
-function CategoriesLayout() {
+function CategoriesLayout({ enabled, disabled }) {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const viewCategory = () => {
+    navigate(`${location.pathname}/categories`);
+  };
   return (
     <Container>
-      <Head>Categories : 0</Head>
+      <Head>Categories : {enabled + disabled}</Head>
       <Data>
-        <Enabled>Enabled: 0</Enabled>
-        <Disabled>Disabled: 0</Disabled>
+        <Enabled>Enabled: {enabled}</Enabled>
+        <Disabled>Disabled: {disabled}</Disabled>
         <AddButton buttonText="Add Category" />
-        <ViewAllButton />
+        <ViewAllButton onClick={viewCategory} />
       </Data>
     </Container>
   );

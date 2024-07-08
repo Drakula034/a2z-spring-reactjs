@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { useEnabledDisabledUser } from "./useEnabledDisabledUser";
+import useCategoryEnabledDisabled from "./useCategoryEnabledDisabled";
 import UserLayout from "./UserLayout";
 import BrandsLayout from "./BrandsLayout";
 import CategoriesLayout from "./CategoriesLayout";
@@ -12,6 +13,7 @@ import OrdersLayout from "./OrdersLayout";
 import ArticlesLayout from "./ArticlesLayout";
 import SettingsLayout from "./SettingsLayout";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useQuery } from "react-query";
 
 const Container = styled.div`
   display: grid;
@@ -100,6 +102,22 @@ function Layout() {
   const disabled = data?.disabled;
   // console.log(enabled);
   // console.log(disabled);
+
+  // // for category
+  // const {
+  //   data: categoryData = { enabledCategory: 0, disabledCategory: 0 },
+  //   isLoading: categoryCountLoading,
+  // } = useQuery("enabledDisabledCategory", useCategoryEnabledDisabled());
+  // const { enabledCategory = 0, disabledCategory = 0 } = categoryData;
+  // console.log(enabledCategory, disabledCategory);
+  // const enabledCategory = 0,
+  //   disabledCategory = 0;
+  const { data: categoryData, isLoading: isCategoryLoading } =
+    useCategoryEnabledDisabled();
+  console.log(categoryData);
+  const enabledCategory = categoryData?.enabled;
+  const disabledCategory = categoryData?.disabled;
+
   const moveToUsersPage = () => {
     // console.log("Navigating");
     // console.log(`${location.pathname}/users`);
@@ -116,7 +134,10 @@ function Layout() {
         />
       </Users>
       <Categories>
-        <CategoriesLayout />
+        <CategoriesLayout
+          enabled={enabledCategory}
+          disabled={disabledCategory}
+        />
       </Categories>
       <Brands>
         <BrandsLayout />
