@@ -231,7 +231,7 @@ const StyledButtons = styled.div`
   justify-content: space-between;
   margin-top: 1.5rem;
 `;
-function AddNewUser({ title }) {
+function UserForm({ title, onSubmit }) {
   const { data: rolesData = [] } = useQuery("getAllRoles", useGetAllRoles());
   const navigate = useNavigate();
   //   const { roles } = rolesData;
@@ -244,8 +244,9 @@ function AddNewUser({ title }) {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
-    console.log(data.photo[0]);
+  const handleFormSubmit = (data) => {
+    // console.log(data.photo[0]);
+    onSubmit(data);
     reset();
   };
 
@@ -254,7 +255,7 @@ function AddNewUser({ title }) {
     navigate(-1);
   };
   return (
-    <StyledForm onSubmit={handleSubmit(onSubmit)}>
+    <StyledForm onSubmit={handleSubmit(handleFormSubmit)}>
       <Title>{title}</Title>
       <StyledName>
         <StyledInputName>
@@ -335,4 +336,4 @@ function AddNewUser({ title }) {
   );
 }
 
-export default AddNewUser;
+export default UserForm;

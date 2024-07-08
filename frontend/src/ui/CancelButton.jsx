@@ -17,8 +17,8 @@ const Button = styled.button`
     background-color: var(--color-grey-600);
   }
 `;
-function CancelButton({ buttonText }) {
-  return <Button>{buttonText}</Button>;
+function CancelButton({ buttonText, handleCancel }) {
+  return <Button onClick={handleCancel}>{buttonText}</Button>;
 }
 
 export default CancelButton;

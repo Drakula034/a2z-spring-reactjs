@@ -7,6 +7,10 @@ import styled from "styled-components";
 import { RiFileEditFill } from "react-icons/ri";
 import { IoMdPerson } from "react-icons/io";
 import { MdDelete } from "react-icons/md";
+import DeleteConfirmation from "./DeleteConfirmation";
+import { useQuery } from "react-query";
+import { getUserById } from "../services/api/user-services/userApi";
+import { useLocation, useNavigate } from "react-router-dom";
 
 // const StyledTable = styled.div`
 //   /* Add gap between grid items */
@@ -32,19 +36,93 @@ const CustomizeEditIcon = styled(RiFileEditFill)`
   color: var(--color-green-500);
   margin-top: 15px;
   margin-left: 3px;
+  cursor: pointer;
+`;
+
+const CustomizedDeleteIcon = styled(MdDelete)`
+  width: 2rem;
+  height: 2rem;
+  color: var(--color-grey-500);
+  margin-top: 15px;
+  margin-left: 3px;
+  cursor: pointer;
 `;
 const EditIconRenderer = () => {
   //   return <RiFileEditFill size={"2rem"} color={"green"} />;
   return <CustomizeEditIcon />;
+};
+const deleteIconRenderer = () => {
+  //   return <RiFileEditFill size={"2rem"} color={"green"} />;
+  return <CustomizedDeleteIcon />;
 };
 
 const AddPhotoIfNotFound = () => {
   //   return <IoMdPerson height={"5rem"} width={"5rem"} />;
   return <RectangularPhotoIcon />;
 };
+
+const EditDeleteFieldRenderer = ({ onDeleteClick, onEditClick }) => {
+  // const [isOpen, setIsOpen] = useState(false);
+
+  // const onEditClick = () => {
+  //   console.log("onEditClick");
+  // };
+
+  // const onDeleteClick = () => {
+  //   // setIsOpen(true);
+  //   console.log("onDeleteClick");
+  // };
+
+  // const onConfirm = () => {
+  //   setIsOpen(false);
+  //   console.log("deleted successfully");
+  // };
+  // const onClose = () => {
+  //   setIsOpen(false);
+  // };
+  return (
+    <>
+      <CustomizeEditIcon onClick={onEditClick} />
+      <CustomizedDeleteIcon onClick={onDeleteClick} />
+      {/* <DeleteConfirmation
+        open={isOpen}
+        onClose={onClose}
+        onConfirm={onConfirm}
+      /> */}
+    </>
+  );
+};
 const ROW_HEIGHT = "100px";
 function Table({ rowData }) {
-  //   const containerStyle = useMemo(() => ({ width: "100%", height: "100%" }), []);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const [isOpen, setIsOpen] = useState(false);
+  const [rowId, setRowId] = useState(null);
+  const [user, setUser] = useState({ id: null, userName: null });
+  // const userToEdit = null;
+  // useEffect(() => {
+  //   userToEdit = useQuery("userById", () => getUserById(userId));
+  // });
+
+  const selectDeleteIcon = (rowId, userName) => {
+    setIsOpen(true);
+    // setRowId(rowId);
+    setUser({ id: rowId, userName: userName });
+  };
+
+  const onConfirm = () => {
+    setIsOpen(false);
+    // setRowId(null);
+    setUser({ id: null, userName: null });
+    console.log(`deleting user with id: + ${rowId} and name: ${user.userName}`);
+  };
+  const onClose = () => {
+    setIsOpen(false);
+    // setRowId(null);
+
+    setUser({ id: null, userName: null });
+  };
+
   const gridStyle = useMemo(() => ({ height: "65vh", width: "100vw" }), []);
   const [colDefs] = useState([
     { field: "userId", headerName: "User ID", flex: 0.5 },
@@ -68,33 +146,47 @@ function Table({ rowData }) {
     {
       field: "editable",
       headerName: "",
-      cellRenderer: EditIconRenderer,
+      cellRenderer: (params) => (
+        <EditDeleteFieldRenderer
+          onDeleteClick={() =>
+            selectDeleteIcon(params.data.userId, params.data.firstName)
+          }
+          onEditClick={() => {
+            const userId = params.data.userId;
+            const userToEdit = params.data;
+            const url = location.pathname;
+            navigate(`${url}/edit?userId=${userId}`, { state: userToEdit });
+          }}
+        />
+      ),
       flex: 1,
+      editable: true,
     },
   ]);
 
-  //   const [rowData, setRowData] = useState([]);
-  //   const { data, isLoading, isError } = useGetUsersByPage(1);
-
-  //   useEffect(() => {
-  //     if (data) {
-  //       setRowData(data);
-  //     }
-  //   }, [data]);
-  //   console.log(data);
-
   //   if (isLoading) return <div>Loading...</div>;
   //   if (isError) return <div>Error loading data</div>;
-  const cellStyle = { textAlign: "center" };
+  const cellStyle = { textAlign: "center", border: "none" };
 
   return (
-    <div style={gridStyle} className="ag-theme-alpine">
-      <AgGridReact
-        rowData={rowData}
-        columnDefs={colDefs}
-        rowHeight={ROW_HEIGHT}
-        defaultColDef={{ cellStyle }}
-        //   frameworkComponents={{ editIconRenderer: EditIconRenderer }} // Register the custom cell renderer
+    <div>
+      <div style={gridStyle} className="ag-theme-alpine">
+        <AgGridReact
+          rowData={rowData}
+          columnDefs={colDefs}
+          rowHeight={ROW_HEIGHT}
+          defaultColDef={{ cellStyle }}
+          // frameworkComponents={{
+          //   editDeleteFieldRenderer: EditDeleteFieldRenderer,
+          // }}
+          //   frameworkComponents={{ editIconRenderer: EditIconRenderer }} // Register the custom cell renderer
+        />
+      </div>
+      <DeleteConfirmation
+        open={isOpen}
+        onClose={onClose}
+        onConfirm={onConfirm}
+        user={user}
       />
     </div>
   );

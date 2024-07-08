@@ -3,6 +3,7 @@ import { json } from "react-router-dom";
 import {
   ALL_USER_INFO,
   GET_USERS_BY_PAGE,
+  USER_BY_ID,
   USER_CONTROL_ENABLED_INFO,
 } from "../../../constants/endpoint-constants";
 
@@ -49,6 +50,19 @@ export async function getUsersByPage(page) {
     if (!response.ok) throw new Error(response.message);
     const data = await response.json();
     // console.log(data);
+    return data;
+  } catch (err) {
+    throw new Error(err.message);
+  }
+}
+
+export async function getUserById(userId) {
+  const url = USER_BY_ID(userId);
+
+  try {
+    const response = await fetch(url, { mode: "cors", method: "GET" });
+    if (!response.ok) throw new Error(response.message);
+    const data = await response.json();
     return data;
   } catch (err) {
     throw new Error(err.message);

@@ -13,13 +13,16 @@ import MenusPage from "../MenusPage.jsx";
 import SettingsPage from "../SettingsPage.jsx";
 import CategoriesPage from "../CategoriesPage.jsx";
 import AddNewUser from "../../../ui/AddNewUser.jsx";
+import AddUser from "../../../features/users-management/AddUser.jsx";
+import EditUser from "../../../features/users-management/EditUser.jsx";
 
 const AdminControl = () => {
   return (
     <Routes>
       <Route path="/" element={<ControlPage />} />
       <Route path="users" element={<UsersPage />} />
-      <Route path="users/create" element={<AddNewUser />} />
+      <Route path="users/create" element={<AddUser />} />
+      <Route path="users/edit" element={<EditUser />} />
       <Route path="categories" element={<CategoriesPage />} />
       <Route path="brands" element={<BrandsPage />} />
       <Route path="shipping" element={<ShippingPage />} />
