@@ -11,6 +11,8 @@ import DeleteConfirmation from "./DeleteConfirmation";
 import { useQuery } from "react-query";
 import { getUserById } from "../services/api/user-services/userApi";
 import { useLocation, useNavigate } from "react-router-dom";
+import EditDeleteFieldColumn from "./EditDeleteFieldColumn";
+import AddPhotoIfNotFound from "./AddPhotoIfNotFound";
 
 // const StyledTable = styled.div`
 //   /* Add gap between grid items */
@@ -30,68 +32,37 @@ const RectangularPhotoIcon = styled(IoMdPerson)`
   margin-top: 5px;
   border-radius: 8px; /* Rounded corners */
 `;
-const CustomizeEditIcon = styled(RiFileEditFill)`
-  width: 2rem;
-  height: 2rem;
-  color: var(--color-green-500);
-  margin-top: 15px;
-  margin-left: 3px;
-  cursor: pointer;
-`;
+// const CustomizeEditIcon = styled(RiFileEditFill)`
+//   width: 2rem;
+//   height: 2rem;
+//   color: var(--color-green-500);
+//   margin-top: 15px;
+//   margin-left: 3px;
+//   cursor: pointer;
+// `;
 
-const CustomizedDeleteIcon = styled(MdDelete)`
-  width: 2rem;
-  height: 2rem;
-  color: var(--color-grey-500);
-  margin-top: 15px;
-  margin-left: 3px;
-  cursor: pointer;
-`;
-const EditIconRenderer = () => {
-  //   return <RiFileEditFill size={"2rem"} color={"green"} />;
-  return <CustomizeEditIcon />;
-};
-const deleteIconRenderer = () => {
-  //   return <RiFileEditFill size={"2rem"} color={"green"} />;
-  return <CustomizedDeleteIcon />;
-};
+// const CustomizedDeleteIcon = styled(MdDelete)`
+//   width: 2rem;
+//   height: 2rem;
+//   color: var(--color-grey-500);
+//   margin-top: 15px;
+//   margin-left: 3px;
+//   cursor: pointer;
+// `;
 
-const AddPhotoIfNotFound = () => {
-  //   return <IoMdPerson height={"5rem"} width={"5rem"} />;
-  return <RectangularPhotoIcon />;
-};
+// const AddPhotoIfNotFound = () => {
+//   //   return <IoMdPerson height={"5rem"} width={"5rem"} />;
+//   return <RectangularPhotoIcon />;
+// };
 
-const EditDeleteFieldRenderer = ({ onDeleteClick, onEditClick }) => {
-  // const [isOpen, setIsOpen] = useState(false);
-
-  // const onEditClick = () => {
-  //   console.log("onEditClick");
-  // };
-
-  // const onDeleteClick = () => {
-  //   // setIsOpen(true);
-  //   console.log("onDeleteClick");
-  // };
-
-  // const onConfirm = () => {
-  //   setIsOpen(false);
-  //   console.log("deleted successfully");
-  // };
-  // const onClose = () => {
-  //   setIsOpen(false);
-  // };
-  return (
-    <>
-      <CustomizeEditIcon onClick={onEditClick} />
-      <CustomizedDeleteIcon onClick={onDeleteClick} />
-      {/* <DeleteConfirmation
-        open={isOpen}
-        onClose={onClose}
-        onConfirm={onConfirm}
-      /> */}
-    </>
-  );
-};
+// const EditDeleteFieldRenderer = ({ onDeleteClick, onEditClick }) => {
+//   return (
+//     <>
+//       <CustomizeEditIcon onClick={onEditClick} />
+//       <CustomizedDeleteIcon onClick={onDeleteClick} />
+//     </>
+//   );
+// };
 const ROW_HEIGHT = "100px";
 function Table({ rowData }) {
   const location = useLocation();
@@ -129,7 +100,10 @@ function Table({ rowData }) {
     {
       field: "photos",
       headerName: "Photo",
-      cellRenderer: AddPhotoIfNotFound,
+      // cellRenderer: AddPhotoIfNotFound,
+      cellRenderer: (props) => {
+        return <AddPhotoIfNotFound icon={<IoMdPerson />} />;
+      },
       flex: 1,
     },
     { field: "email", headerName: "Email", flex: 2 },
@@ -147,7 +121,7 @@ function Table({ rowData }) {
       field: "editable",
       headerName: "",
       cellRenderer: (params) => (
-        <EditDeleteFieldRenderer
+        <EditDeleteFieldColumn
           onDeleteClick={() =>
             selectDeleteIcon(params.data.userId, params.data.firstName)
           }

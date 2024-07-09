@@ -16,6 +16,9 @@ export const USER_ROLES_GET_ALL = `${USER_SERVICE_ROLES_BASE_URL}/all`;
 // categroy
 
 export const CATEGORY_SERVICE_BASE_URL =
-  "http://localhost:8000/api/admin/categories/";
+  "http://localhost:8000/api/admin/categories";
 
 export const CATEGORY_SERVICE_ENABLED_DISABLED_URL = `${CATEGORY_SERVICE_BASE_URL}/control-panel`;
+export const CATEGORY_BY_PAGE = (page) => {
+  return `${CATEGORY_SERVICE_BASE_URL}?page=${page}`;
+};
