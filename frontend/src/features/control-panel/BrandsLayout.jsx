@@ -2,12 +2,12 @@ import AddButton from "../../ui/AddButton";
 import ViewAllButton from "../../ui/ViewAllButton";
 import { Container, Head } from "./LayoutStyles";
 
-function BrandsLayout() {
+function BrandsLayout({ totalBrandCount, moveToBrandsPage }) {
   return (
     <Container>
-      <Head>Brands : 0</Head>
+      <Head>Brands : {totalBrandCount}</Head>
       <AddButton buttonText={"Add Brand"} />
-      <ViewAllButton />
+      <ViewAllButton onClick={moveToBrandsPage} />
     </Container>
   );
 }

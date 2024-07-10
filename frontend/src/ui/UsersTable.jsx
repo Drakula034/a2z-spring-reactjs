@@ -19,12 +19,20 @@ import AddPhotoIfNotFound from "./AddPhotoIfNotFound";
 //   height: 100%; /* Ensure it takes full height of the parent container */
 //   width: 100%; /* Ensure it takes full width of the parent container */
 // `;
-const Container = styled.div`
-  display: flex;
-  justify-content: center; /* Center content horizontally */
-  align-items: center; /* Center content vertically */
-  height: 65vh; /* Total height of the grid container */
-  width: 100vw;
+const GridContainer = styled.div`
+  .ag-header-cell-label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+
+  .ag-cell {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
 `;
 const RectangularPhotoIcon = styled(IoMdPerson)`
   width: 4rem; /* Adjust width as needed */
@@ -143,7 +151,7 @@ function Table({ rowData }) {
   const cellStyle = { textAlign: "center", border: "none" };
 
   return (
-    <div>
+    <GridContainer>
       <div style={gridStyle} className="ag-theme-alpine">
         <AgGridReact
           rowData={rowData}
@@ -164,7 +172,7 @@ function Table({ rowData }) {
         id={user.id}
         name={user.userName}
       />
-    </div>
+    </GridContainer>
   );
 }
 

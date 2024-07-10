@@ -1,5 +1,6 @@
 package com.a2z.product_service.service.impl;
 
+import com.a2z.product_service.model.dto.BrandResponseForControl;
 import com.a2z.product_service.model.entity.Brand;
 import com.a2z.product_service.model.entity.Category;
 import com.a2z.product_service.repository.BrandsRepository;
@@ -14,11 +15,9 @@ import java.util.*;
 @Service
 @RequiredArgsConstructor
 public class BrandServiceImpl implements BrandService {
+    private final BrandsRepository brandsRepository;
 
-
-    private BrandsRepository brandsRepository;
-
-    private CategoryRepository categoryRepository;
+    private final CategoryRepository categoryRepository;
 
     @Override
     public Brand addBrand(Brand brand) {
@@ -55,5 +54,13 @@ public class BrandServiceImpl implements BrandService {
     @Override
     public List<Brand> getAllBrand() {
         return null;
+    }
+
+    @Override
+    public BrandResponseForControl getTotalBrandCount() {
+        Integer count = brandsRepository.countBrand();
+        BrandResponseForControl total = new BrandResponseForControl();
+        total.setTotalBrandCount(count);
+        return total;
     }
 }

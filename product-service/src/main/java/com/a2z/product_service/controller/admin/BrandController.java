@@ -2,9 +2,11 @@ package com.a2z.product_service.controller.admin;
 
 import com.a2z.product_service.mapper.BrandMapper;
 import com.a2z.product_service.model.dto.BrandDto;
+import com.a2z.product_service.model.dto.BrandResponseForControl;
 import com.a2z.product_service.model.entity.Brand;
 import com.a2z.product_service.service.BrandService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Repository;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/api/admin/brands")
+@CrossOrigin("*")
 public class BrandController {
 
     @Autowired
@@ -21,12 +24,17 @@ public class BrandController {
 
     @PostMapping("/add")
     public ResponseEntity<String> addBrand(@RequestBody BrandDto brandDto){
-        System.out.println(brandDto);
+//        System.out.println(brandDto);
         Brand brand = BrandMapper.brandDtoMapToBrand(brandDto, new Brand());
         System.out.println(brand);
         brandService.addBrand(brand);
         return ResponseEntity.ok("Brand added successfully");
+    }
 
-
+    @GetMapping("/control-panel")
+    public ResponseEntity<BrandResponseForControl> getBrandCount(){
+        BrandResponseForControl brandCount = brandService.getTotalBrandCount();
+        System.out.println(brandCount);
+        return ResponseEntity.status(HttpStatus.OK).body(brandCount);
     }
 }

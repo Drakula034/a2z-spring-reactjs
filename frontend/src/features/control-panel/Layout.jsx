@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { useEnabledDisabledUser } from "./useEnabledDisabledUser";
 import useCategoryEnabledDisabled from "./useCategoryEnabledDisabled";
+import useBrandsCount from "./useBrandsCount";
 import UserLayout from "./UserLayout";
 import BrandsLayout from "./BrandsLayout";
 import CategoriesLayout from "./CategoriesLayout";
@@ -100,28 +101,30 @@ function Layout() {
   // console.log(data);
   const enabled = data?.enabled;
   const disabled = data?.disabled;
-  // console.log(enabled);
-  // console.log(disabled);
 
-  // // for category
-  // const {
-  //   data: categoryData = { enabledCategory: 0, disabledCategory: 0 },
-  //   isLoading: categoryCountLoading,
-  // } = useQuery("enabledDisabledCategory", useCategoryEnabledDisabled());
-  // const { enabledCategory = 0, disabledCategory = 0 } = categoryData;
-  // console.log(enabledCategory, disabledCategory);
-  // const enabledCategory = 0,
-  //   disabledCategory = 0;
   const { data: categoryData, isLoading: isCategoryLoading } =
     useCategoryEnabledDisabled();
-  console.log(categoryData);
+  // console.log(categoryData);
   const enabledCategory = categoryData?.enabled;
   const disabledCategory = categoryData?.disabled;
+
+  // brands
+  const { data: totalBrandCount, isLoading: isBrandCountLoading } =
+    useBrandsCount();
+  // console.log(totalBrandCount);
 
   const moveToUsersPage = () => {
     // console.log("Navigating");
     // console.log(`${location.pathname}/users`);
     navigate(`${location.pathname}/users?page=1`);
+  };
+
+  const moveToCategoryPage = () => {
+    navigate(`${location.pathname}/categories?page=1`);
+  };
+
+  const moveToBrandsPage = () => {
+    navigate(`${location.pathname}/brands`);
   };
   return (
     <Container>
@@ -137,10 +140,14 @@ function Layout() {
         <CategoriesLayout
           enabled={enabledCategory}
           disabled={disabledCategory}
+          moveToCategoryPage={moveToCategoryPage}
         />
       </Categories>
       <Brands>
-        <BrandsLayout />
+        <BrandsLayout
+          totalBrandCount={totalBrandCount?.totalBrandCount}
+          moveToBrandsPage={moveToBrandsPage}
+        />
       </Brands>
       <Products>
         <ProductsLayout />

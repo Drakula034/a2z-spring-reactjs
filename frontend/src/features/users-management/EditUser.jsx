@@ -1,5 +1,4 @@
 import { useLocation } from "react-router-dom";
-import AddNewUser from "../../ui/AddNewUser";
 import UserForm from "../../ui/UserForm";
 
 function EditUser() {

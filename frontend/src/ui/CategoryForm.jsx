@@ -3,6 +3,7 @@ import styled from "styled-components";
 import AddButton from "./AddButton";
 import CancelButton from "./CancelButton";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Container = styled.div`
   /* height: 90%; */
@@ -98,6 +99,7 @@ const StyledButtons = styled.div`
 `;
 
 function CategoryForm({ title, categoryToEdit }) {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -114,6 +116,16 @@ function CategoryForm({ title, categoryToEdit }) {
 
   const handleFormSubmit = (data) => {
     console.log(data);
+    reset();
+  };
+
+  const createNew = () => {
+    handleFormSubmit();
+    reset();
+  };
+  const cancel = () => {
+    reset();
+    navigate("/admin/categories");
   };
   return (
     <Container>
@@ -138,7 +150,7 @@ function CategoryForm({ title, categoryToEdit }) {
             type="text"
             placeholder="Enter Category Name"
             name="categoryName"
-            {...register("categoryName")}
+            {...register("categoryName", { required: true })}
             defaultValue={formValues.categoryName}
           />
         </StyledInput>
@@ -157,7 +169,7 @@ function CategoryForm({ title, categoryToEdit }) {
           <input
             type="checkbox"
             name="enabled"
-            {...register("enabled")}
+            {...register("enabled", { required: true })}
             defaultChecked={formValues.enabled}
           />
         </StyledEnabled>
@@ -166,8 +178,8 @@ function CategoryForm({ title, categoryToEdit }) {
           <input type="file" name="photo" {...register("photo")} />
         </StyledInput>
         <StyledButtons>
-          <AddButton buttonText="Save" />
-          <CancelButton buttonText="Cancel" />
+          <AddButton buttonText="Save" createNew={createNew} />
+          <CancelButton buttonText="Cancel" handleCancel={cancel} />
         </StyledButtons>
       </StyledForm>
     </Container>

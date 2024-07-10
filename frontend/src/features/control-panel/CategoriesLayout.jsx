@@ -3,7 +3,7 @@ import AddButton from "../../ui/AddButton";
 import ViewAllButton from "../../ui/ViewAllButton";
 import { Container, Data, Disabled, Enabled, Head } from "./LayoutStyles";
 
-function CategoriesLayout({ enabled, disabled }) {
+function CategoriesLayout({ enabled, disabled, moveToCategoryPage }) {
   const navigate = useNavigate();
   const location = useLocation();
   const viewCategory = () => {
@@ -16,7 +16,7 @@ function CategoriesLayout({ enabled, disabled }) {
         <Enabled>Enabled: {enabled}</Enabled>
         <Disabled>Disabled: {disabled}</Disabled>
         <AddButton buttonText="Add Category" />
-        <ViewAllButton onClick={viewCategory} />
+        <ViewAllButton onClick={viewCategory} onClick={moveToCategoryPage} />
       </Data>
     </Container>
   );

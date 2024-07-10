@@ -22,3 +22,8 @@ export const CATEGORY_SERVICE_ENABLED_DISABLED_URL = `${CATEGORY_SERVICE_BASE_UR
 export const CATEGORY_BY_PAGE = (page) => {
   return `${CATEGORY_SERVICE_BASE_URL}?page=${page}`;
 };
+
+// brands
+
+export const BRAND_SERVICE_BASE_URL = "http://localhost:8000/api/admin/brands";
+export const BRANS_SERVICE_TOTAL_COUNT = `${BRAND_SERVICE_BASE_URL}/control-panel`;

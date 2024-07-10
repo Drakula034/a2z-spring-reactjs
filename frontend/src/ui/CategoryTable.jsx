@@ -7,8 +7,24 @@ import EditDeleteFieldColumn from "./EditDeleteFieldColumn";
 import { Navigate, useNavigate } from "react-router-dom";
 import { set } from "react-hook-form";
 import DeleteConfirmation from "./DeleteConfirmation";
+import styled from "styled-components";
 const ROW_HEIGHT = "100px";
 
+const GridContainer = styled.div`
+  .ag-header-cell-label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+
+  .ag-cell {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+`;
 function CategoryTable({ rowData }) {
   const navigate = useNavigate();
   const [categoryIdName, setCategoryIdName] = useState({
@@ -19,7 +35,7 @@ function CategoryTable({ rowData }) {
   const gridStyle = useMemo(() => ({ height: "65vh", width: "100vw" }), []);
   const selectDeleteIcon = (categoryId, categoryName) => {
     setIsOpen(true);
-    setCategoryIdName({ id: categoryId, categoryName: categoryName });
+    setCategoryIdName({ categoryId: categoryId, categoryName: categoryName });
   };
 
   const onClose = () => {
@@ -76,7 +92,7 @@ function CategoryTable({ rowData }) {
 
   const cellStyle = { textAlign: "center", border: "none" };
   return (
-    <div>
+    <GridContainer>
       <div style={gridStyle} className="ag-theme-alpine">
         <AgGridReact
           columnDefs={colDefs}
@@ -92,7 +108,7 @@ function CategoryTable({ rowData }) {
         id={categoryIdName.categoryId}
         name={categoryIdName.categoryName}
       />
-    </div>
+    </GridContainer>
   );
 }
 

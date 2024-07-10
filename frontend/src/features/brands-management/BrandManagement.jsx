@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import ManagementTitle from "../../ui/ManagementTitle";
 import ManagementSearchAndAdd from "../../ui/ManagementSearchAndAdd";
+import BrandTable from "../../ui/BrandTable";
 
 const Container = styled.div`
   display: grid;
@@ -15,6 +16,7 @@ function BrandManagement() {
         buttonText={"Add Brand"}
         createNew={createNewBrand}
       />
+      <BrandTable />
     </Container>
   );
 }
