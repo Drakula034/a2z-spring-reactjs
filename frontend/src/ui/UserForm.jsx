@@ -16,6 +16,7 @@ const StyledForm = styled.form`
   justify-items: center;
   row-gap: 0.5rem;
   font-family: "IBM Plex Sans", sans-serif;
+  color: var(--color-grey-700);
 `;
 const Title = styled.h2`
   font-size: 1.6rem;
@@ -77,68 +78,7 @@ const StyledInput = styled.div`
     width: 70%; /* Adjust width to 100% to fill the container */
   }
 `;
-// const StyledRoles = styled.div`
-//   display: grid;
-//   grid-template-columns: 1fr 3fr;
-// `;
-// const StyledRoles = styled.div`
-//   display: grid;
-//   grid-template-columns: max-content 1fr;
-//   grid-template-rows: max-content 1fr;
-//   gap: 1rem;
-//   margin-top: 0.5rem;
-//   /* border: 1px solid var(--color-grey-300); */
-//   padding: 1rem;
-//   border-radius: 8px;
-//   background-color: var(--color-grey-50);
 
-//   label {
-//     grid-column: 1 / span 1;
-//     grid-row: 1/-1;
-//     align-self: start;
-//     font-weight: bold;
-//   }
-
-//   div {
-//     grid-column: 2 / span 1;
-//     grid-row: 1/-1;
-//     display: grid;
-//     gap: 0.5rem;
-//   }
-// `;
-// const StyledRole = styled.div`
-//   grid-auto-flow: row;
-//   font-size: 1rem;
-//   font-weight: normal;
-// `;
-// const StyledRole = styled.div`
-//   display: flex;
-//   flex-direction: column;
-//   /* display: grid;
-//   grid-auto-flow: column; */
-//   align-items: center;
-//   gap: 0.5rem;
-//   padding: 1rem;
-//   border: 1px solid var(--color-grey-200);
-//   border-radius: 8px;
-//   background-color: var(--color-white);
-
-//   h3,
-//   h4 {
-//     margin: 0;
-//     font-weight: normal;
-//   }
-
-//   h3 {
-//     font-size: 1rem;
-//     color: var(--color-grey-900);
-//   }
-
-//   h4 {
-//     font-size: 0.8rem;
-//     color: var(--color-grey-700);
-//   }
-// `;
 const StyledRoles = styled.div`
   display: grid;
   grid-template-columns: 1fr 3fr;
@@ -214,10 +154,6 @@ const StyledEnabled = styled.div`
     border-radius: 4px;
     width: 10%; /* Adjust width to fill the container */
 
-    /* justify-self: start; */
-    /* align-self: start; */
-    /* accent-color: var(--color-green-400); */
-
     &:checked {
       background-color: white;
       accent-color: var(--color-green-400);
@@ -279,7 +215,21 @@ function UserForm({ title, onSubmit, userToEdit }) {
   const password = watch("password", "");
   return (
     <StyledForm onSubmit={handleSubmit(handleFormSubmit)}>
-      <Title>{title}</Title>
+      <Title>
+        {" "}
+        <img
+          src="/public/assets/a2z-transparent.png"
+          alt="logo"
+          style={{
+            height: "2rem",
+            width: "2rem",
+            verticalAlign: "middle",
+            marginRight: "0.8rem",
+            // backgroundColor: "var(--color-green-400)",
+          }}
+        />
+        {title}
+      </Title>
       <StyledName>
         <StyledInputName>
           <label>First Name</label>
@@ -384,7 +334,11 @@ function UserForm({ title, onSubmit, userToEdit }) {
         />
       </StyledInput>
       <StyledButtons>
-        <AddButton buttonText={"Save"} type="submit" />
+        <AddButton
+          buttonText={"Save"}
+          type="submit"
+          styled={{ marginRight: "1rem" }}
+        />
         <CancelButton buttonText={"Cancel"} handleCancel={handleCancel} />
       </StyledButtons>
     </StyledForm>

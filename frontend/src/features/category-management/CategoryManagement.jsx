@@ -51,7 +51,11 @@ function CategoryManagement() {
     navigate(`${location.pathname}?page=${currentPage}`, { replace: true });
   }, [currentPage, location.pathname, navigate]);
 
-  const createNewCategory = () => {};
+  const createNewCategory = () => {
+    navigate(`${location.pathname}/create`);
+    // navigate("admin/categories/create");
+    // console.log(`${location.pathname}/create`);
+  };
 
   const buttonClick = (page) => {
     setCurrentPage(page);
