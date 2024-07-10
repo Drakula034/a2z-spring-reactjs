@@ -55,15 +55,15 @@ const ModalButtonNo = styled.button`
     color: var(--color-grey-400);
   }
 `;
-function DeleteConfirmation({ open, onClose, onConfirm, user }) {
+function DeleteConfirmation({ open, onClose, onConfirm, id, name }) {
   if (!open) return null;
 
   return (
     <ModalOverlay>
       <ModalContent className="modal-content">
         <h2>
-          Are you sure you want to delete this user with id: {user.id} and name:
-          {user.userName}
+          Are you sure you want to delete this user with id: {id} and name:
+          {name}
         </h2>
         <ModalButtonYes onClick={onConfirm}>Yes</ModalButtonYes>
         <ModalButtonNo onClick={onClose}>No</ModalButtonNo>

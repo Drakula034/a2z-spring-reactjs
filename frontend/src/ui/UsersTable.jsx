@@ -160,7 +160,9 @@ function Table({ rowData }) {
         open={isOpen}
         onClose={onClose}
         onConfirm={onConfirm}
-        user={user}
+        // user={user}
+        id={user.id}
+        name={user.userName}
       />
     </div>
   );

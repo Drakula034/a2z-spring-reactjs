@@ -7,7 +7,7 @@ function CategoriesLayout({ enabled, disabled }) {
   const navigate = useNavigate();
   const location = useLocation();
   const viewCategory = () => {
-    navigate(`${location.pathname}/categories`);
+    navigate(`${location.pathname}/categories?page=1`);
   };
   return (
     <Container>

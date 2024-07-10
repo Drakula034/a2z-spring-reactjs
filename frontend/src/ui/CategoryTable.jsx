@@ -89,6 +89,8 @@ function CategoryTable({ rowData }) {
         open={isOpen}
         onClose={onClose}
         onConfirm={onConfirm}
+        id={categoryIdName.categoryId}
+        name={categoryIdName.categoryName}
       />
     </div>
   );

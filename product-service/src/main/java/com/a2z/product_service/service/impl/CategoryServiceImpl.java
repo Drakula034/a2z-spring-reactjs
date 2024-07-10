@@ -20,7 +20,7 @@ import java.util.*;
 @RequiredArgsConstructor
 public class CategoryServiceImpl implements CategoryService {
 
-    private  final int CATEGORY_PER_PAGE = 4;
+    private int CATEGORY_PER_PAGE = 4;
 
     @Autowired
     private CategoryRepository categoryRepository;
@@ -41,7 +41,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public List<CategoryResponseDto> getCategoryByPage(Integer page) {
 
-        Pageable pageable = PageRequest.of(page, CATEGORY_PER_PAGE);
+        Pageable pageable = PageRequest.of(page-1, CATEGORY_PER_PAGE);
         List<Category> categories = categoryRepository.findAll(pageable).getContent();
         List<CategoryResponseDto> categoryResponseDtoList = new ArrayList<>();
         for(Category category : categories){
