@@ -6,6 +6,7 @@ import EditDeleteFieldColumn from "./EditDeleteFieldColumn";
 import { useNavigate } from "react-router-dom";
 import AddPhotoIfNotFound from "./AddPhotoIfNotFound";
 import { FaAmazon } from "react-icons/fa";
+import DeleteConfirmation from "./DeleteConfirmation";
 const ROW_HEIGHT = "80px";
 const GridContainer = styled.div`
   .ag-header-cell-label {
@@ -25,6 +26,11 @@ const GridContainer = styled.div`
 
 function BrandTable({ rowData }) {
   // const [rowData] = useState([]);
+  const [isOpen, setIsOpen] = useState(false);
+  const [brandIdName, setBrandIdName] = useState({
+    brandId: null,
+    brandName: null,
+  });
   const navigate = useNavigate();
   const GridStyle = useMemo(
     () => ({
@@ -36,7 +42,10 @@ function BrandTable({ rowData }) {
     []
   );
 
-  const selectDeleteIcon = () => {};
+  const selectDeleteIcon = (brandId, brandName) => {
+    setBrandIdName({ brandId: brandId, brandName: brandName });
+    setIsOpen(true);
+  };
 
   const [colDefs] = useState([
     { field: "brandId", headerName: "Brand Id", flex: 0.5 },
@@ -78,20 +87,6 @@ function BrandTable({ rowData }) {
       //     </div>
       //   );
     },
-    // valueGetter: (params) => {
-    //   return params.data.categories
-    //     .map((category) => category.categoryName)
-    //     .join(", ");
-    // },
-    // <div
-    //   key={category.categoryId}
-    //   style={{ display: "flex", direction: "row" }}
-    // >
-    //   {category.categoryName}
-    // </div>
-    // renderCell: (params) => {
-    //   return <div style={{ color: "blue" }}>{params.value}</div>;
-    // },
 
     {
       field: "editable",
@@ -119,19 +114,32 @@ function BrandTable({ rowData }) {
   const defaultColDef = {
     headerClass: "ag-header-cell-label",
     cellClass: "ag-cell",
-    textAlign: "center",
-    border: "none",
+  };
+  const cellStyle = { textAlign: "center", border: "none" };
+
+  const close = () => {
+    setIsOpen(false);
+  };
+  const confirm = () => {
+    setIsOpen(false);
   };
   return (
     <GridContainer>
       <div style={GridStyle} className="ag-theme-alpine">
         <AgGridReact
           columnDefs={colDefs}
-          defaultColDef={defaultColDef}
+          defaultColDef={{ defaultColDef, cellStyle }}
           rowData={rowData}
           rowHeight={ROW_HEIGHT}
         />
       </div>
+      <DeleteConfirmation
+        open={isOpen}
+        onClose={close}
+        onConfirm={confirm}
+        id={brandIdName.brandId}
+        name={brandIdName.brandName}
+      />
     </GridContainer>
   );
 }

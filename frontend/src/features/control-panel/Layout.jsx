@@ -124,7 +124,7 @@ function Layout() {
   };
 
   const moveToBrandsPage = () => {
-    navigate(`${location.pathname}/brands`);
+    navigate(`${location.pathname}/brands?page=1`);
   };
   return (
     <Container>
