@@ -1,6 +1,7 @@
 package com.a2z.product_service.mapper;
 
 import com.a2z.product_service.model.dto.CategoryDto;
+import com.a2z.product_service.model.dto.CategoryNameDto;
 import com.a2z.product_service.model.dto.CategoryResponseDto;
 import com.a2z.product_service.model.entity.Category;
 import org.springframework.stereotype.Component;
@@ -28,5 +29,12 @@ public class CategoryMapper {
         categoryResponseDto.setDescription(category.getDescription());
         categoryResponseDto.setEnabled(category.isEnabled());
         return categoryResponseDto;
+    }
+
+    public static CategoryNameDto categoryMapToCategoryNameDto(Category category, CategoryNameDto categoryNameDto){
+        categoryNameDto.setCategoryId(category.getCategoryId());
+        categoryNameDto.setCategoryName(category.getCategoryName());
+
+        return categoryNameDto;
     }
 }

@@ -17,6 +17,8 @@ import AddUser from "../../../features/users-management/AddUser.jsx";
 import EditUser from "../../../features/users-management/EditUser.jsx";
 import AddCategory from "../../../features/category-management/AddCategory.jsx";
 import EditCategory from "../../../features/category-management/EditCategory.jsx";
+import EditBrand from "../../../features/brands-management/EditBrand.jsx";
+import AddBrand from "../../../features/brands-management/AddBrand.jsx";
 
 const AdminControl = () => {
   return (
@@ -29,6 +31,8 @@ const AdminControl = () => {
       <Route path="categories/create" element={<AddCategory />} />
       <Route path="categories/edit" element={<EditCategory />} />
       <Route path="brands" element={<BrandsPage />} />
+      <Route path="brands/edit" element={<EditBrand />} />
+      <Route path="brands/create" element={<AddBrand />} />
       <Route path="shipping" element={<ShippingPage />} />
       <Route path="products" element={<ProductsPage />} />
       <Route path="customers" element={<CustomersPage />} />

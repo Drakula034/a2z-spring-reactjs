@@ -44,7 +44,9 @@ function BrandManagement() {
   useEffect(() => {
     navigate(`${location.pathname}?page=${currentPage}`, { replace: true });
   }, [currentPage, location.pathname, navigate]);
-  const createNewBrand = () => {};
+  const createNewBrand = () => {
+    navigate(`${location.pathname}/create`, { replace: true });
+  };
   const nextClick = () => {
     if (currentPage < totalPages) setCurrentPage(currentPage + 1);
   };

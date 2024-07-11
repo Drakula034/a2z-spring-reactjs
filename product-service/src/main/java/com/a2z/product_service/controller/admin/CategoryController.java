@@ -2,6 +2,7 @@ package com.a2z.product_service.controller.admin;
 
 import com.a2z.product_service.mapper.CategoryMapper;
 import com.a2z.product_service.model.dto.CategoryDto;
+import com.a2z.product_service.model.dto.CategoryNameDto;
 import com.a2z.product_service.model.dto.CategoryResponseDto;
 import com.a2z.product_service.model.dto.CategoryResponseForControl;
 import com.a2z.product_service.model.entity.Category;
@@ -41,6 +42,13 @@ public class CategoryController {
         List<CategoryResponseDto> categoryResponseDtoList = categoryService.getCategoryByPage(page);
 
         return ResponseEntity.status(HttpStatus.OK).body(categoryResponseDtoList);
+    }
+
+    @GetMapping("/all-names")
+    public ResponseEntity<List<CategoryNameDto>> getAllCategoryNames(){
+        List<CategoryNameDto> categoryNameDtoList = categoryService.getAllCategoryNames();
+
+        return ResponseEntity.status(HttpStatus.OK).body(categoryNameDtoList);
     }
 
 

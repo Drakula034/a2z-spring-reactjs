@@ -23,6 +23,8 @@ export const CATEGORY_BY_PAGE = (page) => {
   return `${CATEGORY_SERVICE_BASE_URL}?page=${page}`;
 };
 
+export const GET_ALL_CATEGORY = `${CATEGORY_SERVICE_BASE_URL}/all-names`;
+
 // brands
 
 export const BRAND_SERVICE_BASE_URL = "http://localhost:8000/api/admin/brands";

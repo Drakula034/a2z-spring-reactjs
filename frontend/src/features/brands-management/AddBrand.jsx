@@ -1,5 +1,7 @@
+import BrandForm from "../../ui/BrandForm";
+
 function AddBrand() {
-  return <div></div>;
+  return <BrandForm title={"Add Brand"} />;
 }
 
 export default AddBrand;

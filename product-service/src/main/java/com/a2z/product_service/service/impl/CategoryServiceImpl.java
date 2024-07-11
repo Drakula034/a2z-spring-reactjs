@@ -1,6 +1,7 @@
 package com.a2z.product_service.service.impl;
 
 import com.a2z.product_service.mapper.CategoryMapper;
+import com.a2z.product_service.model.dto.CategoryNameDto;
 import com.a2z.product_service.model.dto.CategoryResponseDto;
 import com.a2z.product_service.model.dto.CategoryResponseForControl;
 import com.a2z.product_service.model.entity.Category;
@@ -48,5 +49,15 @@ public class CategoryServiceImpl implements CategoryService {
             categoryResponseDtoList.add(CategoryMapper.categoryMapToCategoryResponseDto(category, new CategoryResponseDto()));
         }
         return categoryResponseDtoList;
+    }
+
+    @Override
+    public List<CategoryNameDto> getAllCategoryNames() {
+        List<Category> categories = categoryRepository.findAll();
+        List<CategoryNameDto> categoryNameDtoList = new ArrayList<>();
+        for(Category category: categories){
+            categoryNameDtoList.add(CategoryMapper.categoryMapToCategoryNameDto(category, new CategoryNameDto()));
+        }
+        return categoryNameDtoList;
     }
 }
