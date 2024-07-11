@@ -100,10 +100,10 @@ function BrandTable({ rowData }) {
             }
             onEditClick={() => {
               const brandId = params.data.brandId;
-              // const brandToEdit = params.data;
+              const brandToEdit = params.data;
               const url = location.pathname;
               navigate(`${url}/edit?brandId=${brandId}`, {
-                // state: { categoryToEdit },
+                state: { brandToEdit },
               });
             }}
           />

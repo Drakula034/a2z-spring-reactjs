@@ -108,6 +108,8 @@ const customStyles = {
 function BrandForm({ title }) {
   const navigate = useNavigate();
   const location = useLocation();
+  const brandToEdit = location.state?.brandToEdit;
+  //   console.log(brandToEdit);
   const [image, setImage] = useState(null);
   const [selectCategories, setSelectCategories] = useState([]);
   const {
@@ -118,6 +120,15 @@ function BrandForm({ title }) {
     reset,
     formState: { errors },
   } = useForm();
+
+  const [formValues] = useState({
+    brandName: brandToEdit?.brandName || "",
+
+    brandLogo: brandToEdit?.brandLogo || null,
+    brandCategories: brandToEdit?.categories || [],
+  });
+
+  //   console.log(formValues);
 
   const { data: categoryList } = useQuery(
     "getAllCategoryByName",
@@ -194,6 +205,7 @@ function BrandForm({ title }) {
           type="text"
           name="brandName"
           {...register("brandName", { required: true })}
+          defaultValue={formValues.brandName}
         />
       </StyledInput>
       <StyledLogoInput>
@@ -203,6 +215,7 @@ function BrandForm({ title }) {
           name="brandLogo"
           {...register("brandLogo")}
           onChange={handleChange}
+          defaultValue={formValues.brandLogo}
         />
         {image && (
           //   <ShowImage>
@@ -223,7 +236,11 @@ function BrandForm({ title }) {
             //   IndicatorSeparator: () => null,
             // }}
             styles={customStyles}
-            value={selectCategories}
+            // value={selectCategories}
+            defaultValue={formValues.brandCategories.map((category) => ({
+              value: category.categoryId,
+              label: category.categoryName,
+            }))}
           />
         </div>
       </StyledSelectCategory>

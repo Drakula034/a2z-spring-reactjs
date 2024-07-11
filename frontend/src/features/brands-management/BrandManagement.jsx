@@ -32,7 +32,7 @@ function BrandManagement() {
   );
 
   // console.log(data);
-  const { totalBrandCount = 0 } = data;
+  const totalBrandCount = data?.totalBrandCount || 0;
   // console.log(totalBrandCount);
   const itemsPerPage = 5;
   const totalPages = Math.ceil(totalBrandCount / itemsPerPage);

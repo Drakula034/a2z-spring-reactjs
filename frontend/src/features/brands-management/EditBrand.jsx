@@ -1,5 +1,7 @@
+import BrandForm from "../../ui/BrandForm";
+
 function EditBrand() {
-  return <div></div>;
+  return <BrandForm title={"Edit Brand"} />;
 }
 
 export default EditBrand;
