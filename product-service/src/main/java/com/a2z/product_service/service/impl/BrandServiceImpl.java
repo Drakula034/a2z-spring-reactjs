@@ -1,5 +1,7 @@
 package com.a2z.product_service.service.impl;
 
+import com.a2z.product_service.mapper.BrandMapper;
+import com.a2z.product_service.model.dto.BrandResponseDto;
 import com.a2z.product_service.model.dto.BrandResponseForControl;
 import com.a2z.product_service.model.entity.Brand;
 import com.a2z.product_service.model.entity.Category;
@@ -8,6 +10,8 @@ import com.a2z.product_service.repository.CategoryRepository;
 import com.a2z.product_service.service.BrandService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -15,6 +19,7 @@ import java.util.*;
 @Service
 @RequiredArgsConstructor
 public class BrandServiceImpl implements BrandService {
+    private Integer BRANDS_PER_PAGE = 5;
     private final BrandsRepository brandsRepository;
 
     private final CategoryRepository categoryRepository;
@@ -62,5 +67,16 @@ public class BrandServiceImpl implements BrandService {
         BrandResponseForControl total = new BrandResponseForControl();
         total.setTotalBrandCount(count);
         return total;
+    }
+
+    @Override
+    public List<BrandResponseDto> getBrandsByPage(int page) {
+        Pageable pageable = PageRequest.of(page-1, BRANDS_PER_PAGE);
+        List<Brand> brands = brandsRepository.findAll(pageable).getContent();
+        List<BrandResponseDto> brandResponseDtoList = new ArrayList<>();
+        for(Brand brand: brands){
+            brandResponseDtoList.add(BrandMapper.brandmapToBrandResponseDto(brand, new BrandResponseDto()));
+        }
+        return brandResponseDtoList;
     }
 }

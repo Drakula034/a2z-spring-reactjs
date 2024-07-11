@@ -2,6 +2,8 @@ package com.a2z.product_service.repository;
 
 import com.a2z.product_service.model.dto.BrandResponseForControl;
 import com.a2z.product_service.model.entity.Brand;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -13,4 +15,6 @@ public interface BrandsRepository extends JpaRepository<Brand, Integer> {
     @Query("select count(b) from Brand b")
     Integer countBrand();
 
+    @Override
+    Page<Brand> findAll(Pageable pageable);
 }

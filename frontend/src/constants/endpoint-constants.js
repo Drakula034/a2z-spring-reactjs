@@ -27,3 +27,6 @@ export const CATEGORY_BY_PAGE = (page) => {
 
 export const BRAND_SERVICE_BASE_URL = "http://localhost:8000/api/admin/brands";
 export const BRANS_SERVICE_TOTAL_COUNT = `${BRAND_SERVICE_BASE_URL}/control-panel`;
+export const BRANDS_BY_PAGE = (page) => {
+  return `${BRAND_SERVICE_BASE_URL}?page=${page}`;
+};
