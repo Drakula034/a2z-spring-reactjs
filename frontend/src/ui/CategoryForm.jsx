@@ -121,7 +121,7 @@ function CategoryForm({ title, categoryToEdit }) {
 
   const createNew = () => {
     handleFormSubmit();
-    reset();
+    navigate(-1);
   };
   const cancel = () => {
     reset();

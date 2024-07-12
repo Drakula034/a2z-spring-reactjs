@@ -5,7 +5,12 @@ import BrandTable from "../../ui/BrandTable";
 import { useEffect, useState } from "react";
 import useGetBrandByPage from "./useGetBrandByPage";
 import Pagination from "../../ui/Pagination";
-import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
+import {
+  Outlet,
+  useLocation,
+  useNavigate,
+  useSearchParams,
+} from "react-router-dom";
 import { useQuery } from "react-query";
 import { getBrandCount } from "../../services/api/product-service/brands";
 import useBrandsCount from "../control-panel/useBrandsCount";
@@ -45,7 +50,8 @@ function BrandManagement() {
     navigate(`${location.pathname}?page=${currentPage}`, { replace: true });
   }, [currentPage, location.pathname, navigate]);
   const createNewBrand = () => {
-    navigate(`${location.pathname}/create`, { replace: true });
+    navigate("/admin/brands/create");
+    // navigate(`${location.pathname}/create`, { replace: true });
   };
   const nextClick = () => {
     if (currentPage < totalPages) setCurrentPage(currentPage + 1);
@@ -57,6 +63,7 @@ function BrandManagement() {
     setCurrentPage(page);
   };
   return (
+    // <div>
     <Container>
       <ManagementTitle>Categories Management</ManagementTitle>
       <ManagementSearchAndAdd
@@ -72,6 +79,8 @@ function BrandManagement() {
         buttonClick={buttonClick}
       />
     </Container>
+    //   <Outlet />
+    // </div>
   );
 }
 

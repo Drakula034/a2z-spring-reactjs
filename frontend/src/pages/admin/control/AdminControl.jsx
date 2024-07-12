@@ -24,15 +24,13 @@ const AdminControl = () => {
   return (
     <Routes>
       <Route path="/" element={<ControlPage />} />
-      <Route path="users" element={<UsersPage />} />
-      <Route path="users/create" element={<AddUser />} />
-      <Route path="users/edit" element={<EditUser />} />
-      <Route path="categories" element={<CategoriesPage />} />
-      <Route path="categories/create" element={<AddCategory />} />
-      <Route path="categories/edit" element={<EditCategory />} />
-      <Route path="brands" element={<BrandsPage />} />
-      <Route path="brands/edit" element={<EditBrand />} />
-      <Route path="brands/create" element={<AddBrand />} />
+      <Route path="users/*" element={<UsersPage />} />
+
+      <Route path="categories/*" element={<CategoriesPage />} />
+      {/* <Route path="categories/create" element={<AddCategory />} />
+      <Route path="categories/edit" element={<EditCategory />} /> */}
+
+      <Route path="brands/*" element={<BrandsPage />} />
       <Route path="shipping" element={<ShippingPage />} />
       <Route path="products" element={<ProductsPage />} />
       <Route path="customers" element={<CustomersPage />} />

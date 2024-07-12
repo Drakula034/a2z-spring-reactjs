@@ -1,10 +1,11 @@
+import ProductManagement from "../../features/products-management/ProductManagement";
 import AdminHeader from "../../ui/admin/AdminHeader";
 
 function ProductsPage() {
   return (
     <>
       <AdminHeader />
-      <div>Product page</div>
+      <ProductManagement />
     </>
   );
 }
