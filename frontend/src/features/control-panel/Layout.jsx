@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { useEnabledDisabledUser } from "./useEnabledDisabledUser";
 import useCategoryEnabledDisabled from "./useCategoryEnabledDisabled";
 import useBrandsCount from "./useBrandsCount";
+import useProductsEnabledDisabledCount from "./useProductsEnabledDisabledCount";
 import UserLayout from "./UserLayout";
 import BrandsLayout from "./BrandsLayout";
 import CategoriesLayout from "./CategoriesLayout";
@@ -113,6 +114,26 @@ function Layout() {
     useBrandsCount();
   // console.log(totalBrandCount);
 
+  // products
+  const {
+    data: productsCount = {
+      enabled: 0,
+      disabled: 0,
+      inStocks: 0,
+      outOfStocks: 0,
+    },
+    isLoading: isProductsCountLoading,
+  } = useProductsEnabledDisabledCount();
+
+  // console.log(productsCount);
+  const {
+    enabled: enabledProducts,
+    disabled: disabledProducts,
+    inStocks: productsInStock,
+    outOfStocks: productsOutOfStocks,
+  } = productsCount;
+  // console.log(enabledProducts, disabledProducts);
+
   const moveToUsersPage = () => {
     // console.log("Navigating");
     // console.log(`${location.pathname}/users`);
@@ -125,6 +146,10 @@ function Layout() {
 
   const moveToBrandsPage = () => {
     navigate(`${location.pathname}/brands?page=1`);
+  };
+
+  const moveToProductsPage = () => {
+    navigate(`${location.pathname}/products?page=1`);
   };
   return (
     <Container>
@@ -150,7 +175,13 @@ function Layout() {
         />
       </Brands>
       <Products>
-        <ProductsLayout />
+        <ProductsLayout
+          enabledProducts={enabledProducts}
+          disabledProducts={disabledProducts}
+          productsInStocks={productsInStock}
+          productsOutOfStocks={productsOutOfStocks}
+          moveToProductsPage={moveToProductsPage}
+        />
       </Products>
       <Questions>
         <QuestionsLayout />

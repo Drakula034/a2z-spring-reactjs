@@ -32,3 +32,10 @@ export const BRANS_SERVICE_TOTAL_COUNT = `${BRAND_SERVICE_BASE_URL}/control-pane
 export const BRANDS_BY_PAGE = (page) => {
   return `${BRAND_SERVICE_BASE_URL}?page=${page}`;
 };
+
+// product
+
+export const PRODUCT_SERVICE_BASE_URL =
+  "http://localhost:8000/api/admin/products";
+
+export const PRODUCT_SERVICE_ENABLED_DISABLED_URL = `${PRODUCT_SERVICE_BASE_URL}/control-panel`;

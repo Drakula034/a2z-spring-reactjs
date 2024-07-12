@@ -14,4 +14,6 @@ public class ProductResponseForControl {
 
     private Integer enabled;
     private Integer disabled;
+    private Integer inStocks;
+    private Integer outOfStocks;
 }

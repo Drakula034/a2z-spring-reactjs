@@ -12,4 +12,9 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     Integer getEnabledProductCount();
     @Query("select count(p) from Product p where p.enabled = false ")
     Integer getDisabledProductCount();
+
+    @Query("select count(p) from Product p where p.inStock = true ")
+    Integer getInStockProductsCount();
+    @Query("select count(p) from Product p where p.inStock = false ")
+    Integer getOutOfStockProductsCount();
 }

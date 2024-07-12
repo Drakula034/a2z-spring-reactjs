@@ -2,17 +2,23 @@ import AddButton from "../../ui/AddButton";
 import ViewAllButton from "../../ui/ViewAllButton";
 import { Container, Data, Disabled, Enabled, Head } from "./LayoutStyles";
 
-function ProductsLayout() {
+function ProductsLayout({
+  enabledProducts,
+  disabledProducts,
+  productsInStocks,
+  productsOutOfStocks,
+  moveToProductsPage,
+}) {
   return (
     <Container>
-      <Head>Product: 0</Head>
+      <Head>Product: {enabledProducts + disabledProducts}</Head>
       <Data>
-        <Enabled>Enabled: 0</Enabled>
-        <Disabled>Disabled: 0</Disabled>
-        <div>InStock: 0</div>
-        <div>Out Of Stock: 0</div>
+        <Enabled>Enabled: {enabledProducts}</Enabled>
+        <Disabled>Disabled: {disabledProducts}</Disabled>
+        <div>InStock: {productsInStocks}</div>
+        <div>Out Of Stock: {productsOutOfStocks}</div>
         <AddButton buttonText="Add Product" />
-        <ViewAllButton />
+        <ViewAllButton onClick={moveToProductsPage} />
       </Data>
     </Container>
   );

@@ -85,6 +85,8 @@ public class ProductServiceImpl implements ProductService {
     public ProductResponseForControl getProductEnabledDisabledCount() {
         Integer enabledProductCount = productRepository.getEnabledProductCount();
         Integer disabledProductCount = productRepository.getDisabledProductCount();
-        return new ProductResponseForControl(enabledProductCount, disabledProductCount);
+        Integer inStockProductCount = productRepository.getInStockProductsCount();
+        Integer outOfStockProductCount = productRepository.getOutOfStockProductsCount();
+        return new ProductResponseForControl(enabledProductCount, disabledProductCount, inStockProductCount, outOfStockProductCount);
     }
 }
