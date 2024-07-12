@@ -33,18 +33,30 @@ const Input = styled.input`
     opacity: 0;
   }
 `;
-function ManagementSearchAndAddProducts({ buttonText, createNew }) {
+function ManagementSearchAndAddProducts({
+  buttonText,
+  createNew,
+  categoryData,
+}) {
+  const options = [
+    { value: "All Category", label: "All Category" },
+    ...categoryData.map((category) => ({
+      value: category.categoryName,
+      label: category.categoryName,
+    })),
+  ];
+
+  // Find the "All" option to set as defaultValue
+  const initialValue = options.find((option) => option.value === "all");
   return (
     <StyledFeatures>
       <Search>
         <Label>
           <label style={{ marginRight: "0.5rem" }}>Category: </label>
           <Select
-            placeholder="Category"
-            options={[
-              { value: "All", label: "All" },
-              { value: "Electronics", label: "Electronics" },
-            ]}
+            placeholder="All Category"
+            options={options}
+            defaultValue={initialValue}
           />
         </Label>
         <Label>

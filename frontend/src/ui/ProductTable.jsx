@@ -4,6 +4,9 @@ import "ag-grid-community/styles/ag-grid.css";
 import styled from "styled-components";
 import AddPhotoIfNotFound from "./AddPhotoIfNotFound";
 import { CgProductHunt } from "react-icons/cg";
+import EditDeleteFieldColumn from "./EditDeleteFieldColumn";
+import DeleteConfirmation from "./DeleteConfirmation";
+import { useLocation, useNavigate } from "react-router-dom";
 const ROW_HEIGHT = "100px";
 const GridContainer = styled.div`
   .ag-header-cell-label {
@@ -20,7 +23,9 @@ const GridContainer = styled.div`
     text-align: center;
   }
 `;
-function ProductTable() {
+function ProductTable({ rowData }) {
+  const navigate = useNavigate();
+  const location = useLocation();
   const gridStyle = useMemo(
     () => ({
       height: "65vh",
@@ -31,22 +36,61 @@ function ProductTable() {
     []
   );
 
-  const [rowData] = useState([]);
+  const [isOpen, setIsOpen] = useState(false);
+
+  const [productIdName, setProductIdName] = useState({
+    productId: null,
+    productName: null,
+  });
+
+  const selectDeleteIcon = (productId, productName) => {
+    setProductIdName({ productId: productId, productName: productName });
+    // console.log(productIdName);
+    setIsOpen(true);
+  };
 
   const [colDefs] = useState([
     { field: "productId", headerName: "ID", flex: 0.5 },
     {
-      field: "images",
+      field: "image",
       headerName: "Image",
-      cellRenderer: (props) => <AddPhotoIfNotFound icon={<CgProductHunt />} />,
+      cellRenderer: () => <AddPhotoIfNotFound icon={<CgProductHunt />} />,
       flex: 1,
     },
     { field: "productName", headerName: "Name", flex: 3 },
-    { field: "brand", headerName: "Brand", flex: 0.5 },
-    { field: "category", headerName: "Category", flex: 1 },
+    { field: "brandName", headerName: "Brand", flex: 0.5 },
+    { field: "categoryName", headerName: "Category", flex: 1 },
     { field: "enabled", headerName: "Enabled", flex: 1 },
-    { field: "editable", headerName: "", flex: 1 },
+    {
+      field: "editable",
+      headerName: "",
+      flex: 1,
+      cellRenderer: (params) => {
+        return (
+          <EditDeleteFieldColumn
+            onDeleteClick={() =>
+              selectDeleteIcon(params.data.productId, params.data.productName)
+            }
+            onEditClick={() => {
+              const productId = params.data.productId;
+              //   const categoryToEdit = params.data;
+              const url = location.pathname;
+              navigate(`${url}/edit?categoryId=${productId}`, {
+                // state: { categoryToEdit },
+              });
+            }}
+          />
+        );
+      },
+    },
   ]);
+  const cellStyle = { textAlign: "center", border: "none" };
+  const onClose = () => {
+    setIsOpen(false);
+  };
+  const onConfirm = () => {
+    setIsOpen(false);
+  };
   return (
     <GridContainer>
       <div style={gridStyle} className="ag-theme-alpine">
@@ -54,8 +98,16 @@ function ProductTable() {
           columnDefs={colDefs}
           rowData={rowData}
           rowHeight={ROW_HEIGHT}
+          defaultColDef={{ cellStyle }}
         />
       </div>
+      <DeleteConfirmation
+        open={isOpen}
+        onClose={onClose}
+        onConfirm={onConfirm}
+        id={productIdName.productId}
+        name={productIdName.productName}
+      />
     </GridContainer>
   );
 }

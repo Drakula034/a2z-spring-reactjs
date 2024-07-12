@@ -65,8 +65,16 @@ public class ProductMapper {
     public static ProductResponseForProductAdminPage productMapToProductResponseForProductAdmin(Product product, ProductResponseForProductAdminPage productResponse){
         productResponse.setProductId(product.getId());
         productResponse.setProductName(product.getName());
-        productResponse.setBrandName(String.valueOf(product.getBrand()));
-        productResponse.setCategoryName(String.valueOf(product.getCategory()));
+        if (product.getBrand() != null && product.getBrand().getName() != null) {
+            productResponse.setBrandName(product.getBrand().getName());
+        } else {
+            productResponse.setBrandName("Not Assigned"); // or any default value you prefer
+        }
+        if (product.getCategory() != null && product.getCategory().getCategoryName() != null) {
+            productResponse.setCategoryName(product.getCategory().getCategoryName());
+        } else {
+            productResponse.setCategoryName("Not Assigned"); // or any default value you prefer
+        }
         productResponse.setEnabled(product.isEnabled());
         productResponse.setImage(product.getMainImage());
 

@@ -26,9 +26,9 @@ const PaginationItem = styled.div`
 
 function Pagination({
   setCurrentPage,
+  totalPages,
   previousClick,
   nextClick,
-  totalPages,
   buttonClick,
   //   totalItemsCount,
   //   itemsPerPage,

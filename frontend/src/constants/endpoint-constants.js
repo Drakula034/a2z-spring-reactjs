@@ -39,3 +39,6 @@ export const PRODUCT_SERVICE_BASE_URL =
   "http://localhost:8000/api/admin/products";
 
 export const PRODUCT_SERVICE_ENABLED_DISABLED_URL = `${PRODUCT_SERVICE_BASE_URL}/control-panel`;
+export const GET_PRODUCT_BY_PAGE = (page) => {
+  return `${PRODUCT_SERVICE_BASE_URL}?page=${page}`;
+};
