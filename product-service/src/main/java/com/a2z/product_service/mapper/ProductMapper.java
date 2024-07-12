@@ -2,11 +2,13 @@ package com.a2z.product_service.mapper;
 
 import com.a2z.product_service.model.dto.ProductDto;
 import com.a2z.product_service.model.dto.ProductDtoForOrder;
+import com.a2z.product_service.model.dto.ProductResponseForProductAdminPage;
 import com.a2z.product_service.model.entity.Brand;
 import com.a2z.product_service.model.entity.Category;
 import com.a2z.product_service.model.entity.Product;
 import com.a2z.product_service.repository.BrandsRepository;
 import com.a2z.product_service.repository.CategoryRepository;
+import com.a2z.product_service.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -58,5 +60,16 @@ public class ProductMapper {
         productDtoForOrder.setDiscountPercent(product.getDiscountPercent());
 
         return productDtoForOrder;
+    }
+
+    public static ProductResponseForProductAdminPage productMapToProductResponseForProductAdmin(Product product, ProductResponseForProductAdminPage productResponse){
+        productResponse.setProductId(product.getId());
+        productResponse.setProductName(product.getName());
+        productResponse.setBrandName(String.valueOf(product.getBrand()));
+        productResponse.setCategoryName(String.valueOf(product.getCategory()));
+        productResponse.setEnabled(product.isEnabled());
+        productResponse.setImage(product.getMainImage());
+
+        return productResponse;
     }
 }

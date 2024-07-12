@@ -1,6 +1,8 @@
 package com.a2z.product_service.service.impl;
 
+import com.a2z.product_service.mapper.ProductMapper;
 import com.a2z.product_service.model.dto.ProductResponseForControl;
+import com.a2z.product_service.model.dto.ProductResponseForProductAdminPage;
 import com.a2z.product_service.model.entity.Brand;
 import com.a2z.product_service.model.entity.Category;
 import com.a2z.product_service.model.entity.Product;
@@ -9,15 +11,21 @@ import com.a2z.product_service.repository.CategoryRepository;
 import com.a2z.product_service.repository.ProductRepository;
 import com.a2z.product_service.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @Service
 public class ProductServiceImpl implements ProductService {
+
+    private final int PRODUCTS_PER_PAGE = 4;
     @Autowired
     ProductRepository productRepository;
 
@@ -88,5 +96,16 @@ public class ProductServiceImpl implements ProductService {
         Integer inStockProductCount = productRepository.getInStockProductsCount();
         Integer outOfStockProductCount = productRepository.getOutOfStockProductsCount();
         return new ProductResponseForControl(enabledProductCount, disabledProductCount, inStockProductCount, outOfStockProductCount);
+    }
+
+    @Override
+    public List<ProductResponseForProductAdminPage> getProductByPage(Integer page) {
+        Pageable pageable = PageRequest.of(page-1, PRODUCTS_PER_PAGE);
+        List<Product> products = productRepository.findAll(pageable).getContent();
+        List<ProductResponseForProductAdminPage> responseProductList = new ArrayList<>();
+        for(Product product : products) {
+            responseProductList.add(ProductMapper.productMapToProductResponseForProductAdmin(product, new ProductResponseForProductAdminPage()));
+        }
+         return responseProductList;
     }
 }

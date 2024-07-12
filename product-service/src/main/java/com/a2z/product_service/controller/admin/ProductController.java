@@ -4,12 +4,15 @@ import com.a2z.product_service.mapper.ProductMapper;
 import com.a2z.product_service.model.dto.ProductDto;
 import com.a2z.product_service.model.dto.ProductDtoForOrder;
 import com.a2z.product_service.model.dto.ProductResponseForControl;
+import com.a2z.product_service.model.dto.ProductResponseForProductAdminPage;
 import com.a2z.product_service.model.entity.Product;
 import com.a2z.product_service.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.*;
 
 @RestController
 @RequestMapping("/api/admin/products")
@@ -48,5 +51,11 @@ public class ProductController {
         ProductResponseForControl productResponseForControl = productService.getProductEnabledDisabledCount();
 
         return ResponseEntity.status(HttpStatus.OK).body(productResponseForControl);
+    }
+
+    @RequestMapping("")
+    public ResponseEntity<List<ProductResponseForProductAdminPage>> getProductsByPage(@RequestParam(defaultValue = "1")Integer page){
+        List<ProductResponseForProductAdminPage> products = productService.getProductByPage(page);
+        return ResponseEntity.status(HttpStatus.OK).body(products);
     }
 }
