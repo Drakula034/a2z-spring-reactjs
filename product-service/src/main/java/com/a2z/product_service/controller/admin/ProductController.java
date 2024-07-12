@@ -3,18 +3,17 @@ package com.a2z.product_service.controller.admin;
 import com.a2z.product_service.mapper.ProductMapper;
 import com.a2z.product_service.model.dto.ProductDto;
 import com.a2z.product_service.model.dto.ProductDtoForOrder;
+import com.a2z.product_service.model.dto.ProductResponseForControl;
 import com.a2z.product_service.model.entity.Product;
 import com.a2z.product_service.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/admin/products")
+@CrossOrigin("*")
 public class ProductController {
 
     private final ProductService productService;
@@ -42,5 +41,12 @@ public class ProductController {
         ProductDtoForOrder productDtoForOrder = productMapper.productMapToProductDtoForOrder(product, new ProductDtoForOrder());
         return ResponseEntity.status(HttpStatus.OK).body(productDtoForOrder);
 
+    }
+
+    @RequestMapping("control-panel")
+    public ResponseEntity<ProductResponseForControl> getEnabledAndDisabledProductCount(){
+        ProductResponseForControl productResponseForControl = productService.getProductEnabledDisabledCount();
+
+        return ResponseEntity.status(HttpStatus.OK).body(productResponseForControl);
     }
 }

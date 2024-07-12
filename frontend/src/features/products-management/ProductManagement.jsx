@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import ManagementTitle from "../../ui/ManagementTitle";
 import ManagementSearchAndAddProducts from "../../ui/ManagementSearchAndAddProducts";
+import ProductTable from "../../ui/ProductTable";
 
 const Container = styled.div`
   display: grid;
@@ -13,6 +14,7 @@ function ProductManagement() {
       <ManagementTitle>{"Products Management"}</ManagementTitle>
 
       <ManagementSearchAndAddProducts buttonText={"Add Product"} />
+      <ProductTable />
     </Container>
   );
 }

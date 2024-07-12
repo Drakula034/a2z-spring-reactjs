@@ -32,7 +32,15 @@ function CategoryTable({ rowData }) {
     categoryName: null,
   });
   const [isOpen, setIsOpen] = useState(false);
-  const gridStyle = useMemo(() => ({ height: "65vh", width: "100vw" }), []);
+  const gridStyle = useMemo(
+    () => ({
+      height: "65vh",
+      width: "97vw",
+      marginLeft: "2rem",
+      marginRight: ".7rem",
+    }),
+    []
+  );
   const selectDeleteIcon = (categoryId, categoryName) => {
     setIsOpen(true);
     setCategoryIdName({ categoryId: categoryId, categoryName: categoryName });

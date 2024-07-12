@@ -27,12 +27,10 @@ const AdminControl = () => {
       <Route path="users/*" element={<UsersPage />} />
 
       <Route path="categories/*" element={<CategoriesPage />} />
-      {/* <Route path="categories/create" element={<AddCategory />} />
-      <Route path="categories/edit" element={<EditCategory />} /> */}
 
       <Route path="brands/*" element={<BrandsPage />} />
+      <Route path="products/*" element={<ProductsPage />} />
       <Route path="shipping" element={<ShippingPage />} />
-      <Route path="products" element={<ProductsPage />} />
       <Route path="customers" element={<CustomersPage />} />
       <Route path="orders" element={<OrdersPage />} />
       <Route path="reports" element={<ReportsPage />} />

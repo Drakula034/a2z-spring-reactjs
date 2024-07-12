@@ -1,5 +1,6 @@
 package com.a2z.product_service.service.impl;
 
+import com.a2z.product_service.model.dto.ProductResponseForControl;
 import com.a2z.product_service.model.entity.Brand;
 import com.a2z.product_service.model.entity.Category;
 import com.a2z.product_service.model.entity.Product;
@@ -78,5 +79,12 @@ public class ProductServiceImpl implements ProductService {
         Optional<Product> product = productRepository.findById(productId);
 
         return product.get();
+    }
+
+    @Override
+    public ProductResponseForControl getProductEnabledDisabledCount() {
+        Integer enabledProductCount = productRepository.getEnabledProductCount();
+        Integer disabledProductCount = productRepository.getDisabledProductCount();
+        return new ProductResponseForControl(enabledProductCount, disabledProductCount);
     }
 }

@@ -102,7 +102,15 @@ function Table({ rowData }) {
     setUser({ id: null, userName: null });
   };
 
-  const gridStyle = useMemo(() => ({ height: "65vh", width: "100vw" }), []);
+  const gridStyle = useMemo(
+    () => ({
+      height: "65vh",
+      width: "97vw",
+      marginLeft: "2rem",
+      marginRight: ".7rem",
+    }),
+    []
+  );
   const [colDefs] = useState([
     { field: "userId", headerName: "User ID", flex: 0.5 },
     {
