@@ -3,6 +3,7 @@ import ProductManagement from "../../features/products-management/ProductManagem
 import AdminHeader from "../../ui/admin/AdminHeader";
 import AddProduct from "../../features/products-management/AddProduct";
 import EditProduct from "../../features/products-management/EditProduct";
+import ProductForm from "../../ui/ProductForm";
 
 function ProductsPage() {
   return (
@@ -10,8 +11,8 @@ function ProductsPage() {
       <AdminHeader />
       <Routes>
         <Route index element={<ProductManagement />} />
-        <Route path="create" element={<AddProduct />} />
-        <Route path="edit" element={<EditProduct />} />
+        <Route path="create/*" element={<ProductForm />} />
+        <Route path="edit/*" element={<EditProduct />} />
       </Routes>
       <Outlet />
     </>

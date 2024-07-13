@@ -7,6 +7,7 @@ import { CgProductHunt } from "react-icons/cg";
 import EditDeleteFieldColumn from "./EditDeleteFieldColumn";
 import DeleteConfirmation from "./DeleteConfirmation";
 import { useLocation, useNavigate } from "react-router-dom";
+import { TbFileInfo } from "react-icons/tb";
 const ROW_HEIGHT = "100px";
 const GridContainer = styled.div`
   .ag-header-cell-label {
@@ -37,6 +38,7 @@ function ProductTable({ rowData }) {
   );
 
   const [isOpen, setIsOpen] = useState(false);
+  const [icon] = useState(true);
 
   const [productIdName, setProductIdName] = useState({
     productId: null,
@@ -79,6 +81,7 @@ function ProductTable({ rowData }) {
                 // state: { categoryToEdit },
               });
             }}
+            icon={icon}
           />
         );
       },

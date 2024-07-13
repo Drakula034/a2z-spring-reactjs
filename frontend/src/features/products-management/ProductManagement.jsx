@@ -3,7 +3,7 @@ import ManagementTitle from "../../ui/ManagementTitle";
 import ManagementSearchAndAddProducts from "../../ui/ManagementSearchAndAddProducts";
 import ProductTable from "../../ui/ProductTable";
 import Pagination from "../../ui/Pagination";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import useGetProductsByPage from "./useGetProductsByPage";
 import useProductsEnabledDisabledCount from "../control-panel/useProductsEnabledDisabledCount";
@@ -17,7 +17,9 @@ const Container = styled.div`
 
 function ProductManagement() {
   const location = useLocation();
-  const page = new URLSearchParams(location.search).get("page");
+  const navigate = useNavigate();
+  const params = new URLSearchParams(location.search);
+  const page = parseInt(params.get("page"), 10) || 1;
   const [currentPage, setCurrentPage] = useState(page);
   const [products, setProducts] = useState([]);
   const { data: categoryData, isLoading: categoryLoading } =
@@ -49,6 +51,9 @@ function ProductManagement() {
   const buttonClick = (page) => {
     setCurrentPage(page);
   };
+  const createNew = () => {
+    navigate(`${location.pathname}/create`);
+  };
   if (productsLoading) return <Spinner />;
   return (
     <Container>
@@ -57,6 +62,7 @@ function ProductManagement() {
       <ManagementSearchAndAddProducts
         buttonText={"Add Product"}
         categoryData={categoryData}
+        createNew={createNew}
       />
       <ProductTable rowData={products} />
       <Pagination

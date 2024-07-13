@@ -2,7 +2,7 @@ import { React } from "react";
 import styled from "styled-components";
 import logoIcon from "/assets/a2z-transparent.png";
 import { MdOutlineArrowDropDown } from "react-icons/md";
-import { useLocation, useNavigate } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 // Make sure to have a logo icon image in your project
 
 const Header = styled.header`
@@ -44,10 +44,11 @@ const Nav = styled.nav`
   gap: 1rem;
 `;
 
-const NavItem = styled.div`
+const NavItem = styled(NavLink)`
   color: var(--text-color);
   font-weight: bold;
   cursor: pointer;
+  text-decoration: none;
 
   &:hover {
     //text-decoration: underline;
@@ -99,7 +100,12 @@ function AdminHeader() {
       </LogoContainer>
       <Nav>
         {headerCategories.map((category, index) => (
-          <NavItem key={index} onClick={() => onCategoryClick(category.path)}>
+          // <NavItem key={index} onClick={() => onCategoryClick(category.path)}> with div
+          <NavItem
+            key={index}
+            to={`/admin/${category.path}`}
+            // activeClassName="active"
+          >
             {category.name}
             {itemsWithDropIcon.includes(category.name) && (
               <MdOutlineArrowDropDown />
