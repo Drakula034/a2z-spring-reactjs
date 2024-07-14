@@ -1,8 +1,8 @@
 // user-services
 
-export const USER_SERVICE_BASE_URL = "http://localhost:8000/api/admin/users/";
+export const USER_SERVICE_BASE_URL = "http://localhost:8000/api/admin/users";
 export const USER_SERVICE_ROLES_BASE_URL =
-  "http://localhost:8000/api/admin/roles/";
+  "http://localhost:8000/api/admin/roles";
 
 export const ALL_USER_INFO = `${USER_SERVICE_BASE_URL}/all`;
 export const USER_BY_ID = (userId) => `${USER_SERVICE_BASE_URL}/${userId}`;

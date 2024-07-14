@@ -1,6 +1,7 @@
 package com.a2z.product_service.mapper;
 
 import com.a2z.product_service.model.dto.BrandDto;
+import com.a2z.product_service.model.dto.BrandNamesDto;
 import com.a2z.product_service.model.dto.BrandResponseDto;
 import com.a2z.product_service.model.dto.CategoryResponseDto;
 import com.a2z.product_service.model.entity.Brand;
@@ -33,5 +34,12 @@ public class BrandMapper {
         brandResponseDto.setCategories(categoriesResponseDto);
 
         return brandResponseDto;
+    }
+
+    public static BrandNamesDto brandMapToBrandNamesDto(Brand brand, BrandNamesDto brandResponse){
+        brandResponse.setBrandId(brand.getId());
+        brandResponse.setBrandName(brand.getName());
+
+        return brandResponse;
     }
 }

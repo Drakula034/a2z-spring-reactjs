@@ -2,6 +2,7 @@ package com.a2z.product_service.controller.admin;
 
 import com.a2z.product_service.mapper.BrandMapper;
 import com.a2z.product_service.model.dto.BrandDto;
+import com.a2z.product_service.model.dto.BrandNamesDto;
 import com.a2z.product_service.model.dto.BrandResponseDto;
 import com.a2z.product_service.model.dto.BrandResponseForControl;
 import com.a2z.product_service.model.entity.Brand;
@@ -47,5 +48,11 @@ public class BrandController {
       List<BrandResponseDto> list = brandService.getBrandsByPage(page);
 
       return ResponseEntity.status(HttpStatus.OK).body(list);
+    }
+
+    @GetMapping("all-names")
+    public ResponseEntity<List<BrandNamesDto>> getAllBrandNames(){
+        List<BrandNamesDto> brandNamesDtoList = brandService.getAllBrandsNames();
+        return ResponseEntity.status(HttpStatus.OK).body(brandNamesDtoList);
     }
 }

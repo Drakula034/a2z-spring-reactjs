@@ -1,6 +1,7 @@
 package com.a2z.product_service.service.impl;
 
 import com.a2z.product_service.mapper.BrandMapper;
+import com.a2z.product_service.model.dto.BrandNamesDto;
 import com.a2z.product_service.model.dto.BrandResponseDto;
 import com.a2z.product_service.model.dto.BrandResponseForControl;
 import com.a2z.product_service.model.entity.Brand;
@@ -78,5 +79,15 @@ public class BrandServiceImpl implements BrandService {
             brandResponseDtoList.add(BrandMapper.brandmapToBrandResponseDto(brand, new BrandResponseDto()));
         }
         return brandResponseDtoList;
+    }
+
+    @Override
+    public List<BrandNamesDto> getAllBrandsNames() {
+        List<Brand> brands = brandsRepository.findAll();
+        List<BrandNamesDto> brandNamesDtoList = new ArrayList<>();
+        for(Brand brand: brands){
+            brandNamesDtoList.add(BrandMapper.brandMapToBrandNamesDto(brand, new BrandNamesDto()));
+        }
+        return brandNamesDtoList;
     }
 }

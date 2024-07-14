@@ -1,5 +1,6 @@
 package com.a2z.product_service.service;
 
+import com.a2z.product_service.model.dto.BrandNamesDto;
 import com.a2z.product_service.model.dto.BrandResponseDto;
 import com.a2z.product_service.model.dto.BrandResponseForControl;
 import com.a2z.product_service.model.entity.Brand;
@@ -15,4 +16,5 @@ public interface BrandService {
     BrandResponseForControl getTotalBrandCount();
 
     List<BrandResponseDto> getBrandsByPage(int page);
+    List<BrandNamesDto> getAllBrandsNames();
 }
