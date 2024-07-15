@@ -3,19 +3,24 @@ import { useRef, useState } from "react";
 import styled from "styled-components";
 import AddButton from "../AddButton";
 import CancelButton from "../CancelButton";
+import {
+  Description,
+  ShortDescription,
+  StyledButtons,
+} from "../AdminFormStyles";
 
-const ShortDescription = styled.div`
-  margin-bottom: 1rem;
-`;
-const Description = styled.div`
-  margin-top: 1rem;
-`;
-const StyledButtons = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  margin-top: 1.5rem;
-`;
+// const ShortDescription = styled.div`
+//   margin-bottom: 1rem;
+// `;
+// const Description = styled.div`
+//   margin-top: 1rem;
+// `;
+// const StyledButtons = styled.div`
+//   display: flex;
+//   flex-direction: row;
+//   justify-content: space-between;
+//   margin-top: 1.5rem;
+// `;
 
 function ProductDescriptionForm() {
   const editor = useRef(null);

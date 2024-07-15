@@ -6,49 +6,61 @@ import { useQuery } from "react-query";
 import useGetAllRoles from "../features/users-management/useGetAllRoles";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
-const StyledForm = styled.form`
-  border: 1px solid var(--color-grey-300);
-  margin: 2rem 10rem;
-  z-index: 2;
-  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
-  display: grid;
-  grid-auto-flow: row;
-  justify-items: center;
-  row-gap: 0.5rem;
-  font-family: "IBM Plex Sans", sans-serif;
-  color: var(--color-grey-700);
-`;
-const Title = styled.h2`
-  font-size: 1.6rem;
-  text-align: center;
-  margin: 1rem;
-`;
+import {
+  StyledButtons,
+  StyledEnabled,
+  StyledForm,
+  StyledInput,
+  StyledLogoInput,
+  StyledRole,
+  StyledRoles,
+  StyledUserInputName,
+  StyledUserName,
+  Title,
+} from "./AdminFormStyles";
+// const StyledForm = styled.form`
+//   border: 1px solid var(--color-grey-300);
+//   margin: 2rem 10rem;
+//   z-index: 2;
+//   box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
+//   display: grid;
+//   grid-auto-flow: row;
+//   justify-items: center;
+//   row-gap: 0.5rem;
+//   font-family: "IBM Plex Sans", sans-serif;
+//   color: var(--color-grey-700);
+// `;
+// const Title = styled.h2`
+//   font-size: 1.6rem;
+//   text-align: center;
+//   margin: 1rem;
+// `;
 
-const StyledName = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  column-gap: 2rem;
-  align-items: start;
-`;
+// const StyledName = styled.div`
+//   display: grid;
+//   grid-template-columns: 1fr 1fr;
+//   column-gap: 2rem;
+//   align-items: start;
+// `;
 
-const StyledInputName = styled.div`
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  row-gap: 0.5rem;
+// const StyledInputName = styled.div`
+//   display: flex;
+//   flex-direction: column;
+//   flex-wrap: wrap;
+//   row-gap: 0.5rem;
 
-  label {
-    font-weight: bold;
-    margin-bottom: 0.25rem;
-  }
+//   label {
+//     font-weight: bold;
+//     margin-bottom: 0.25rem;
+//   }
 
-  input {
-    padding: 0.5rem;
-    border: 1px solid var(--color-grey-300);
-    border-radius: 4px;
-    width: 100%;
-  }
-`;
+//   input {
+//     padding: 0.5rem;
+//     border: 1px solid var(--color-grey-300);
+//     border-radius: 4px;
+//     width: 100%;
+//   }
+// `;
 const StyledInputGroup = styled.div`
   display: grid;
   grid-template-columns: max-content 1fr;
@@ -57,117 +69,117 @@ const StyledInputGroup = styled.div`
   row-gap: 0.5rem;
 `;
 
-const StyledInput = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 3fr;
-  column-gap: 1rem;
-  align-items: center;
-  width: 80%; /* Ensure the input takes up the full available width */
+// const StyledInput = styled.div`
+//   display: grid;
+//   grid-template-columns: 1fr 3fr;
+//   column-gap: 1rem;
+//   align-items: center;
+//   width: 80%; /* Ensure the input takes up the full available width */
 
-  label {
-    grid-column: 1 / span 1;
-    font-weight: bold;
-    margin-bottom: 0.25rem;
-  }
+//   label {
+//     grid-column: 1 / span 1;
+//     font-weight: bold;
+//     margin-bottom: 0.25rem;
+//   }
 
-  input {
-    grid-column: 2 / span 1;
-    padding: 0.5rem;
-    border: 1px solid var(--color-grey-300);
-    border-radius: 4px;
-    width: 70%; /* Adjust width to 100% to fill the container */
-  }
-`;
+//   input {
+//     grid-column: 2 / span 1;
+//     padding: 0.5rem;
+//     border: 1px solid var(--color-grey-300);
+//     border-radius: 4px;
+//     width: 70%; /* Adjust width to 100% to fill the container */
+//   }
+// `;
 
-const StyledRoles = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 3fr;
-  column-gap: 1rem;
+// const StyledRoles = styled.div`
+//   display: grid;
+//   grid-template-columns: 1fr 3fr;
+//   column-gap: 1rem;
 
-  width: 80%;
-  margin-top: 1rem;
+//   width: 80%;
+//   margin-top: 1rem;
 
-  label {
-    grid-column: 1 / span 1;
-    font-weight: bold;
-    margin-bottom: 0.25rem;
-    align-items: start;
-  }
+//   label {
+//     grid-column: 1 / span 1;
+//     font-weight: bold;
+//     margin-bottom: 0.25rem;
+//     align-items: start;
+//   }
 
-  div {
-    /* grid-column: 2 / span 1; */
-    display: grid;
-    /* flex-direction: column; */
-    grid-auto-flow: row;
-    gap: 0.5rem;
-    width: 90%;
-  }
-`;
+//   div {
+//     /* grid-column: 2 / span 1; */
+//     display: grid;
+//     /* flex-direction: column; */
+//     grid-auto-flow: row;
+//     gap: 0.5rem;
+//     width: 90%;
+//   }
+// `;
 
-const StyledRole = styled.div`
-  /* display: flex; */
-  /* grid-template-columns: max-content max-content 1fr; */
-  /* flex-direction: row; */
-  display: grid;
-  grid-template-columns: max-content max-content auto;
-  align-items: center;
-  gap: 1rem;
-  padding: 0.5rem;
-  border: 1px solid var(--color-grey-300);
-  border-radius: 4px;
-  background-color: var(--color-white);
-  /* width: 90%; */
+// const StyledRole = styled.div`
+//   /* display: flex; */
+//   /* grid-template-columns: max-content max-content 1fr; */
+//   /* flex-direction: row; */
+//   display: grid;
+//   grid-template-columns: max-content max-content auto;
+//   align-items: center;
+//   gap: 1rem;
+//   padding: 0.5rem;
+//   border: 1px solid var(--color-grey-300);
+//   border-radius: 4px;
+//   background-color: var(--color-white);
+//   /* width: 90%; */
 
-  h3,
-  h4 {
-    margin: 0;
-    font-weight: normal;
-  }
+//   h3,
+//   h4 {
+//     margin: 0;
+//     font-weight: normal;
+//   }
 
-  h3 {
-    font-size: 1rem;
-    color: var(--color-grey-900);
-  }
+//   h3 {
+//     font-size: 1rem;
+//     color: var(--color-grey-900);
+//   }
 
-  h4 {
-    font-size: 0.8rem;
-    color: var(--color-grey-700);
-  }
-`;
-const StyledEnabled = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 3fr;
-  column-gap: 1rem;
-  justify-items: start; /* Align items vertically to the center */
-  width: 80%;
+//   h4 {
+//     font-size: 0.8rem;
+//     color: var(--color-grey-700);
+//   }
+// `;
+// const StyledEnabled = styled.div`
+//   display: grid;
+//   grid-template-columns: 1fr 3fr;
+//   column-gap: 1rem;
+//   justify-items: start; /* Align items vertically to the center */
+//   width: 80%;
 
-  label {
-    grid-column: 1;
-    font-weight: bold;
-    margin-bottom: 0.25rem;
-  }
+//   label {
+//     grid-column: 1;
+//     font-weight: bold;
+//     margin-bottom: 0.25rem;
+//   }
 
-  input {
-    grid-column: 2; /* Explicitly place input in the second column */
-    padding: 0.5rem;
-    border: 1px solid var(--color-grey-300);
-    border-radius: 4px;
-    width: 10%; /* Adjust width to fill the container */
+//   input {
+//     grid-column: 2; /* Explicitly place input in the second column */
+//     padding: 0.5rem;
+//     border: 1px solid var(--color-grey-300);
+//     border-radius: 4px;
+//     width: 10%; /* Adjust width to fill the container */
 
-    &:checked {
-      background-color: white;
-      accent-color: var(--color-green-400);
-    }
-  }
-`;
-const StyledPhoto = styled.div``;
+//     &:checked {
+//       background-color: white;
+//       accent-color: var(--color-green-400);
+//     }
+//   }
+// `;
+const StyledImageInput = styled(StyledLogoInput)``;
 
-const StyledButtons = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  margin-top: 1.5rem;
-`;
+// const StyledButtons = styled.div`
+//   display: flex;
+//   flex-direction: row;
+//   justify-content: space-between;
+//   margin-top: 1.5rem;
+// `;
 function UserForm({ title, onSubmit, userToEdit }) {
   const { data: rolesData = [] } = useQuery("getAllRoles", useGetAllRoles());
   const navigate = useNavigate();
@@ -230,8 +242,8 @@ function UserForm({ title, onSubmit, userToEdit }) {
         />
         {title}
       </Title>
-      <StyledName>
-        <StyledInputName>
+      <StyledUserName>
+        <StyledUserInputName>
           <label>First Name</label>
           <input
             type="text"
@@ -240,8 +252,8 @@ function UserForm({ title, onSubmit, userToEdit }) {
             defaultValue={formValues.firstName}
             size={30}
           />
-        </StyledInputName>
-        <StyledInputName>
+        </StyledUserInputName>
+        <StyledUserInputName>
           <label>Last Name</label>
           <input
             type="text"
@@ -250,8 +262,8 @@ function UserForm({ title, onSubmit, userToEdit }) {
             size={30}
             defaultValue={formValues.lastName}
           />
-        </StyledInputName>
-      </StyledName>
+        </StyledUserInputName>
+      </StyledUserName>
       {/* <StyledInputGroup> */}
       <StyledInput>
         <label>Email</label>
@@ -324,7 +336,7 @@ function UserForm({ title, onSubmit, userToEdit }) {
           defaultChecked={formValues.enabled}
         />
       </StyledEnabled>
-      <StyledInput>
+      <StyledImageInput>
         <label>Photos</label>
         <input
           type="file"
@@ -332,7 +344,7 @@ function UserForm({ title, onSubmit, userToEdit }) {
           {...register("photo")}
           defaultValue={formValues.photos}
         />
-      </StyledInput>
+      </StyledImageInput>
       <StyledButtons>
         <AddButton
           buttonText={"Save"}
