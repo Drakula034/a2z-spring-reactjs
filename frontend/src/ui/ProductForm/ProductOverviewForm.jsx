@@ -4,7 +4,9 @@ import styled from "styled-components";
 import AddButton from "../AddButton";
 import CancelButton from "../CancelButton";
 import useGetCategoryAll from "../../features/brands-management/useGetAllCategory";
+import useGetAllBrandByName from "../../features/products-management/useGetAllBrandByName";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const StyledForm = styled.form`
   border: 1px solid var(--color-grey-300);
@@ -115,15 +117,23 @@ const customStyles = {
   }),
 };
 function ProductOverviewForm() {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
+    setValue,
+    reset,
     formState: { errors },
   } = useForm();
 
   const { data: categoryList } = useGetCategoryAll();
+  const { data: brandsList } = useGetAllBrandByName();
+  // console.log(brandsList);
 
   const [categories, setCategories] = useState([]);
+  const [brands, setBrands] = useState([]);
+  const [selectedBrands, setSelectedBrands] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState([]);
 
   useEffect(() => {
     if (categoryList) {
@@ -135,9 +145,46 @@ function ProductOverviewForm() {
       setCategories(categoryOptions);
     }
   }, [categoryList]);
+
+  useEffect(() => {
+    if (brandsList) {
+      const brandData = brandsList.map((brand) => ({
+        value: brand.brandId,
+        label: brand.brandName,
+      }));
+
+      setBrands(brandData);
+    }
+  }, [brandsList]);
+
+  useEffect(() => {
+    setValue("productBrands", selectedBrands);
+    setValue("productCategories", selectedCategory);
+  }, [selectedBrands, selectedCategory, setValue]);
+
+  const handleCategoryChange = (selectedOptions) => {
+    setSelectedCategory(selectedOptions);
+  };
+
+  const handleBrandChange = (selectedOptions) => {
+    setSelectedBrands(selectedOptions);
+  };
+  const handleFormSubmit = (data) => {
+    console.log(data);
+    // reset();
+    // navigate(-1);
+  };
+
+  const createNew = () => {
+    handleFormSubmit();
+  };
+  const onCancel = () => {
+    // reset();
+    // navigate(-1);
+  };
   return (
-    <StyledForm>
-      <StyledInput>
+    <StyledForm onSubmit={handleSubmit(handleFormSubmit)}>
+      <StyledInput style={{ marginTop: "1rem" }}>
         <label>Product Name</label>
         <input type="text" name="productName" {...register("productName")} />
       </StyledInput>
@@ -147,10 +194,10 @@ function ProductOverviewForm() {
         <div className="select-category">
           <Select
             isMulti
-            name="productCategories"
-            {...register("productCategories")}
-            options={categories}
-            // onChange={handleCategoryChange}
+            name="productBrands"
+            {...register("productBrands")}
+            options={brands}
+            onChange={handleBrandChange}
             styles={customStyles}
             // value={selectCategories}
             // defaultValue={formValues.brandCategories.map((category) => ({
@@ -169,7 +216,7 @@ function ProductOverviewForm() {
             name="productCategories"
             {...register("productCategories")}
             options={categories}
-            // onChange={handleCategoryChange}
+            onChange={handleCategoryChange}
             styles={customStyles}
             // value={selectCategories}
             // defaultValue={formValues.brandCategories.map((category) => ({
@@ -200,8 +247,8 @@ function ProductOverviewForm() {
         <input type="number" name="discount" {...register("discount")} />
       </StyledInput>
       <StyledButtons>
-        <AddButton buttonText="Save" />
-        <CancelButton buttonText="Cancel" />
+        <AddButton buttonText="Save" createNew={createNew} />
+        <CancelButton buttonText="Cancel" handleCancel={onCancel} />
       </StyledButtons>
     </StyledForm>
   );

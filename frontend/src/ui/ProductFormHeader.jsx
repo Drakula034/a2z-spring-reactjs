@@ -38,10 +38,7 @@ function ProductFormHeader() {
   return (
     <Nav>
       {navCategories.map((category) => (
-        <NavItem
-          to={`${location.pathname}/${category.path}`}
-          key={category.name}
-        >
+        <NavItem to={`${category.path}`} key={category.name}>
           {category.name}
         </NavItem>
       ))}

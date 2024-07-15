@@ -1,6 +1,7 @@
 import {
   BRANDS_BY_PAGE,
   BRANS_SERVICE_TOTAL_COUNT,
+  GET_ALL_BRANDS,
 } from "../../../constants/endpoint-constants";
 
 export async function getBrandCount() {
@@ -29,5 +30,22 @@ export async function getBrandsByPage(page) {
     return data;
   } catch (err) {
     return new Error(err.message);
+  }
+}
+
+export async function getAllBrandsNames() {
+  const URL = GET_ALL_BRANDS;
+
+  try {
+    const res = await fetch(URL, { mode: "cors", method: "GET" });
+    if (!res.ok) {
+      throw new Error(res.message);
+    }
+
+    const data = await res.json();
+    // console.log(data);
+    return data;
+  } catch (err) {
+    throw new Error(err.message);
   }
 }

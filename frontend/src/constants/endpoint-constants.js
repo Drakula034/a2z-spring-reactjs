@@ -33,6 +33,8 @@ export const BRANDS_BY_PAGE = (page) => {
   return `${BRAND_SERVICE_BASE_URL}?page=${page}`;
 };
 
+export const GET_ALL_BRANDS = `${BRAND_SERVICE_BASE_URL}/all-names`;
+
 // product
 
 export const PRODUCT_SERVICE_BASE_URL =

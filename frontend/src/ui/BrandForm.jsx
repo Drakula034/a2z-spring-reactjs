@@ -130,10 +130,7 @@ function BrandForm({ title }) {
 
   //   console.log(formValues);
 
-  const { data: categoryList } = useQuery(
-    "getAllCategoryByName",
-    useGetCategoryAll()
-  );
+  const { data: categoryList } = useGetCategoryAll();
 
   const [categories, setCategories] = useState([]);
 
@@ -231,10 +228,6 @@ function BrandForm({ title }) {
             {...register("brandCategories")}
             options={categories}
             onChange={handleCategoryChange}
-            // components={{
-            //   DropdownIndicator: () => null,
-            //   IndicatorSeparator: () => null,
-            // }}
             styles={customStyles}
             // value={selectCategories}
             defaultValue={formValues.brandCategories.map((category) => ({
