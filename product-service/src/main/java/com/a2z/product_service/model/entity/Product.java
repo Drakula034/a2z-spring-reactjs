@@ -72,4 +72,7 @@ public class Product {
     public void addExtraImage(String imageName){
         this.images.add(new ProductImage(imageName, this));
     }
+    public void addProductDetails(String name, String value) {
+        this.productDetails.add(new ProductDetails(name, value, this));
+    }
 }

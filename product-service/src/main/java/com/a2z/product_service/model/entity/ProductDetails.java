@@ -25,4 +25,9 @@ public class ProductDetails {
     private Product product;
 
 
+    public ProductDetails(String name, String value, Product product) {
+        this.name = name;
+        this.value = value;
+        this.product = product;
+    }
 }
