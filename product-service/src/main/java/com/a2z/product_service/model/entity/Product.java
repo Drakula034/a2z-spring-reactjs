@@ -61,6 +61,9 @@ public class Product {
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<ProductImage> images = new ArrayList<>();
 
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    private List<ProductDetails> productDetails = new ArrayList<>();
+
 
     public boolean getInStock() {
         return inStock;
