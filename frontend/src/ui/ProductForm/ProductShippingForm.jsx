@@ -16,7 +16,7 @@ function ProductShippingForm() {
     formState: { errors },
   } = useForm();
   const handleFormSubmit = (data) => {
-    console.log(data);
+    // console.log(data);
   };
   const createNew = () => {};
   const onCancel = () => {};

@@ -31,7 +31,7 @@ function ProductFormHeader() {
   const navCategories = [
     { name: "Overview", path: "overview" },
     { name: "Description", path: "description" },
-    { name: "Images", path: "image" },
+    { name: "Images", path: "images" },
     { name: "Details", path: "details" },
     { name: "Shipping", path: "shipping" },
   ];

@@ -225,3 +225,29 @@ export const StyledRole = styled.div`
     color: var(--color-grey-700);
   }
 `;
+
+export const StyledImageContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  height: 300px;
+  border: 1px solid var(--color-grey-300);
+  justify-items: center;
+  align-items: center;
+  /* padding: 1rem; */
+`;
+export const StyledImage = styled.div`
+  width: 100%;
+  height: 70%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--color-grey-300);
+  margin-bottom: 10px;
+
+  img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover;
+  }
+`;
