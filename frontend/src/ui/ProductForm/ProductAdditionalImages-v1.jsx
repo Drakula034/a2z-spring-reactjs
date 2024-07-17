@@ -10,40 +10,53 @@ const ImageLabel = styled.div`
   justify-content: space-between;
   align-items: center;
 `;
-function ProductAdditionalImages({ setAdditionalImages, onRemove, imageRow }) {
-  const [image, setImage] = useState({ id: "", imageName: "" });
+function ProductAdditionalImages({
+  setAdditionalImages,
+  setAdditionalImageCount,
+  removeImage,
+  imageRow,
+}) {
+  const [image, setImage] = useState(initialImage || "");
 
   const handleAdditionalImageChange = (event) => {
-    // setImage({ id: "", imageName: "" }); // Clear previous image
     const file = event.target.files[0];
     if (file) {
       const reader = new FileReader();
-      const newImage = { id: Date.now(), imageName: file.name };
       reader.onload = () => {
-        setImage({ id: newImage.id, imageName: reader.result });
+        setImage(reader.result);
       };
-      // const newImage = { id: imageRow.id, imageName: file.name };
-      setAdditionalImages((prevImages) =>
-        prevImages.map((img) => (img.id === imageRow.id ? newImage : img))
-      );
       reader.onerror = (error) => {
         throw new Error("Error reading file:", error);
       };
       reader.readAsDataURL(file);
-      // console.log(file.name);
+      setAdditionalImages((prevImages) => [
+        ...prevImages,
+        { id: imageId, name: file.name, src: reader.result },
+      ]);
+      setAdditionalImageCount((prevCount) => prevCount + 1);
     }
   };
+
+  const handleRemoveClick = () => {
+    removeImage(imageId);
+  };
+
+  useEffect(() => {
+    if (initialImage) {
+      setImage(initialImage);
+    }
+  }, [initialImage]);
 
   return (
     <div>
       <StyledImageContainer>
         <ImageLabel>
           <label>Additional Image: {2}</label>
-          <MdCancel onClick={onRemove} />
+          <MdCancel onClick={handleRemoveClick} />
         </ImageLabel>
         <StyledImage>
-          {image.imageName ? (
-            <img src={image.imageName} alt={`additional image ${2}`} />
+          {image ? (
+            <img src={image} alt={`additional image ${imageName}`} />
           ) : (
             <CiImageOn size={100} />
           )}
