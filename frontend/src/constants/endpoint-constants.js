@@ -46,3 +46,6 @@ export const PRODUCT_SERVICE_ENABLED_DISABLED_URL = `${PRODUCT_SERVICE_BASE_URL}
 export const GET_PRODUCT_BY_PAGE = (page) => {
   return `${PRODUCT_SERVICE_BASE_URL}?page=${page}`;
 };
+
+export const PRODUCTS_TOGGLE_ENABLED_STATUS = (productId) =>
+  `${PRODUCT_SERVICE_BASE_URL}/${productId}/toggle-status`;

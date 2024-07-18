@@ -8,6 +8,7 @@ import EditDeleteFieldColumn from "./EditDeleteFieldColumn";
 import DeleteConfirmation from "./DeleteConfirmation";
 import { useLocation, useNavigate } from "react-router-dom";
 import { TbFileInfo } from "react-icons/tb";
+import useProductToggleEnabledStatus from "../features/products-management/useToggleProductEnabledStatus";
 const ROW_HEIGHT = "100px";
 const GridContainer = styled.div`
   .ag-header-cell-label {
@@ -45,6 +46,13 @@ function ProductTable({ rowData }) {
     productName: null,
   });
 
+  const { togglingProductStatus } = useProductToggleEnabledStatus();
+
+  const handleProductEnabledTogglingStatus = (productId) => {
+    console.log(productId);
+    togglingProductStatus(productId);
+  };
+
   const selectDeleteIcon = (productId, productName) => {
     setProductIdName({ productId: productId, productName: productName });
     // console.log(productIdName);
@@ -62,7 +70,20 @@ function ProductTable({ rowData }) {
     { field: "productName", headerName: "Name", flex: 3 },
     { field: "brandName", headerName: "Brand", flex: 0.5 },
     { field: "categoryName", headerName: "Category", flex: 1 },
-    { field: "enabled", headerName: "Enabled", flex: 1 },
+    {
+      field: "enabled",
+      headerName: "Enabled",
+      flex: 1,
+      editable: true,
+      cellRenderer: ({ data }) => (
+        <input
+          type="checkbox"
+          checked={data.enabled}
+          onChange={() => handleProductEnabledTogglingStatus(data.productId)}
+        />
+      ),
+    },
+
     {
       field: "editable",
       headerName: "",

@@ -87,27 +87,14 @@ function UsersManagement() {
     <Container>
       {/* <Title>User&apos;s Management</Title> */}
       <ManagementTitle>User&apos;s Management</ManagementTitle>
-      {/* <StyledFeatures>
-        <Search>
-          <Label>
-            Filter: <Input placeholder="Keyword" />
-          </Label>
 
-          <SearchButton />
-          <ClearButton />
-        </Search>
-        <AddButton
-          buttonText={"Create New user"}
-          createNewUser={createNewUser}
-        />
-      </StyledFeatures> */}
       <ManagementSearchAndAdd
         createNew={createNewUser}
         buttonText={"Create New user"}
       />
       <UsersTable
         rowData={rowData}
-        onUserStatusToggle={handleUserStatusToggle}
+        // onUserStatusToggle={handleUserStatusToggle}
       />
       <Pagination
         setCurrentPage={setCurrentPage}

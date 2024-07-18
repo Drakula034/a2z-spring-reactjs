@@ -58,4 +58,12 @@ public class ProductController {
         List<ProductResponseForProductAdminPage> products = productService.getProductByPage(page);
         return ResponseEntity.status(HttpStatus.OK).body(products);
     }
+
+    @PutMapping("/{productId}/toggle-status")
+    public ResponseEntity<?> toggleProductEnabledStatus(@PathVariable Integer productId){
+        boolean isProductEnabled = productService.toggleProductEnabledStatus(productId);
+
+        if(isProductEnabled)return ResponseEntity.status(HttpStatus.OK).build();
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    }
 }

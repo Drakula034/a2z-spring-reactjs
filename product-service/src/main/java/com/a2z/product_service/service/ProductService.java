@@ -15,4 +15,5 @@ public interface ProductService {
     ProductResponseForControl getProductEnabledDisabledCount();
 
     List<ProductResponseForProductAdminPage> getProductByPage(Integer page);
+    boolean toggleProductEnabledStatus(Integer productId);
 }

@@ -108,4 +108,12 @@ public class ProductServiceImpl implements ProductService {
         }
          return responseProductList;
     }
+
+    @Override
+    public boolean toggleProductEnabledStatus(Integer productId) {
+        Product product = productRepository.findById(productId).get();
+        product.setEnabled(!product.isEnabled());
+        Product savedProduct = productRepository.save(product);
+        return savedProduct.getId() > 0;
+    }
 }
