@@ -2,6 +2,7 @@ import { json } from "react-router-dom";
 
 import {
   ALL_USER_INFO,
+  DELETE_USER_BY_ID,
   GET_USERS_BY_PAGE,
   USER_BY_ID,
   USER_CONTROL_ENABLED_INFO,
@@ -84,6 +85,18 @@ export async function editUserEnabledStatus(userId) {
     if (!response.ok) throw new Error(response.message);
     // const data = await response.json();
     // return data;
+    return { success: true };
+  } catch (err) {
+    throw new Error(err.message);
+  }
+}
+
+export async function deleteUserById(userId) {
+  const url = DELETE_USER_BY_ID(userId);
+
+  try {
+    const response = await fetch(url, { method: "DELETE" });
+    if (!response.ok) throw new Error(response.message);
     return { success: true };
   } catch (err) {
     throw new Error(err.message);

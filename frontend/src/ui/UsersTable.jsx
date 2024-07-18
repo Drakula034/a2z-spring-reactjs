@@ -14,12 +14,8 @@ import { useLocation, useNavigate } from "react-router-dom";
 import EditDeleteFieldColumn from "./EditDeleteFieldColumn";
 import AddPhotoIfNotFound from "./AddPhotoIfNotFound";
 import useToggleUserStatus from "../features/users-management/useToggleUserStatus";
+import useDeleteByUserId from "../features/users-management/useDeleteByUserId";
 
-// const StyledTable = styled.div`
-//   /* Add gap between grid items */
-//   height: 100%; /* Ensure it takes full height of the parent container */
-//   width: 100%; /* Ensure it takes full width of the parent container */
-// `;
 const GridContainer = styled.div`
   .ag-header-cell-label {
     display: flex;
@@ -41,37 +37,7 @@ const RectangularPhotoIcon = styled(IoMdPerson)`
   margin-top: 5px;
   border-radius: 8px; /* Rounded corners */
 `;
-// const CustomizeEditIcon = styled(RiFileEditFill)`
-//   width: 2rem;
-//   height: 2rem;
-//   color: var(--color-green-500);
-//   margin-top: 15px;
-//   margin-left: 3px;
-//   cursor: pointer;
-// `;
 
-// const CustomizedDeleteIcon = styled(MdDelete)`
-//   width: 2rem;
-//   height: 2rem;
-//   color: var(--color-grey-500);
-//   margin-top: 15px;
-//   margin-left: 3px;
-//   cursor: pointer;
-// `;
-
-// const AddPhotoIfNotFound = () => {
-//   //   return <IoMdPerson height={"5rem"} width={"5rem"} />;
-//   return <RectangularPhotoIcon />;
-// };
-
-// const EditDeleteFieldRenderer = ({ onDeleteClick, onEditClick }) => {
-//   return (
-//     <>
-//       <CustomizeEditIcon onClick={onEditClick} />
-//       <CustomizedDeleteIcon onClick={onDeleteClick} />
-//     </>
-//   );
-// };
 const ROW_HEIGHT = "100px";
 function Table({ rowData }) {
   const location = useLocation();
@@ -85,6 +51,12 @@ function Table({ rowData }) {
     togglingUserStatus(userId);
   };
 
+  const { deletingUserByUserId } = useDeleteByUserId();
+
+  const handleUserDeleteByUserId = (userId) => {
+    deletingUserByUserId(userId);
+  };
+
   const selectDeleteIcon = (rowId, userName) => {
     setIsOpen(true);
     // setRowId(rowId);
@@ -94,8 +66,9 @@ function Table({ rowData }) {
   const onConfirm = () => {
     setIsOpen(false);
     // setRowId(null);
+    handleUserDeleteByUserId(user.id);
     setUser({ id: null, userName: null });
-    console.log(`deleting user with id: + ${rowId} and name: ${user.userName}`);
+    console.log(`deleting user with name: ${user.userName} and id: ${user.id}`);
   };
   const onClose = () => {
     setIsOpen(false);
@@ -127,28 +100,7 @@ function Table({ rowData }) {
     { field: "email", headerName: "Email", flex: 2 },
     { field: "firstName", headerName: "First Name", flex: 1 },
     { field: "lastName", headerName: "Last Name", flex: 1 },
-    // {
-    //   field: "enabled",
-    //   headerName: "Enabled",
-    //   flex: 1,
-    //   editable: true,
-    //   cellRenderer: (params) => {
-    //     const userId = params.data.userId;
-    //     onUserStatusToggle(userId);
 
-    //   },
-    // },
-    // {
-    //   field: "enabled",
-    //   headerName: "Enabled",
-    //   flex: 1,
-    //   editable: true,
-    //   cellRenderer: (params) => {
-    //     const userId = params.data.userId;
-    //     togglingUserStatus(userId);
-    //     // return <I checked={params.data.enabled} />;
-    //   },
-    // },
     {
       field: "enabled",
       headerName: "Enabled",
@@ -203,10 +155,6 @@ function Table({ rowData }) {
           columnDefs={colDefs}
           rowHeight={ROW_HEIGHT}
           defaultColDef={{ cellStyle }}
-          // frameworkComponents={{
-          //   editDeleteFieldRenderer: EditDeleteFieldRenderer,
-          // }}
-          //   frameworkComponents={{ editIconRenderer: EditIconRenderer }} // Register the custom cell renderer
         />
       </div>
       <DeleteConfirmation

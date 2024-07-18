@@ -14,6 +14,9 @@ export const USER_ROLES_GET_ALL = `${USER_SERVICE_ROLES_BASE_URL}/all`;
 export const USERS_ENABLED_DISABLED_STATUS = (userId) =>
   `${USER_SERVICE_BASE_URL}/${userId}/toggle-status`;
 
+export const DELETE_USER_BY_ID = (userId) =>
+  `${USER_SERVICE_BASE_URL}/${userId}`;
+
 // product-service
 // categroy
 

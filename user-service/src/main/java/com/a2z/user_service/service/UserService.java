@@ -26,4 +26,5 @@ public interface UserService {
 
      UserResponseForControl getEnabledAndDisabledUserForControlPanel();
      boolean toggleUserStatus(Integer userId);
+
 }

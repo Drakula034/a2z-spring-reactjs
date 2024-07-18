@@ -1,5 +1,6 @@
 package com.a2z.user_service.controller.admin.api;
 
+import com.a2z.user_service.exceptions.UserNotFoundException;
 import com.a2z.user_service.mapper.UserMapper;
 import com.a2z.user_service.model.dto.UserCreateDto;
 import com.a2z.user_service.model.dto.UserDetailsDto;
@@ -101,15 +102,20 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteUser(@PathVariable String id) {
-        Integer userId = Integer.parseInt(id);
-        boolean isDeleteionSuccessful = userService.deleteUser(userId);
-
-        if (isDeleteionSuccessful) {
-            return ResponseEntity.status(HttpStatus.OK).body("Deletion Succesfull");
+    @DeleteMapping("/{userId}")
+    public ResponseEntity<String> deleteUser(@PathVariable Integer userId) {
+       try {
+            boolean isDeletionSuccessful = userService.deleteUser(userId);
+            if (isDeletionSuccessful) {
+                return ResponseEntity.status(HttpStatus.OK).body("Deletion Successful");
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User ID not found");
+            }
+        } catch (UserNotFoundException ex) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while deleting the user");
         }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("user id is not found");
     }
 
     @GetMapping("/control-panel")
