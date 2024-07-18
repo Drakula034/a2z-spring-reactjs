@@ -15,4 +15,5 @@ public interface CategoryService {
     CategoryResponseForControl getEnabledAndDisabledCategory();
     List<CategoryResponseDto> getCategoryByPage(Integer page);
     List<CategoryNameDto> getAllCategoryNames();
+    boolean toggleCategoryEnabledStatus(Integer categoryId);
 }

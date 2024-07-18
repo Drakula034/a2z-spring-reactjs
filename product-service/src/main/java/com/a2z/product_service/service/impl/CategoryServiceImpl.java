@@ -60,4 +60,15 @@ public class CategoryServiceImpl implements CategoryService {
         }
         return categoryNameDtoList;
     }
+
+    @Override
+    public boolean toggleCategoryEnabledStatus(Integer categoryId) {
+        Category category = categoryRepository.findById(categoryId).get();
+        String currentStatus = category.getEnabled().trim();
+        String categoryEnabledStatusChange = currentStatus.equals("true") ? "false" : "true";
+        category.setEnabled(categoryEnabledStatusChange);
+        Category savedCategory = categoryRepository.save(category);
+
+        return savedCategory.getCategoryId() > 0;
+    }
 }

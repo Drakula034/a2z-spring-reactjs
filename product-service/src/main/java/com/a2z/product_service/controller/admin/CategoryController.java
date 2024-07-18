@@ -51,5 +51,17 @@ public class CategoryController {
         return ResponseEntity.status(HttpStatus.OK).body(categoryNameDtoList);
     }
 
+    @PutMapping("/{categoryId}/toggle-status")
+    public ResponseEntity<?> toggleCategoryEnabledStatus(@PathVariable Integer categoryId){
+      boolean isToggled = categoryService.toggleCategoryEnabledStatus(categoryId);
+
+      if(isToggled){
+          return ResponseEntity.status(HttpStatus.OK).build();
+      }
+
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+
+    }
+
 
 }

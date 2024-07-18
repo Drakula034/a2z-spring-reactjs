@@ -8,6 +8,7 @@ import { Navigate, useNavigate } from "react-router-dom";
 import { set } from "react-hook-form";
 import DeleteConfirmation from "./DeleteConfirmation";
 import styled from "styled-components";
+import useToggleCategoryEnabledStatus from "../features/category-management/useToggleCategoryEnabledStatus";
 const ROW_HEIGHT = "100px";
 
 const GridContainer = styled.div`
@@ -32,6 +33,11 @@ function CategoryTable({ rowData }) {
     categoryName: null,
   });
   const [isOpen, setIsOpen] = useState(false);
+  const { togglingCategoryStatus } = useToggleCategoryEnabledStatus();
+  const handleCategoryTogglingStatus = (categoryId) => {
+    // console.log(categoryId);
+    togglingCategoryStatus(categoryId);
+  };
   const gridStyle = useMemo(
     () => ({
       height: "65vh",
@@ -70,7 +76,15 @@ function CategoryTable({ rowData }) {
       field: "enabled",
       headerName: "Enabled",
       flex: 1,
-      defaultColDef: "false",
+      editable: true,
+      // defaultColDef: "unchecked",
+      cellRenderer: (params) => (
+        <input
+          type="checkbox"
+          checked={params.data.enabled === "true"}
+          onChange={() => handleCategoryTogglingStatus(params.data.categoryId)}
+        />
+      ),
     },
     {
       field: "editable",

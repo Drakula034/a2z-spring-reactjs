@@ -26,6 +26,8 @@ export const CATEGORY_BY_PAGE = (page) => {
 };
 
 export const GET_ALL_CATEGORY = `${CATEGORY_SERVICE_BASE_URL}/all-names`;
+export const CATEGORY_TOGGLE_ENABLED_STATUS = (categoryId) =>
+  `${CATEGORY_SERVICE_BASE_URL}/${categoryId}/toggle-status`;
 
 // brands
 
