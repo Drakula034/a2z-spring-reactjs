@@ -190,4 +190,13 @@ public class UserServiceImpl implements UserService {
         return new UserResponseForControl(enabled, disabled);
     }
 
+    @Override
+    public boolean toggleUserStatus(Integer userId) {
+        User user = userRepository.findById(userId).get();
+        user.setEnabled(!user.getEnabled());
+        User savedUser = userRepository.save(user);
+        if(savedUser.getUserId() > 0)return true;
+        return false;
+    }
+
 }

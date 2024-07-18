@@ -11,6 +11,8 @@ export const GET_USERS_BY_PAGE = (page) =>
   `${USER_SERVICE_BASE_URL}/?page=${page}`;
 
 export const USER_ROLES_GET_ALL = `${USER_SERVICE_ROLES_BASE_URL}/all`;
+export const USERS_ENABLED_DISABLED_STATUS = (userId) =>
+  `${USER_SERVICE_BASE_URL}/${userId}/toggle-status`;
 
 // product-service
 // categroy

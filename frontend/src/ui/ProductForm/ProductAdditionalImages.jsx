@@ -10,7 +10,12 @@ const ImageLabel = styled.div`
   justify-content: space-between;
   align-items: center;
 `;
-function ProductAdditionalImages({ setAdditionalImages, onRemove, imageRow }) {
+function ProductAdditionalImages({
+  setAdditionalImages,
+  onRemove,
+  imageRow,
+  additionalImageCount,
+}) {
   const [image, setImage] = useState({ id: "", imageName: "" });
 
   const handleAdditionalImageChange = (event) => {
@@ -38,12 +43,15 @@ function ProductAdditionalImages({ setAdditionalImages, onRemove, imageRow }) {
     <div>
       <StyledImageContainer>
         <ImageLabel>
-          <label>Additional Image: {2}</label>
+          <label>Additional Image: {additionalImageCount + 1}</label>
           <MdCancel onClick={onRemove} />
         </ImageLabel>
         <StyledImage>
           {image.imageName ? (
-            <img src={image.imageName} alt={`additional image ${2}`} />
+            <img
+              src={image.imageName}
+              alt={`additional image ${additionalImageCount + 1}`}
+            />
           ) : (
             <CiImageOn size={100} />
           )}

@@ -5,6 +5,7 @@ import ProductAdditionalImages from "./ProductAdditionalImages";
 import { StyledButtons } from "../AdminFormStyles";
 import AddButton from "../AddButton";
 import CancelButton from "../CancelButton";
+import { useNavigate } from "react-router-dom";
 
 const StyledImages = styled.div`
   display: grid;
@@ -17,32 +18,35 @@ const StyledImages = styled.div`
   /* justify-items: center; */
 `;
 function ProductImagesForm() {
+  const navigate = useNavigate();
   const [mainImage, setMainImage] = useState("");
-  // console.log(mainImage);
-  const [additionalImages, setAdditionalImages] = useState([
-    // { id: "", imageName: "" },
-  ]);
-  const [additionalImageCount, setAdditionalImageCount] = useState(1);
+  const [additionalImages, setAdditionalImages] = useState([]);
+  // const [additionalImageCount, setAdditionalImageCount] = useState(0);
   // console.log(additionalImages);
   const removeAdditionalImage = (imageId) => {
     setAdditionalImages((prevImages) =>
       prevImages.filter((image) => image.id !== imageId)
     );
-    // console.log(additionalImages);
   };
-  // console.log(additionalImages);
-  // console.log(additionalImageCount);
+
   const handleAddImage = () => {
     setAdditionalImages((prevImages) => [
       ...prevImages,
       { id: Date.now(), imageName: "" },
     ]);
+    // setAdditionalImageCount((prevCount) => prevCount + 1);
   };
 
   const onSave = () => {
     console.log(additionalImages);
     console.log("main Images", mainImage);
   };
+  const onCancel = () => {
+    setAdditionalImages([]);
+    setMainImage("");
+    navigate(-1);
+  };
+
   return (
     <div>
       <StyledImages>
@@ -54,14 +58,15 @@ function ProductImagesForm() {
                 imageRow={imageRow}
                 setAdditionalImages={setAdditionalImages}
                 onRemove={() => removeAdditionalImage(imageRow.id)}
+                additionalImageCount={index}
               />
             </div>
           ))}
       </StyledImages>
       <StyledButtons>
-        <AddButton buttonText={"Add More Details"} createNew={handleAddImage} />
+        <AddButton buttonText={"Add More Images"} createNew={handleAddImage} />
         <AddButton buttonText={"Save"} createNew={onSave} />
-        <CancelButton buttonText={"Cancel"} />
+        <CancelButton buttonText={"Cancel"} handleCancel={onCancel} />
       </StyledButtons>
     </div>
   );

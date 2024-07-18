@@ -13,6 +13,7 @@ import { getUserById } from "../services/api/user-services/userApi";
 import { useLocation, useNavigate } from "react-router-dom";
 import EditDeleteFieldColumn from "./EditDeleteFieldColumn";
 import AddPhotoIfNotFound from "./AddPhotoIfNotFound";
+import useToggleUserStatus from "../features/users-management/useToggleUserStatus";
 
 // const StyledTable = styled.div`
 //   /* Add gap between grid items */
@@ -78,10 +79,11 @@ function Table({ rowData }) {
   const [isOpen, setIsOpen] = useState(false);
   const [rowId, setRowId] = useState(null);
   const [user, setUser] = useState({ id: null, userName: null });
-  // const userToEdit = null;
-  // useEffect(() => {
-  //   userToEdit = useQuery("userById", () => getUserById(userId));
-  // });
+  const { togglingUserStatus } = useToggleUserStatus();
+
+  const handleUserStatusToggle = (userId) => {
+    togglingUserStatus(userId);
+  };
 
   const selectDeleteIcon = (rowId, userName) => {
     setIsOpen(true);
@@ -125,7 +127,42 @@ function Table({ rowData }) {
     { field: "email", headerName: "Email", flex: 2 },
     { field: "firstName", headerName: "First Name", flex: 1 },
     { field: "lastName", headerName: "Last Name", flex: 1 },
-    { field: "enabled", headerName: "Enabled", flex: 1 },
+    // {
+    //   field: "enabled",
+    //   headerName: "Enabled",
+    //   flex: 1,
+    //   editable: true,
+    //   cellRenderer: (params) => {
+    //     const userId = params.data.userId;
+    //     onUserStatusToggle(userId);
+
+    //   },
+    // },
+    // {
+    //   field: "enabled",
+    //   headerName: "Enabled",
+    //   flex: 1,
+    //   editable: true,
+    //   cellRenderer: (params) => {
+    //     const userId = params.data.userId;
+    //     togglingUserStatus(userId);
+    //     // return <I checked={params.data.enabled} />;
+    //   },
+    // },
+    {
+      field: "enabled",
+      headerName: "Enabled",
+      flex: 1,
+      editable: true,
+      cellRenderer: ({ data }) => (
+        <input
+          type="checkbox"
+          checked={data.enabled}
+          onChange={() => handleUserStatusToggle(data.userId)}
+        />
+      ),
+    },
+
     {
       field: "roles",
       headerName: "Roles",

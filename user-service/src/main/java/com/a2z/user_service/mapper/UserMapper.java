@@ -8,10 +8,8 @@ import com.a2z.user_service.repository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Component
 public class UserMapper {
@@ -77,6 +75,7 @@ public class UserMapper {
         user.setPhotos(userCreateDto.getPhotos());
         user.setEnabled(userCreateDto.getEnabled());
         user.setPassword(userCreateDto.getPassword());
+//        List<String> roles = userCreateDto.getRoles();
         List<String> roles = userCreateDto.getRoles();
         Set<Role> roleToAdd = new HashSet<Role>();
         for (String role : roles) {
@@ -90,5 +89,26 @@ public class UserMapper {
         user.setPassword(userCreateDto.getPassword());
 
         return user;
+//////        Set<Role> roleToAdd = new HashSet<>();
+////        Set<Role> roleToAdd = user.getRoles();
+////
+//        for (String roleName : roles) {
+//            Role existingRole = roleRepository.findByName(roleName);
+//            if (existingRole != null && !user.getRoles().contains(existingRole)) {
+////                roleToAdd.add(existingRole);
+//                user.getRoles().add(existingRole);
+//            } else {
+//                // Handle case where role is already associated with the user
+//                System.out.println("Role " + roleName + " is already associated with the user.");
+//            }
+//        }
+//////        System.out.println("Roles to add: " + roleToAdd.stream().map(Role::getName).collect(Collectors.joining(", ")));
+////
+//////        user.getRoles().addAll(roleToAdd);
+//////        user.setRoles(roleToAdd);
+//        System.out.println(user.getRoles());
+//        user.setPassword(userCreateDto.getPassword());
+
+//        return user;
     }
 }

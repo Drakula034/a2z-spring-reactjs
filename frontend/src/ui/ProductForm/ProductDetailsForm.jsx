@@ -30,10 +30,6 @@ function ProductDetailsForm() {
 
   const handleInputChange = (event, index) => {
     const { name, value } = event.target;
-    // const rows = [...inputRows];
-    // rows[index][name] = value;
-    // setInputRows(rows);
-    // console.log(rows);
     setInputRows((prevRows) =>
       prevRows.map((row) =>
         row.id === index ? { ...row, [name]: value } : row

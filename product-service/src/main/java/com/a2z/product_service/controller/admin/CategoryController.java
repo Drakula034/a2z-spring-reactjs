@@ -17,7 +17,7 @@ import java.util.*;
 
 @Controller
 @RequestMapping("api/admin/categories")
-@CrossOrigin("*")
+//@CrossOrigin("*")
 public class CategoryController {
 
     @Autowired

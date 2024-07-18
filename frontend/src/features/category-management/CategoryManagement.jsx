@@ -60,7 +60,7 @@ function CategoryManagement() {
   const buttonClick = (page) => {
     setCurrentPage(page);
   };
-  console.log(currentPage);
+  // console.log(currentPage);
   const previousClick = () => {
     if (currentPage > 1) setCurrentPage(currentPage - 1);
   };

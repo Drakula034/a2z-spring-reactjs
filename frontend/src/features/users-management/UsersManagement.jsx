@@ -12,60 +12,28 @@ import { useLocation, useNavigate } from "react-router-dom";
 import Spinner from "../../ui/Spinner";
 import ManagementTitle from "../../ui/ManagementTitle";
 import ManagementSearchAndAdd from "../../ui/ManagementSearchAndAdd";
+import useToggleUserStatus from "./useToggleUserStatus";
 
 const Container = styled.div`
   display: grid;
   grid-template-rows: max-content max-content 1fr max-content;
 `;
-// const Title = styled.div`
-//   font-size: 1.6rem;
-//   font-weight: bold;
-//   padding: 5px;
-//   text-align: center;
-// `;
-// const StyledFeatures = styled.div`
-//   display: grid;
-//   grid-template-columns: 1fr auto;
-//   align-items: center;
-//   margin-right: 2rem;
-// `;
-// const Search = styled.div`
-//   display: grid;
-//   grid-template-columns: max-content min-content min-content;
-//   column-gap: 8px;
-// `;
-// const Label = styled.label`
-//   font-size: 1.1rem;
-//   margin-left: 2rem;
-// `;
-// const Input = styled.input`
-//   height: 1.4rem;
 
-//   &::placeholder {
-//     transition: opacity 0.3s ease;
-//   }
-//   &:focus::placeholder {
-//     opacity: 0;
-//   }
-// `;
 function UsersManagement() {
   const location = useLocation();
   const navigate = useNavigate();
-
-  // Retrieve cached data from React Query
-  // const { enabled = 0, disabled = 0 } =
-  //   queryClient.getQueryData(
-  //     "enabledDisabledUserCount",
-  //     useEnabledDisabledUser,
-  //     { staleTime: 0 }
-  //   ) || {};
 
   const {
     data: userData = { enabled: 0, disabled: 0 },
     isLoading: usersCountLoading,
   } = useQuery("enabledDisabledUserCount", useEnabledDisabledUser());
-
   const { enabled = 0, disabled = 0 } = userData;
+
+  const { togglingUserStatus } = useToggleUserStatus();
+
+  const handleUserStatusToggle = (userId) => {
+    togglingUserStatus(userId);
+  };
 
   const params = new URLSearchParams(location.search);
   const page = parseInt(params.get("page"), 10) || 1;
@@ -112,7 +80,7 @@ function UsersManagement() {
     navigate(`${location.pathname}/create`);
   };
 
-  if (isLoading) {
+  if (usersCountLoading) {
     return <Spinner />;
   }
   return (
@@ -137,8 +105,10 @@ function UsersManagement() {
         createNew={createNewUser}
         buttonText={"Create New user"}
       />
-      {/* <Table columnName={columnName} columns={columns} data={data} /> */}
-      <UsersTable rowData={rowData} />
+      <UsersTable
+        rowData={rowData}
+        onUserStatusToggle={handleUserStatusToggle}
+      />
       <Pagination
         setCurrentPage={setCurrentPage}
         previousClick={previousClick}

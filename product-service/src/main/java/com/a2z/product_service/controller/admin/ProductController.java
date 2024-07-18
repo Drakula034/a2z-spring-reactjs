@@ -16,7 +16,7 @@ import java.util.*;
 
 @RestController
 @RequestMapping("/api/admin/products")
-@CrossOrigin("*")
+//@CrossOrigin("*")
 public class ProductController {
 
     private final ProductService productService;
@@ -41,7 +41,7 @@ public class ProductController {
     public ResponseEntity<ProductDtoForOrder> getProductByIdForOrderService(@PathVariable String productId){
         Integer id = Integer.parseInt(productId);
         Product product = productService.getProductById(id);
-        ProductDtoForOrder productDtoForOrder = productMapper.productMapToProductDtoForOrder(product, new ProductDtoForOrder());
+        ProductDtoForOrder productDtoForOrder = ProductMapper.productMapToProductDtoForOrder(product, new ProductDtoForOrder());
         return ResponseEntity.status(HttpStatus.OK).body(productDtoForOrder);
 
     }

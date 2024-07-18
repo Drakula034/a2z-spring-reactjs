@@ -22,7 +22,7 @@ import java.util.*;
 @Controller
 @RequestMapping("/api/admin/users")
 @Slf4j
-@CrossOrigin(origins = "*")
+//@CrossOrigin(origins = "*")
 public class UserController {
 
     private final UserService userService;
@@ -50,8 +50,7 @@ public class UserController {
 
     @GetMapping("/")
     public ResponseEntity<List<UserDetailsDto>> getAllUsersByPage(@RequestParam(defaultValue = "0") Integer page) {
-//        logger.info("active");
-//        int pageNum = page;
+
         List<User> allUsers = userService.getAllUsersByPage(page);
         List<UserDetailsDto> allUsersDetailsDto = new ArrayList<>();
         allUsers.forEach(user -> allUsersDetailsDto.add(UserMapper.usersMapToUserDetailsDto(user, new UserDetailsDto())));
@@ -61,11 +60,10 @@ public class UserController {
 
     @PostMapping("/create")
     public ResponseEntity<Boolean> createNewUser(@RequestBody UserCreateDto userCreateDto) {
-//        System.out.println(userCreateDto);
+        System.out.println("userCreateDto" + userCreateDto.getRoles());
         User user = userMapper.userCreateDtoMapToUser(userCreateDto, new User());
+//        System.out.println("usersave dto" + user.getRoles());
         boolean isUserCreated = userService.createNewUser(user);
-//        System.out.println("check: " + isUserCreated);
-//        System.out.println(user);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(isUserCreated);
     }
@@ -119,6 +117,15 @@ public class UserController {
         UserResponseForControl userResponseForControl = userService.getEnabledAndDisabledUserForControlPanel();
 
         return ResponseEntity.status(HttpStatus.OK).body(userResponseForControl);
+    }
+
+    @PutMapping("/{userId}/toggle-status")
+    public ResponseEntity<?> toggleUserStatus(@PathVariable Integer userId){
+        boolean toggleSuccessfull = userService.toggleUserStatus(userId);
+        if(toggleSuccessfull){
+            return ResponseEntity.status(HttpStatus.OK).build();
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
 

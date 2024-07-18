@@ -21,7 +21,7 @@ import java.util.*;
 
 @Controller
 @RequestMapping("/api/admin/brands")
-@CrossOrigin("*")
+//@CrossOrigin("*")
 public class BrandController {
 
     @Autowired

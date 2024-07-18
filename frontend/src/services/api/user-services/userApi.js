@@ -5,6 +5,7 @@ import {
   GET_USERS_BY_PAGE,
   USER_BY_ID,
   USER_CONTROL_ENABLED_INFO,
+  USERS_ENABLED_DISABLED_STATUS,
 } from "../../../constants/endpoint-constants";
 
 export async function getUserInfo() {
@@ -64,6 +65,26 @@ export async function getUserById(userId) {
     if (!response.ok) throw new Error(response.message);
     const data = await response.json();
     return data;
+  } catch (err) {
+    throw new Error(err.message);
+  }
+}
+
+export async function editUserEnabledStatus(userId) {
+  const url = USERS_ENABLED_DISABLED_STATUS(userId);
+
+  try {
+    const response = await fetch(url, {
+      // mode: "no-cors",
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    if (!response.ok) throw new Error(response.message);
+    // const data = await response.json();
+    // return data;
+    return { success: true };
   } catch (err) {
     throw new Error(err.message);
   }

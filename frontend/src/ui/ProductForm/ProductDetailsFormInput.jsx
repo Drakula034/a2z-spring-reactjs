@@ -1,20 +1,6 @@
 import styled from "styled-components";
 import { MdCancel } from "react-icons/md";
 import { useForm } from "react-hook-form";
-// const StyledInput = styled.div`
-//   display: grid;
-//   grid-template-columns: 1fr 1fr;
-//   column-gap: 1rem;
-//   align-items: center;
-// `;
-// const StyledLabel = styled.div`
-//   display: flex;
-//   flex-direction: column;
-// `;
-// const StyledInputValue = styled.div`
-//   display: flex;
-//   flex-direction: column;
-// `;
 
 const StyledInput = styled.div`
   display: flex;
@@ -51,14 +37,10 @@ const InputField = styled.input`
 function ProductDetailsFormInput({ row, onChange, onRemove }) {
   const {
     register,
-    handleSubmit,
     formState: { errors },
   } = useForm();
   const { inputName, inputValue } = row;
 
-  const handleFormInputSubmit = (data) => {
-    console.log(data);
-  };
   return (
     <StyledInput>
       <StyledLabel>

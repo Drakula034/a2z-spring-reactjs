@@ -189,6 +189,15 @@ function ProductOverviewForm() {
         <input type="text" name="productName" {...register("productName")} />
       </StyledInput>
       <StyledInput>
+        <label>Alias</label>
+        <input
+          type="text"
+          name="productAlias"
+          {...register("productAlias")}
+          placeholder="Default is product name (space is replaced by dashes)"
+        />
+      </StyledInput>
+      <StyledInput>
         <label>Brand</label>
         {/* <input type="text" name="brand" {...register("brand")} /> */}
         <div className="select-category">

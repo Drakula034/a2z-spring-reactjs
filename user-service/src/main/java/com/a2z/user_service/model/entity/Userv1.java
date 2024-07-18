@@ -1,26 +1,27 @@
 package com.a2z.user_service.model.entity;
 
-import com.a2z.user_service.model.entity.Role;
+//import javax.persistence.*;
+
 import jakarta.persistence.*;
-import jakarta.persistence.Table;
 import jakarta.validation.constraints.Size;
 import lombok.*;
-import org.hibernate.annotations.GenericGenerator;
 
 import java.util.HashSet;
 import java.util.Set;
 
-@Entity
-@Table(name = "users")
-@Getter
-@Setter
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
+@Setter
+@Getter
+@Entity
+//@MappedSuperclass
+//@Component
+@Table(name = "users")
+@ToString
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class User {
-
+public class Userv1 {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "native")
     @Column(name = "user_id")
     private Integer userId;
 
@@ -33,11 +34,12 @@ public class User {
     @Column(name = "last_name", length = 40, nullable = false)
     private String lastName;
 
-    @Size(min = 6, max = 12)
     @Column(nullable = false)
+    @Size(min = 6, max = 12)
     private String password;
 
-    @Column(nullable = false, length = 10)
+    @Column(nullable = false)
+    @Size(min = 10, max = 10)
     private String mobileNumber;
 
     @Column(length = 64)
@@ -46,7 +48,14 @@ public class User {
     @Column(nullable = false)
     private boolean enabled;
 
-    @ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+//    @ManyToMany(fetch = FetchType.EAGER)
+//    @JoinTable(
+//            name = "users_roles",
+//            joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "user_id")},
+//            inverseJoinColumns =  {@JoinColumn(name = "role_id", referencedColumnName = "id")},
+//            uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "role_id"})
+//    )
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
@@ -55,12 +64,29 @@ public class User {
     )
     private Set<Role> roles = new HashSet<>();
 
-    // Constructors, getters, setters, and other methods omitted for brevity
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
     public void addRole(Role role) {
         this.roles.add(role);
     }
 
+    public Userv1(String email, String password, String firstName, String lastName) {
+        this.email = email;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
+
     public boolean getEnabled() {
         return enabled;
     }
+
+
 }

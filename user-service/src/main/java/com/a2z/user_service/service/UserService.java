@@ -25,4 +25,5 @@ public interface UserService {
      boolean deleteUser(Integer userId);
 
      UserResponseForControl getEnabledAndDisabledUserForControlPanel();
+     boolean toggleUserStatus(Integer userId);
 }
