@@ -9,6 +9,7 @@ import { set } from "react-hook-form";
 import DeleteConfirmation from "./DeleteConfirmation";
 import styled from "styled-components";
 import useToggleCategoryEnabledStatus from "../features/category-management/useToggleCategoryEnabledStatus";
+import useDeleteCategoryByCategoryId from "../features/category-management/useDeleteCategoryByCategoryId";
 const ROW_HEIGHT = "100px";
 
 const GridContainer = styled.div`
@@ -38,6 +39,11 @@ function CategoryTable({ rowData }) {
     // console.log(categoryId);
     togglingCategoryStatus(categoryId);
   };
+
+  const { deletingCategoryByCategoryId } = useDeleteCategoryByCategoryId();
+  const handleCategoryDeleteByCategoryId = (categoryId) => {
+    deletingCategoryByCategoryId(categoryId);
+  };
   const gridStyle = useMemo(
     () => ({
       height: "65vh",
@@ -57,7 +63,14 @@ function CategoryTable({ rowData }) {
   };
   const onConfirm = () => {
     setIsOpen(false);
-    setCategoryIdName({ id: null, categoryName: null });
+    handleCategoryDeleteByCategoryId(categoryIdName.categoryId);
+    // console.log(
+    //   "deleting category with name: " +
+    //     categoryIdName.categoryName +
+    //     " and id: " +
+    //     categoryIdName.categoryId
+    // );
+    setCategoryIdName({ categoryId: null, categoryName: null });
   };
 
   const [colDefs] = useState([

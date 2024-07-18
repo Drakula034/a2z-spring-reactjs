@@ -63,5 +63,16 @@ public class CategoryController {
 
     }
 
+    @DeleteMapping("/{categoryId}")
+    public ResponseEntity<?> deleteCategoryByCategoryId(@PathVariable Integer categoryId){
+        boolean isDeleted = categoryService.deleteCategoryByCategoryId(categoryId);
+
+        if(isDeleted){
+            return ResponseEntity.status(HttpStatus.OK).build();
+        }
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    }
+
 
 }

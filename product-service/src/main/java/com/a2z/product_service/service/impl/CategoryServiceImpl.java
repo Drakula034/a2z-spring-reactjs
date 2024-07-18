@@ -71,4 +71,22 @@ public class CategoryServiceImpl implements CategoryService {
 
         return savedCategory.getCategoryId() > 0;
     }
+
+    @Override
+    public boolean deleteCategoryByCategoryId(Integer categoryId) {
+        // Check if the category exists
+        Optional<Category> categoryOptional = categoryRepository.findById(categoryId);
+
+        if (categoryOptional.isPresent()) {
+            // Delete the category
+            categoryRepository.deleteById(categoryId);
+
+            // Check if the category has been deleted
+            return categoryRepository.findById(categoryId).isEmpty();
+        } else {
+            // Handle the case where the category does not exist
+            throw new NoSuchElementException("Category with ID " + categoryId + " not found.");
+        }
+    }
+
 }

@@ -16,4 +16,5 @@ public interface CategoryService {
     List<CategoryResponseDto> getCategoryByPage(Integer page);
     List<CategoryNameDto> getAllCategoryNames();
     boolean toggleCategoryEnabledStatus(Integer categoryId);
+    boolean deleteCategoryByCategoryId(Integer categoryId);
 }

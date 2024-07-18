@@ -68,7 +68,7 @@ function Table({ rowData }) {
     // setRowId(null);
     handleUserDeleteByUserId(user.id);
     setUser({ id: null, userName: null });
-    console.log(`deleting user with name: ${user.userName} and id: ${user.id}`);
+    // console.log(`deleting user with name: ${user.userName} and id: ${user.id}`);
   };
   const onClose = () => {
     setIsOpen(false);
