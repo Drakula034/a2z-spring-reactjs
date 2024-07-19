@@ -2,6 +2,7 @@ package com.a2z.user_service.mapper;
 
 import com.a2z.user_service.model.dto.UserCreateDto;
 import com.a2z.user_service.model.dto.UserDetailsDto;
+import com.a2z.user_service.model.dto.UserUpdateDto;
 import com.a2z.user_service.model.entity.Role;
 import com.a2z.user_service.model.entity.User;
 import com.a2z.user_service.repository.RoleRepository;
@@ -58,7 +59,7 @@ public class UserMapper {
         userCreateDto.setPhotos(user.getPhotos());
         userCreateDto.setEnabled(user.getEnabled());
         List<String> roleList = new ArrayList<>();
-        Set<Role>roles = user.getRoles();
+        Set<Role> roles = user.getRoles();
         for (Role role : roles) {
             roleList.add(role.getName());
         }
@@ -84,12 +85,56 @@ public class UserMapper {
             }
         }
         user.setRoles(roleToAdd);
-        System.out.println("roles: " + user.getRoles());
-        System.out.println("users: " + user.toString());
-        System.out.println("photos: " + user.getPhotos());
+//        System.out.println("roles: " + user.getRoles());
+//        System.out.println("users: " + user.toString());
+//        System.out.println("photos: " + user.getPhotos());
         user.setPassword(userCreateDto.getPassword());
 
         return user;
 
     }
+
+    public User userUpdateDtoMapToUser(UserUpdateDto userUpdateDto, User user) {
+        if (userUpdateDto.getUserId() != null) {
+            user.setUserId(userUpdateDto.getUserId());
+        }
+        if (userUpdateDto.getEmail() != null) {
+            user.setEmail(userUpdateDto.getEmail());
+        }
+        if (userUpdateDto.getFirstName() != null) {
+            user.setFirstName(userUpdateDto.getFirstName());
+        }
+        if (userUpdateDto.getLastName() != null) {
+            user.setLastName(userUpdateDto.getLastName());
+        }
+        if (userUpdateDto.getMobileNumber() != null) {
+            user.setMobileNumber(userUpdateDto.getMobileNumber());
+        }
+        if (userUpdateDto.getPhotos() != null) {
+            user.setPhotos(userUpdateDto.getPhotos());
+        }
+        user.setEnabled(userUpdateDto.getEnabled());
+
+        List<String> roles = userUpdateDto.getRoles();
+        if (roles != null) {
+            Set<Role> roleToAdd = new HashSet<>();
+            for (String role : roles) {
+                Role existingRole = roleRepository.findByName(role);
+                if (existingRole != null) {
+                    roleToAdd.add(existingRole);
+                }
+            }
+            user.setRoles(roleToAdd);
+        }
+
+        if (userUpdateDto.getPassword() != null) {
+            user.setPassword(userUpdateDto.getPassword());
+        }
+        System.out.println("roles: " + user.getRoles());
+        System.out.println("users: " + user.toString());
+        System.out.println("photos: " + user.getPhotos());
+
+        return user;
+    }
+
 }

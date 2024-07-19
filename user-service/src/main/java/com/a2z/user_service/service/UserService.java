@@ -16,6 +16,7 @@ public interface UserService {
     public List<User> getAllUsers();
     public List<User> getAllUsersByPage(int page);
     public boolean createNewUser(User user);
+    public boolean updateUser(User user);
 
     public boolean checkDuplicateEmail(String email);
 

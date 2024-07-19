@@ -18,6 +18,7 @@ export const DELETE_USER_BY_ID = (userId) =>
   `${USER_SERVICE_BASE_URL}/${userId}`;
 
 export const CREATE_USER = `${USER_SERVICE_BASE_URL}/create`;
+export const UPDATE_USER = `${USER_SERVICE_BASE_URL}/update`;
 
 // product-service
 // categroy

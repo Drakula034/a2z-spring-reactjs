@@ -1,13 +1,16 @@
 package com.a2z.user_service.controller.admin.api;
 
+import com.a2z.user_service.exceptions.EmailFoundException;
 import com.a2z.user_service.exceptions.UserNotFoundException;
 import com.a2z.user_service.mapper.UserMapper;
 import com.a2z.user_service.model.dto.UserCreateDto;
 import com.a2z.user_service.model.dto.UserDetailsDto;
 import com.a2z.user_service.model.dto.UserResponseForControl;
+import com.a2z.user_service.model.dto.UserUpdateDto;
 import com.a2z.user_service.model.entity.User;
 import com.a2z.user_service.service.UserService;
 
+import com.a2z.user_service.service.util.UserServiceHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,12 +31,14 @@ public class UserController {
 
     private final UserService userService;
     private final UserMapper userMapper;
+    private final UserServiceHelper userServiceHelper;
 
 
     @Autowired
-    public UserController(UserService userService, UserMapper userMapper) {
+    public UserController(UserService userService, UserMapper userMapper, UserServiceHelper userServiceHelper) {
         this.userService = userService;
         this.userMapper = userMapper;
+        this.userServiceHelper = userServiceHelper;
     }
 
     private final Logger logger = LoggerFactory.getLogger(UserController.class);
@@ -61,11 +66,30 @@ public class UserController {
 
     @PostMapping("/create")
     public ResponseEntity<Boolean> createNewUser(@RequestBody UserCreateDto userCreateDto) {
-        System.out.println("userCreateDto" + userCreateDto.getPhotos());
+        boolean emailExists = userServiceHelper.checkEmailUniquness(userCreateDto.getEmail());
+        if (emailExists) {
+            throw new EmailFoundException("Email is already registered.");
+        }
         User user = userMapper.userCreateDtoMapToUser(userCreateDto, new User());
-//        System.out.println("usersave dto" + user.getRoles());
+
         boolean isUserCreated = userService.createNewUser(user);
         return ResponseEntity.status(HttpStatus.CREATED).body(isUserCreated);
+    }
+
+    @PutMapping("/update")
+    public ResponseEntity<Boolean> updateUser(@RequestBody UserUpdateDto userUpdateDto){
+        if (userUpdateDto.getUserId() == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(false);
+        }
+        User user = userMapper.userUpdateDtoMapToUser(userUpdateDto, new User());
+        boolean isUpdated = userService.updateUser(user);
+
+
+        if(isUpdated)return ResponseEntity.status(HttpStatus.OK).build();
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+
+
     }
 
     @GetMapping("/{id}")

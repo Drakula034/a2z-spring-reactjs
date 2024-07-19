@@ -5,6 +5,7 @@ import {
   CREATE_USER,
   DELETE_USER_BY_ID,
   GET_USERS_BY_PAGE,
+  UPDATE_USER,
   USER_BY_ID,
   USER_CONTROL_ENABLED_INFO,
   USERS_ENABLED_DISABLED_STATUS,
@@ -114,7 +115,31 @@ export async function createUser(data) {
       },
       body: JSON.stringify(data), // Convert data object to JSON string
     });
-    if (!response.ok) throw new Error(response.message);
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || "An error occurred");
+    }
+    // console.log(data);
+    return { success: true };
+  } catch (err) {
+    throw new Error(err.message);
+  }
+}
+
+export async function updateUser(data) {
+  const URL = UPDATE_USER;
+  try {
+    const response = await fetch(URL, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json", // Specify JSON content type
+      },
+      body: JSON.stringify(data), // Convert data object to JSON string
+    });
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || "An error occurred");
+    }
     // console.log(data);
     return { success: true };
   } catch (err) {

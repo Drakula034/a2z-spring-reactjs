@@ -32,7 +32,7 @@ const StyledSpan = styled.span`
 
 const StyledImageInput = styled(StyledLogoInput)``;
 
-function UserForm({ title, onSubmit, userToEdit }) {
+function UserForm({ title, onSubmit, userToEdit, formType }) {
   const { data: rolesData = [] } = useQuery("getAllRoles", useGetAllRoles());
   const navigate = useNavigate();
   const location = useLocation();
@@ -47,6 +47,7 @@ function UserForm({ title, onSubmit, userToEdit }) {
     enabled: userToEdit?.enabled || false,
     photos: userToEdit?.photos || "",
     roles: userToEdit?.roles.map((role) => role.name) || [],
+    password: userToEdit?.password || "",
   });
 
   const {
@@ -66,8 +67,8 @@ function UserForm({ title, onSubmit, userToEdit }) {
   const handleFormSubmit = (data) => {
     // console.log(data.photo[0]);
     onSubmit(data);
-    // reset();
-    // navigate(-1);
+    reset();
+    navigate(-1);
   };
 
   const handleCancel = () => {
@@ -159,7 +160,11 @@ function UserForm({ title, onSubmit, userToEdit }) {
         <input
           type="password"
           name="password"
-          {...register("password", { required: true })}
+          {...register("password", {
+            required: formType === "add" ? true : false,
+          })}
+          defaultValue={formValues.password}
+
           // onChange={handlePasswordChange}
         />
         {errors.password && <StyledSpan>Password is required</StyledSpan>}
@@ -172,6 +177,7 @@ function UserForm({ title, onSubmit, userToEdit }) {
           {...register("confirmPassword", {
             validate: (value) => value === password,
           })}
+          // disabled={password.length > 0 ? true : false}
           disabled={!password}
         />
         {errors.confirmPassword && (

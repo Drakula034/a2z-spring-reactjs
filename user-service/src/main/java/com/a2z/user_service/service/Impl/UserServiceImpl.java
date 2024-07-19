@@ -52,19 +52,22 @@ public class UserServiceImpl implements UserService {
         return pageUsers.getContent();
     }
 
+    private void setUserFieldsForCreateAndUpdate(User sourceUser, User targetUser){
+        targetUser.setEmail(sourceUser.getEmail());
+        targetUser.setFirstName(sourceUser.getFirstName());
+        targetUser.setLastName(sourceUser.getLastName());
+        targetUser.setPassword(sourceUser.getPassword());
+        targetUser.setMobileNumber(sourceUser.getMobileNumber());
+        targetUser.setPhotos(sourceUser.getPhotos());
+        targetUser.setEnabled(sourceUser.getEnabled());
+    }
 
     public boolean createNewUser(User user) {
         try {
             Set<Role> roles = user.getRoles();
 
             User newUser = new User();
-            newUser.setEmail(user.getEmail());
-            newUser.setFirstName(user.getFirstName());
-            newUser.setLastName(user.getLastName());
-            newUser.setPassword(user.getPassword());
-            newUser.setMobileNumber(user.getMobileNumber());
-            newUser.setPhotos(user.getPhotos());
-            newUser.setEnabled(user.getEnabled());
+            setUserFieldsForCreateAndUpdate(user, newUser);
 
 // Save user information to 'users' database
             User savedUser = userRepository.save(newUser);
@@ -76,6 +79,22 @@ public class UserServiceImpl implements UserService {
             return false; // Return false to indicate failure
         }
         return true;
+    }
+
+    @Override
+    public boolean updateUser(User user) {
+         Optional<User> existingUserOptional = userRepository.findById(user.getUserId());
+         if(existingUserOptional.isPresent()){
+             User existingUser = existingUserOptional.get();
+             setUserFieldsForCreateAndUpdate(user, existingUser);
+
+             User savedUser = userRepository.save(existingUser);
+             Set<Role> roles = user.getRoles();
+             savedUser.setRoles(roles);
+             userRepository.save(savedUser);
+             return true;
+         }
+        return false;
     }
 
     public boolean checkDuplicateEmail(String email) {

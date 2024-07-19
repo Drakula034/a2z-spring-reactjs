@@ -14,7 +14,7 @@ const useCreateUser = () => {
       },
       onError: (error) => {
         toast.error(
-          "Unable to delete the user because of this error: " + error.message
+          "Unable to create the user because of this error: " + error.message
         );
       },
     }

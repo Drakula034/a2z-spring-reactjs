@@ -37,7 +37,13 @@ function AddUser() {
     };
     createUser(userData);
   };
-  return <UserForm title={"Add New User"} onSubmit={handleOnSubmit} />;
+  return (
+    <UserForm
+      title={"Add New User"}
+      onSubmit={handleOnSubmit}
+      formType={"add"}
+    />
+  );
 }
 
 export default AddUser;
