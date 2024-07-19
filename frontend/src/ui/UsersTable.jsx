@@ -91,16 +91,21 @@ function Table({ rowData }) {
     {
       field: "photos",
       headerName: "Photo",
-      // cellRenderer: AddPhotoIfNotFound,
       cellRenderer: (props) => {
-        const photoUrl = props.data?.photo; // Extract the photo URL
+        const photoUrl = props.data?.photos; // Extract the photo URL (image name)
+        // console.log(photoUrl);
 
         return photoUrl ? (
           <img
-            src={photoUrl}
+            src={`/assets/users/${photoUrl}`} // Adjust path to be relative from public directory
             alt="photo"
-            style={{ width: "100px", height: "auto" }}
-          /> // Adjust styles as needed
+            style={{
+              width: "100px",
+              height: "auto",
+              padding: "2px 0",
+              display: "block",
+            }} // Adjust styles as needed
+          />
         ) : (
           <AddPhotoIfNotFound icon={<IoMdPerson />} />
         );

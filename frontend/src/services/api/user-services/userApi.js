@@ -115,7 +115,7 @@ export async function createUser(data) {
       body: JSON.stringify(data), // Convert data object to JSON string
     });
     if (!response.ok) throw new Error(response.message);
-    console.log(data);
+    // console.log(data);
     return { success: true };
   } catch (err) {
     throw new Error(err.message);

@@ -16,7 +16,7 @@ function AddUser() {
   //   });
   const handleOnSubmit = (data) => {
     // Extract the file object from the photo input
-    const file = data.photo[0].name;
+    const file = data.photo[0];
 
     // Extract selected roles
     const selectedRoles = Object.keys(data.roles).filter(
@@ -25,13 +25,14 @@ function AddUser() {
 
     // Set user data
     const userData = {
-      firstName: data.firstName,
-      lastName: data.lastName,
+      firstName:
+        data.firstName.charAt(0).toUpperCase() + data.firstName.slice(1),
+      lastName: data.lastName.charAt(0).toUpperCase() + data.lastName.slice(1),
       email: data.email,
       mobileNumber: data.mobileNumber,
       roles: selectedRoles,
       password: data.password,
-      photo: file,
+      photos: file.name,
       enabled: data.enabled,
     };
     createUser(userData);

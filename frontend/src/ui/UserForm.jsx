@@ -66,8 +66,8 @@ function UserForm({ title, onSubmit, userToEdit }) {
   const handleFormSubmit = (data) => {
     // console.log(data.photo[0]);
     onSubmit(data);
-    reset();
-    navigate(-1);
+    // reset();
+    // navigate(-1);
   };
 
   const handleCancel = () => {

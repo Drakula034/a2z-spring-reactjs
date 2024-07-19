@@ -76,7 +76,7 @@ public class UserMapper {
         user.setEnabled(userCreateDto.getEnabled());
 //        List<String> roles = userCreateDto.getRoles();
         List<String> roles = userCreateDto.getRoles();
-        Set<Role> roleToAdd = new HashSet<Role>();
+        Set<Role> roleToAdd = new HashSet<>();
         for (String role : roles) {
             Role existingRole = roleRepository.findByName(role);
             if (existingRole != null) {
@@ -84,30 +84,12 @@ public class UserMapper {
             }
         }
         user.setRoles(roleToAdd);
-
+        System.out.println("roles: " + user.getRoles());
+        System.out.println("users: " + user.toString());
+        System.out.println("photos: " + user.getPhotos());
         user.setPassword(userCreateDto.getPassword());
 
         return user;
-//////        Set<Role> roleToAdd = new HashSet<>();
-////        Set<Role> roleToAdd = user.getRoles();
-////
-//        for (String roleName : roles) {
-//            Role existingRole = roleRepository.findByName(roleName);
-//            if (existingRole != null && !user.getRoles().contains(existingRole)) {
-////                roleToAdd.add(existingRole);
-//                user.getRoles().add(existingRole);
-//            } else {
-//                // Handle case where role is already associated with the user
-//                System.out.println("Role " + roleName + " is already associated with the user.");
-//            }
-//        }
-//////        System.out.println("Roles to add: " + roleToAdd.stream().map(Role::getName).collect(Collectors.joining(", ")));
-////
-//////        user.getRoles().addAll(roleToAdd);
-//////        user.setRoles(roleToAdd);
-//        System.out.println(user.getRoles());
-//        user.setPassword(userCreateDto.getPassword());
 
-//        return user;
     }
 }
