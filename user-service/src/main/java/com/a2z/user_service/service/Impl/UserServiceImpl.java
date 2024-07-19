@@ -9,7 +9,6 @@ import com.a2z.user_service.service.UserService;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -28,6 +27,7 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
 
     private final RoleRepository roleRepository;
+
 
     private final int USERS_PER_PAGE = 4;
 
@@ -83,6 +83,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean updateUser(User user) {
+
          Optional<User> existingUserOptional = userRepository.findById(user.getUserId());
          if(existingUserOptional.isPresent()){
              User existingUser = existingUserOptional.get();

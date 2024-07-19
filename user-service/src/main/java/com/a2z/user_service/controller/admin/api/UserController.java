@@ -11,7 +11,11 @@ import com.a2z.user_service.model.entity.User;
 import com.a2z.user_service.service.UserService;
 
 import com.a2z.user_service.service.util.UserServiceHelper;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.ConstraintViolationException;
+import jakarta.validation.Validator;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.sql.Update;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +36,8 @@ public class UserController {
     private final UserService userService;
     private final UserMapper userMapper;
     private final UserServiceHelper userServiceHelper;
+//    @Autowired
+//    private Validator validator;
 
 
     @Autowired
@@ -81,6 +87,10 @@ public class UserController {
         if (userUpdateDto.getUserId() == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(false);
         }
+//        Set<ConstraintViolation<UserUpdateDto>> violations = validator.validate(userUpdateDto, Update.class);
+//        if (!violations.isEmpty()) {
+//            throw new ConstraintViolationException(violations);
+//        }
         User user = userMapper.userUpdateDtoMapToUser(userUpdateDto, new User());
         boolean isUpdated = userService.updateUser(user);
 

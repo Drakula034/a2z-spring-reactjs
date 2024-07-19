@@ -1,6 +1,8 @@
 package com.a2z.user_service.model.entity;
 
 import com.a2z.user_service.model.entity.Role;
+import com.a2z.user_service.validation.Create;
+import com.a2z.user_service.validation.Update;
 import jakarta.persistence.*;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Size;
@@ -35,6 +37,7 @@ public class User {
     @Column(name = "last_name", length = 40, nullable = false)
     private String lastName;
 
+//    @Size(min = 6, max = 12, groups = {Create.class, Update.class})
     @Size(min = 6, max = 12)
     @Column(nullable = false)
     private String password;

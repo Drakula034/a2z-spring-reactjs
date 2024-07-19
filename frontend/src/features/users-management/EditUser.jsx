@@ -1,23 +1,25 @@
 import { useLocation } from "react-router-dom";
 import UserForm from "../../ui/UserForm";
-import useCreateUser from "./useCreateUser";
+import useUpdateUser from "./useUpdateUser";
 
 function EditUser() {
-  const location = useLocation();
+  // const location = useLocation();
   const {
     state: { userToEdit },
+    location,
   } = useLocation();
   // console.log(userToEdit);
-  const { createUser } = useCreateUser();
-  const handleOnSubmit = (data) => {
+  const { updateUser } = useUpdateUser();
+  const handleOnSubmit = (data, userId) => {
     // Extract the file object from the photo input
-    const file = data.photo[0];
+    const file = data.photo && data.photo[0] ? data.photo[0] : { name: "" };
 
     // Extract selected roles
     const selectedRoles = Object.keys(data.roles).filter(
       (role) => data.roles[role] === true
     );
 
+    // const userId = 5;
     // Set user data
     const userData = {
       firstName:
@@ -29,8 +31,10 @@ function EditUser() {
       password: data.password,
       photos: file.name,
       enabled: data.enabled,
+      userId: userId,
     };
-    createUser(userData);
+    updateUser(userData);
+    console.log(userData);
   };
 
   return (

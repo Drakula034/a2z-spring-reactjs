@@ -4,8 +4,8 @@ import CancelButton from "./CancelButton";
 import styled from "styled-components";
 import { useQuery } from "react-query";
 import useGetAllRoles from "../features/users-management/useGetAllRoles";
-import { useLocation, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 import {
   StyledButtons,
   StyledEnabled,
@@ -38,7 +38,18 @@ function UserForm({ title, onSubmit, userToEdit, formType }) {
   const location = useLocation();
   //   const { roles } = rolesData;
   //   console.log(rolesData);
+  // const [userId, setUserId] = useState(null);
 
+  // useEffect(() => {
+  //   // const queryParams = new URLSearchParams(location.search);
+  //   // const id = queryParams.get("userId");
+  //   // setUserId(id);
+  //   setUserId(userToEdit?.userId);
+  // }, [location]);
+
+  const userId = userToEdit?.userId;
+  // console.log(userId);
+  // console.log(userToEdit);
   const [formValues, setFormValues] = useState({
     firstName: userToEdit ? userToEdit.firstName : "",
     lastName: userToEdit?.lastName || "",
@@ -59,16 +70,17 @@ function UserForm({ title, onSubmit, userToEdit, formType }) {
     formState: { errors },
   } = useForm();
 
-  // const [password, setPassword] = useState("");
-
-  // const handlePasswordChange = (e) => {
-  //   setPassword(e.target.value);
-  // };
   const handleFormSubmit = (data) => {
     // console.log(data.photo[0]);
-    onSubmit(data);
-    reset();
-    navigate(-1);
+    // console.log(data);
+    if (formType === "edit") {
+      onSubmit(data, userId);
+    } else {
+      onSubmit(data, userId);
+    }
+
+    // reset();
+    // navigate(-1);
   };
 
   const handleCancel = () => {
@@ -80,8 +92,8 @@ function UserForm({ title, onSubmit, userToEdit, formType }) {
   };
   const password = watch("password", "");
   const validateFileSize = (file) => {
-    if (file && (file.size < 100 * 1024 || file.size > 2 * 1024 * 1024)) {
-      return "File size must be between 100KB and 2MB.";
+    if (file && (file.size < 20 * 1024 || file.size > 2 * 1024 * 1024)) {
+      return "File size must be between 20KB and 2MB.";
     }
     return true;
   };
@@ -126,7 +138,6 @@ function UserForm({ title, onSubmit, userToEdit, formType }) {
           {errors.lastName && <StyledSpan>Last Name is required</StyledSpan>}
         </StyledUserInputName>
       </StyledUserName>
-      {/* <StyledInputGroup> */}
       <StyledInput>
         <label>Email</label>
         <input
@@ -161,7 +172,7 @@ function UserForm({ title, onSubmit, userToEdit, formType }) {
           type="password"
           name="password"
           {...register("password", {
-            required: formType === "add" ? true : false,
+            required: formType === "add",
           })}
           defaultValue={formValues.password}
 
@@ -175,26 +186,24 @@ function UserForm({ title, onSubmit, userToEdit, formType }) {
           type="password"
           name="confirmPassword"
           {...register("confirmPassword", {
-            validate: (value) => value === password,
+            validate: (value) => {
+              // If password is empty, don't validate confirmPassword
+              if (!password) return true;
+              return value === password || "Passwords do not match";
+            },
           })}
-          // disabled={password.length > 0 ? true : false}
           disabled={!password}
         />
         {errors.confirmPassword && (
-          <StyledSpan>Passwords do not match</StyledSpan>
+          <StyledSpan>{errors.confirmPassword.message}</StyledSpan>
         )}
       </StyledInput>
-      {/* </StyledInputGroup> */}
+
       <StyledRoles>
         <label>Roles</label>
-        {/* <label>Roles</label>
-        <input type="text" name="roles" {...register("roles")} /> */}
         <div>
           {rolesData.map((role, id) => (
             <StyledRole key={id}>
-              {/* <input type="checkbox" {...register} name="roles" />
-              <h3 style={{ fontWeight: "normal" }}>{role.roleName}</h3>
-              <h4 style={{ fontWeight: "normal" }}>{role.description}</h4> */}
               <Controller
                 name={`roles.${role.roleName}`}
                 control={control}
@@ -233,7 +242,7 @@ function UserForm({ title, onSubmit, userToEdit, formType }) {
           {...register("photo", {
             validate: (value) => validateFileSize(value),
           })}
-          defaultValue={formValues.photos}
+          // value={formValues.photos}
         />
       </StyledImageInput>
       <StyledButtons>
