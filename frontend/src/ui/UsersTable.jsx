@@ -93,7 +93,17 @@ function Table({ rowData }) {
       headerName: "Photo",
       // cellRenderer: AddPhotoIfNotFound,
       cellRenderer: (props) => {
-        return <AddPhotoIfNotFound icon={<IoMdPerson />} />;
+        const photoUrl = props.data?.photo; // Extract the photo URL
+
+        return photoUrl ? (
+          <img
+            src={photoUrl}
+            alt="photo"
+            style={{ width: "100px", height: "auto" }}
+          /> // Adjust styles as needed
+        ) : (
+          <AddPhotoIfNotFound icon={<IoMdPerson />} />
+        );
       },
       flex: 1,
     },

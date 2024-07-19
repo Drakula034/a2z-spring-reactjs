@@ -90,4 +90,16 @@ public class BrandServiceImpl implements BrandService {
         }
         return brandNamesDtoList;
     }
+
+    @Override
+    public boolean deleteBrandById(Integer brandId) {
+        Optional<Brand> brand = brandsRepository.findById(brandId);
+        if(brand.isPresent()){
+            brandsRepository.delete(brand.get());
+            return brandsRepository.findById(brandId).isEmpty();
+        }else {
+            // Handle the case where the category does not exist
+            throw new NoSuchElementException("Brand with ID " + brandId + " not found.");
+        }
+    }
 }

@@ -17,4 +17,5 @@ public interface BrandService {
 
     List<BrandResponseDto> getBrandsByPage(int page);
     List<BrandNamesDto> getAllBrandsNames();
+    boolean deleteBrandById(Integer brandId);
 }

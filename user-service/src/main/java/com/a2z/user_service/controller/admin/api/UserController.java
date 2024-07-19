@@ -61,11 +61,10 @@ public class UserController {
 
     @PostMapping("/create")
     public ResponseEntity<Boolean> createNewUser(@RequestBody UserCreateDto userCreateDto) {
-        System.out.println("userCreateDto" + userCreateDto.getRoles());
+//        System.out.println("userCreateDto" + userCreateDto.getRoles());
         User user = userMapper.userCreateDtoMapToUser(userCreateDto, new User());
 //        System.out.println("usersave dto" + user.getRoles());
         boolean isUserCreated = userService.createNewUser(user);
-
         return ResponseEntity.status(HttpStatus.CREATED).body(isUserCreated);
     }
 

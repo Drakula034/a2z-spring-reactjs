@@ -55,4 +55,13 @@ public class BrandController {
         List<BrandNamesDto> brandNamesDtoList = brandService.getAllBrandsNames();
         return ResponseEntity.status(HttpStatus.OK).body(brandNamesDtoList);
     }
+
+    @DeleteMapping("/{brandId}")
+    public ResponseEntity<?> deleteBrandByBrandId(@PathVariable Integer brandId){
+        boolean isDeleted = brandService.deleteBrandById(brandId);
+        if(isDeleted) {
+            return ResponseEntity.status(HttpStatus.OK).build();
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    }
 }

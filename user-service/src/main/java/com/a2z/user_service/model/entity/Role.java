@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import jakarta.persistence.Table;
 import lombok.*;
 import org.hibernate.annotations.*;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 //@NoArgsConstructor
 //@Getter
@@ -21,6 +22,7 @@ import org.hibernate.annotations.*;
 @Entity
 @Table(name="roles")
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@EntityListeners(AuditingEntityListener.class)
 public class Role {
 
     @Id

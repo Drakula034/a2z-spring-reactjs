@@ -17,6 +17,8 @@ export const USERS_ENABLED_DISABLED_STATUS = (userId) =>
 export const DELETE_USER_BY_ID = (userId) =>
   `${USER_SERVICE_BASE_URL}/${userId}`;
 
+export const CREATE_USER = `${USER_SERVICE_BASE_URL}/create`;
+
 // product-service
 // categroy
 
@@ -44,6 +46,8 @@ export const BRANDS_BY_PAGE = (page) => {
 };
 
 export const GET_ALL_BRANDS = `${BRAND_SERVICE_BASE_URL}/all-names`;
+export const DELETE_BRAND_BY_ID = (brandId) =>
+  `${BRAND_SERVICE_BASE_URL}/${brandId}`;
 
 // product
 

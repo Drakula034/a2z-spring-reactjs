@@ -6,6 +6,7 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -17,6 +18,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@EntityListeners(AuditingEntityListener.class)
 public class User {
 
     @Id
@@ -55,7 +57,12 @@ public class User {
     )
     private Set<Role> roles = new HashSet<>();
 
-    // Constructors, getters, setters, and other methods omitted for brevity
+//    private String createBy;
+//    private String updateBy;
+//    private String createDate;
+//    private String updateDate;
+
+
     public void addRole(Role role) {
         this.roles.add(role);
     }

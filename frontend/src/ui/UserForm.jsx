@@ -26,6 +26,9 @@ const StyledInputGroup = styled.div`
   column-gap: 1rem;
   row-gap: 0.5rem;
 `;
+const StyledSpan = styled.span`
+  color: red;
+`;
 
 const StyledImageInput = styled(StyledLogoInput)``;
 
@@ -40,6 +43,7 @@ function UserForm({ title, onSubmit, userToEdit }) {
     firstName: userToEdit ? userToEdit.firstName : "",
     lastName: userToEdit?.lastName || "",
     email: userToEdit?.email || "",
+    mobileNumber: userToEdit?.mobileNumber || "",
     enabled: userToEdit?.enabled || false,
     photos: userToEdit?.photos || "",
     roles: userToEdit?.roles.map((role) => role.name) || [],
@@ -74,6 +78,12 @@ function UserForm({ title, onSubmit, userToEdit }) {
     // navigate("/admin/users");
   };
   const password = watch("password", "");
+  const validateFileSize = (file) => {
+    if (file && (file.size < 100 * 1024 || file.size > 2 * 1024 * 1024)) {
+      return "File size must be between 100KB and 2MB.";
+    }
+    return true;
+  };
   return (
     <StyledForm onSubmit={handleSubmit(handleFormSubmit)}>
       <Title>
@@ -97,20 +107,22 @@ function UserForm({ title, onSubmit, userToEdit }) {
           <input
             type="text"
             name="firstName"
-            {...register("firstName")}
+            {...register("firstName", { required: true })}
             defaultValue={formValues.firstName}
             size={30}
           />
+          {errors.firstName && <StyledSpan>First Name is required</StyledSpan>}
         </StyledUserInputName>
         <StyledUserInputName>
           <label>Last Name</label>
           <input
             type="text"
             name="lastName"
-            {...register("lastName")}
+            {...register("lastName", { required: true })}
             size={30}
             defaultValue={formValues.lastName}
           />
+          {errors.lastName && <StyledSpan>Last Name is required</StyledSpan>}
         </StyledUserInputName>
       </StyledUserName>
       {/* <StyledInputGroup> */}
@@ -119,31 +131,52 @@ function UserForm({ title, onSubmit, userToEdit }) {
         <input
           type="email"
           name="email"
-          {...register("email")}
+          {...register("email", {
+            required: "Email is required",
+            pattern: {
+              value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+              message: "Provide a valid email address",
+            },
+          })}
           defaultValue={formValues.email}
         />
+        {errors.email && <StyledSpan>{errors.email.message}</StyledSpan>}
       </StyledInput>
-      {/* </StyledInputGroup> */}
-      {/* <StyledInputGroup> */}
+      <StyledInput>
+        <label>Mobile Number</label>
+        <input
+          type="Number"
+          name="mobileNumber"
+          {...register("mobileNumber", { required: true })}
+          defaultValue={formValues.mobileNumber}
+        />
+        {errors.mobileNumber && (
+          <StyledSpan>Mobile Number is required</StyledSpan>
+        )}
+      </StyledInput>
       <StyledInput>
         <label>Password</label>
         <input
           type="password"
           name="password"
-          {...register("password")}
+          {...register("password", { required: true })}
           // onChange={handlePasswordChange}
         />
+        {errors.password && <StyledSpan>Password is required</StyledSpan>}
       </StyledInput>
-      {/* </StyledInputGroup> */}
-      {/* <StyledInputGroup> */}
       <StyledInput>
         <label>Confirm Password</label>
         <input
           type="password"
           name="confirmPassword"
-          {...register("confirmPassword")}
+          {...register("confirmPassword", {
+            validate: (value) => value === password,
+          })}
           disabled={!password}
         />
+        {errors.confirmPassword && (
+          <StyledSpan>Passwords do not match</StyledSpan>
+        )}
       </StyledInput>
       {/* </StyledInputGroup> */}
       <StyledRoles>
@@ -170,6 +203,7 @@ function UserForm({ title, onSubmit, userToEdit }) {
                   />
                 )}
               />
+              {errors.roles && <StyledSpan>Role is required</StyledSpan>}
               <h3 style={{ fontWeight: "normal" }}>{role.roleName}</h3>
               <h4 style={{ fontWeight: "normal" }}>{role.description}</h4>
             </StyledRole>
@@ -190,7 +224,9 @@ function UserForm({ title, onSubmit, userToEdit }) {
         <input
           type="file"
           name="photo"
-          {...register("photo")}
+          {...register("photo", {
+            validate: (value) => validateFileSize(value),
+          })}
           defaultValue={formValues.photos}
         />
       </StyledImageInput>

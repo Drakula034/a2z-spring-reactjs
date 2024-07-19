@@ -49,3 +49,5 @@ export async function getAllBrandsNames() {
     throw new Error(err.message);
   }
 }
+
+export async function deleteBrandById(brandId) {}

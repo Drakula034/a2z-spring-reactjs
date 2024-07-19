@@ -2,6 +2,7 @@ import { json } from "react-router-dom";
 
 import {
   ALL_USER_INFO,
+  CREATE_USER,
   DELETE_USER_BY_ID,
   GET_USERS_BY_PAGE,
   USER_BY_ID,
@@ -97,6 +98,24 @@ export async function deleteUserById(userId) {
   try {
     const response = await fetch(url, { method: "DELETE" });
     if (!response.ok) throw new Error(response.message);
+    return { success: true };
+  } catch (err) {
+    throw new Error(err.message);
+  }
+}
+
+export async function createUser(data) {
+  const URL = CREATE_USER;
+  try {
+    const response = await fetch(URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json", // Specify JSON content type
+      },
+      body: JSON.stringify(data), // Convert data object to JSON string
+    });
+    if (!response.ok) throw new Error(response.message);
+    console.log(data);
     return { success: true };
   } catch (err) {
     throw new Error(err.message);

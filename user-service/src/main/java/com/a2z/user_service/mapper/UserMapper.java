@@ -74,7 +74,6 @@ public class UserMapper {
         user.setMobileNumber(userCreateDto.getMobileNumber());
         user.setPhotos(userCreateDto.getPhotos());
         user.setEnabled(userCreateDto.getEnabled());
-        user.setPassword(userCreateDto.getPassword());
 //        List<String> roles = userCreateDto.getRoles();
         List<String> roles = userCreateDto.getRoles();
         Set<Role> roleToAdd = new HashSet<Role>();
