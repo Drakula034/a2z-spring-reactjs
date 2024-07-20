@@ -11,7 +11,7 @@ import java.util.*;
 @Service
 public interface BrandService {
 
-    Brand addBrand(Brand brand);
+    boolean addBrand(Brand brand);
     List<Brand> getAllBrand();
     BrandResponseForControl getTotalBrandCount();
 

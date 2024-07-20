@@ -26,36 +26,57 @@ public class BrandServiceImpl implements BrandService {
     private final CategoryRepository categoryRepository;
 
     @Override
-    public Brand addBrand(Brand brand) {
-            Brand addBrand = new Brand();
-            addBrand.setName(brand.getName());
-            addBrand.setLogo(brand.getLogo());
+//    public Brand addBrand(Brand brand) {
+//            Brand addBrand = new Brand();
+//            addBrand.setName(brand.getName());
+//            addBrand.setLogo(brand.getLogo());
+//
+//            // No need to create a new Brand object, use the one passed as a parameter
+//            Brand savedBrand = brandsRepository.save(addBrand);
+//
+//            // Retrieve existing categories by name and add them to the brand
+//            Set<Category> categories = brand.getCategories();
+//            Set<Category> existingCategories = new HashSet<>();
+//
+//            for (Category category : categories) {
+//                Category existingCategory = categoryRepository.findByCategoryName(category.getCategoryName());
+//                if (existingCategory != null) {
+//                    existingCategories.add(existingCategory);
+//                }
+//            }
+//
+//            // Set the categories to the brand and save
+//            savedBrand.setCategories(existingCategories);
+//            savedBrand = brandsRepository.save(savedBrand);
+//
+//            // Print the saved brand for debugging purposes
+////            System.out.println(savedBrand);
+//
+//            return savedBrand;
+//
+//
+//    }
+    public boolean addBrand(Brand brand) {
+        // Retrieve existing categories by name and add them to the brand
+        Set<Category> categories = brand.getCategories();
+        Set<Category> existingCategories = new HashSet<>();
 
-            // No need to create a new Brand object, use the one passed as a parameter
-            Brand savedBrand = brandsRepository.save(addBrand);
-
-            // Retrieve existing categories by name and add them to the brand
-            Set<Category> categories = brand.getCategories();
-            Set<Category> existingCategories = new HashSet<>();
-
-            for (Category category : categories) {
-                Category existingCategory = categoryRepository.findByCategoryName(category.getCategoryName());
-                if (existingCategory != null) {
-                    existingCategories.add(existingCategory);
-                }
+        for (Category category : categories) {
+            Category existingCategory = categoryRepository.findByCategoryName(category.getCategoryName());
+            if (existingCategory != null) {
+                existingCategories.add(existingCategory);
             }
+        }
 
-            // Set the categories to the brand and save
-            savedBrand.setCategories(existingCategories);
-            savedBrand = brandsRepository.save(savedBrand);
+        // Set the categories to the brand
+        brand.setCategories(existingCategories);
 
-            // Print the saved brand for debugging purposes
-//            System.out.println(savedBrand);
+        // Save the brand with its categories
+        Brand savedBrand = brandsRepository.save(brand);
 
-            return savedBrand;
-
-
+        return savedBrand.getId() > 0;
     }
+
 
     @Override
     public List<Brand> getAllBrand() {

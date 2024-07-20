@@ -12,11 +12,11 @@ function EditCategory() {
   const handleFormSubmit = (data, categoryId) => {
     const file = data.photo[0];
     const categoryData = {
-      categoryName: data.categoryName,
-      description: data.categoryDescription,
-      enabled: data.enabled,
-      image: file.name,
-      categoryId: categoryId,
+      categoryName: data?.categoryName || null,
+      description: data?.categoryDescription || null,
+      enabled: data?.enabled ?? false, // Use nullish coalescing to handle undefined and null
+      image: file?.name || null,
+      categoryId: categoryId ?? null, // Use nullish coalescing to handle undefined and null
     };
     // console.log(data);
     // console.log(categoryData);

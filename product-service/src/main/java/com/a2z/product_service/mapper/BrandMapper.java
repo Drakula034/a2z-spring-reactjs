@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 public class BrandMapper {
     public static Brand brandDtoMapToBrand(BrandDto brandDto, Brand brand){
         brand.setName(brandDto.getName());
-        brand.setName(brandDto.getName());
+        brand.setLogo(brandDto.getLogo());
         brand.setCategories(new HashSet<>(brandDto.getCategories()));
 
         return brand;

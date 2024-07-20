@@ -33,4 +33,14 @@ public class Brand {
     public void addCategory(Category category) {
         this.categories.add(category);
     }
+
+
+    @Override
+    public String toString() {
+        return "BrandId: " + getId() + ", "
+                + "Brand Name: " + getName() + ", "
+                + "Brand Logo: " + getLogo() + ", "
+                + "Categories: " + getCategories();
+    }
+
 }

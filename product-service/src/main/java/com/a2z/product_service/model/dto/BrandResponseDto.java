@@ -16,5 +16,6 @@ public class BrandResponseDto {
     private Integer brandId;
     private String brandName;
     private String brandLogo;
+
     private Set<CategoryResponseDto> categories;
 }

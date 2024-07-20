@@ -26,6 +26,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Autowired
     private CategoryRepository categoryRepository;
     private CategoryMapper categoryMapper;
+
     @Override
     public boolean createCategory(Category category) {
         try {
@@ -53,10 +54,14 @@ public class CategoryServiceImpl implements CategoryService {
             Optional<Category> existingCategoryOptional = categoryRepository.findById(category.getCategoryId());
             if (existingCategoryOptional.isPresent()) {
                 Category existingCategory = existingCategoryOptional.get();
-                existingCategory.setCategoryName(category.getCategoryName());
-                existingCategory.setEnabled(category.isEnabled());
-                existingCategory.setDescription(category.getDescription());
-                existingCategory.setImage(category.getImage());
+                if (category.getCategoryName() != null)
+                    existingCategory.setCategoryName(category.getCategoryName());
+                if (!Objects.equals(category.getEnabled(), existingCategory.getEnabled()))
+                    existingCategory.setEnabled(category.isEnabled());
+                if (category.getDescription() != null)
+                    existingCategory.setDescription(category.getDescription());
+                if (category.getImage() != null)
+                    existingCategory.setImage(category.getImage());
 
                 // Save the updated category
                 categoryRepository.save(existingCategory);
@@ -73,7 +78,6 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
 
-
     @Override
     public CategoryResponseForControl getEnabledAndDisabledCategory() {
         Integer enabledCategory = categoryRepository.countEnabledCategory();
@@ -84,10 +88,10 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public List<CategoryResponseDto> getCategoryByPage(Integer page) {
 
-        Pageable pageable = PageRequest.of(page-1, CATEGORY_PER_PAGE);
+        Pageable pageable = PageRequest.of(page - 1, CATEGORY_PER_PAGE);
         List<Category> categories = categoryRepository.findAll(pageable).getContent();
         List<CategoryResponseDto> categoryResponseDtoList = new ArrayList<>();
-        for(Category category : categories){
+        for (Category category : categories) {
             categoryResponseDtoList.add(CategoryMapper.categoryMapToCategoryResponseDto(category, new CategoryResponseDto()));
         }
         return categoryResponseDtoList;
@@ -97,7 +101,7 @@ public class CategoryServiceImpl implements CategoryService {
     public List<CategoryNameDto> getAllCategoryNames() {
         List<Category> categories = categoryRepository.findAll();
         List<CategoryNameDto> categoryNameDtoList = new ArrayList<>();
-        for(Category category: categories){
+        for (Category category : categories) {
             categoryNameDtoList.add(CategoryMapper.categoryMapToCategoryNameDto(category, new CategoryNameDto()));
         }
         return categoryNameDtoList;

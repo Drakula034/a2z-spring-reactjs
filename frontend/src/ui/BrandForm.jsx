@@ -15,6 +15,7 @@ import {
   StyledSelectCategory,
   Title,
 } from "./AdminFormStyles";
+import { CommonStyledSpan } from "../styles/CommonStyles";
 
 const Container = styled.div`
   /* height: 90%; */
@@ -38,7 +39,7 @@ const customStyles = {
     display: "none", // Hide the remove button
   }),
 };
-function BrandForm({ title }) {
+function BrandForm({ title, onSubmit, formType }) {
   const navigate = useNavigate();
   const location = useLocation();
   const brandToEdit = location.state?.brandToEdit;
@@ -105,13 +106,15 @@ function BrandForm({ title }) {
 
   const handleFormSubmit = (data) => {
     // console.log(data);
-    reset();
-    navigate(-1);
+
+    onSubmit(data);
+    // reset();
+    // navigate(-1);
   };
-  const createNew = () => {
-    // console.log("submitted");
-    handleFormSubmit();
-  };
+  // const createNew = () => {
+  //   // console.log("submitted");
+  //   handleFormSubmit();
+  // };
 
   return (
     <StyledForm onSubmit={handleSubmit(handleFormSubmit)}>
@@ -137,19 +140,25 @@ function BrandForm({ title }) {
           {...register("brandName", { required: true })}
           defaultValue={formValues.brandName}
         />
+        {errors.brandName && (
+          <CommonStyledSpan>This field is required</CommonStyledSpan>
+        )}
       </StyledInput>
       <StyledLogoInput>
         <label>Brand Logo</label>
         <input
           type="file"
           name="brandLogo"
-          {...register("brandLogo")}
+          {...register("brandLogo", { required: formType === "add" })}
           onChange={handleChange}
           defaultValue={formValues.brandLogo}
         />
         {image && (
           //   <ShowImage>
           <img src={image} />
+        )}
+        {formType === "add" && errors.brandLogo && (
+          <CommonStyledSpan>This field is required</CommonStyledSpan>
         )}
       </StyledLogoInput>
       <StyledSelectCategory>
@@ -158,7 +167,7 @@ function BrandForm({ title }) {
           <Select
             isMulti
             name="brandCategories"
-            {...register("brandCategories")}
+            {...register("brandCategories", { required: formType === "add" })}
             options={categories}
             onChange={handleCategoryChange}
             styles={customStyles}
@@ -179,7 +188,7 @@ function BrandForm({ title }) {
       )} */}
 
       <StyledButtons>
-        <AddButton buttonText="Save" createNew={createNew} />
+        <AddButton buttonText="Save" />
         <CancelButton buttonText="Cancel" handleCancel={cancel} />
       </StyledButtons>
     </StyledForm>

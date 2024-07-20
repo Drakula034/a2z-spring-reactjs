@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import AddPhotoIfNotFound from "./AddPhotoIfNotFound";
 import { FaAmazon } from "react-icons/fa";
 import DeleteConfirmation from "./DeleteConfirmation";
+import useDeleteBrandByBrandId from "../features/brands-management/useDeleteBrandByBrandId";
 const ROW_HEIGHT = "80px";
 const GridContainer = styled.div`
   .ag-header-cell-label {
@@ -41,7 +42,7 @@ function BrandTable({ rowData }) {
     }),
     []
   );
-
+  const { deleteBrandByBrandId } = useDeleteBrandByBrandId();
   const selectDeleteIcon = (brandId, brandName) => {
     setBrandIdName({ brandId: brandId, brandName: brandName });
     setIsOpen(true);
@@ -53,7 +54,15 @@ function BrandTable({ rowData }) {
       field: "Logo",
       headerName: "Logo",
       flex: 1,
-      cellRenderer: (props) => <AddPhotoIfNotFound icon={<FaAmazon />} />,
+      cellRenderer: (props) => {
+        const photo = props.data?.brandLogo;
+        // console.log("photo", photo);
+        return photo ? (
+          <img src={`/assets/brands/${photo}`} style={{ width: "100px" }} />
+        ) : (
+          <AddPhotoIfNotFound icon={<FaAmazon />} />
+        );
+      },
     },
     { field: "brandName", headerName: "Brand Name", flex: 1.2 },
     {
@@ -120,8 +129,9 @@ function BrandTable({ rowData }) {
   const close = () => {
     setIsOpen(false);
   };
-  const confirm = () => {
+  const confirm = (brandId) => {
     setIsOpen(false);
+    deleteBrandByBrandId(brandId);
   };
   return (
     <GridContainer>

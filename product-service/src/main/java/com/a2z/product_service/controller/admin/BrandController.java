@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.*;
 
+import javax.xml.transform.OutputKeys;
 import java.util.*;
 
 @Controller
@@ -28,12 +29,16 @@ public class BrandController {
     private BrandService brandService;
 
     @PostMapping("/add")
-    public ResponseEntity<String> addBrand(@RequestBody BrandDto brandDto){
+    public ResponseEntity<Boolean> addBrand(@RequestBody BrandDto brandDto){
 //        System.out.println(brandDto);
         Brand brand = BrandMapper.brandDtoMapToBrand(brandDto, new Brand());
-        System.out.println(brand);
-        brandService.addBrand(brand);
-        return ResponseEntity.ok("Brand added successfully");
+//        System.out.println(brand.getCategories().toString());
+//        System.out.println(brand.toString());
+       boolean isCreated =  brandService.addBrand(brand);
+       if(isCreated)
+        return ResponseEntity.status(HttpStatus.OK).build();
+
+       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
 
     @GetMapping("/control-panel")

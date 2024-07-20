@@ -53,6 +53,10 @@ export const GET_ALL_BRANDS = `${BRAND_SERVICE_BASE_URL}/all-names`;
 export const DELETE_BRAND_BY_ID = (brandId) =>
   `${BRAND_SERVICE_BASE_URL}/${brandId}`;
 
+export const CREATE_BRAND = `${BRAND_SERVICE_BASE_URL}/add`;
+export const UPDATE_BRAND = (brandId) =>
+  `${BRAND_SERVICE_BASE_URL}/${brandId}/update`;
+
 // product
 
 export const PRODUCT_SERVICE_BASE_URL =

@@ -13,14 +13,15 @@ import {
   StyledButtons,
   StyledLogoInput,
 } from "./AdminFormStyles";
+import { CommonStyledSpan } from "../styles/CommonStyles";
 
 const Container = styled.div`
   /* height: 90%; */
   /* width: 80%; */
 `;
-const StyledSpan = styled.span`
-  color: red;
-`;
+// const StyledSpan = styled.span`
+//   color: red;
+// `;
 const StyledImageInput = styled(StyledLogoInput)``;
 
 function CategoryForm({ title, categoryToEdit, onSubmit, formType }) {
@@ -53,11 +54,6 @@ function CategoryForm({ title, categoryToEdit, onSubmit, formType }) {
     navigate(-1);
   };
 
-  // const createNew = (e) => {
-  //   e.preventDefault();
-  //   handleSubmit(handleFormSubmit)();
-  //   // navigate(-1);
-  // };
   const cancel = () => {
     reset();
     navigate("/admin/categories");
@@ -88,7 +84,9 @@ function CategoryForm({ title, categoryToEdit, onSubmit, formType }) {
           {...register("categoryName", { required: true })}
           defaultValue={formValues.categoryName}
         />
-        {errors.categoryName && <StyledSpan>This field is required</StyledSpan>}
+        {errors.categoryName && (
+          <CommonStyledSpan>This field is required</CommonStyledSpan>
+        )}
       </StyledInput>
       <StyledInputDescription>
         <label>Category Description</label>
@@ -111,7 +109,14 @@ function CategoryForm({ title, categoryToEdit, onSubmit, formType }) {
       </StyledEnabled>
       <StyledImageInput>
         <label>Image</label>
-        <input type="file" name="photo" {...register("photo")} />
+        <input
+          type="file"
+          name="photo"
+          {...register("photo", { required: formType !== "edit" })}
+        />
+        {formType !== "edit" && errors.photo && (
+          <CommonStyledSpan>This field is required</CommonStyledSpan>
+        )}
       </StyledImageInput>
       <StyledButtons>
         <AddButton
