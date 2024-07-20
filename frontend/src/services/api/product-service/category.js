@@ -2,6 +2,7 @@ import {
   CATEGORY_BY_PAGE,
   CATEGORY_SERVICE_ENABLED_DISABLED_URL,
   CATEGORY_TOGGLE_ENABLED_STATUS,
+  CREATE_CATEGORY,
   DELETE_CATEGORY_BY_ID,
   GET_ALL_CATEGORY,
 } from "../../../constants/endpoint-constants";
@@ -65,6 +66,26 @@ export async function deleteCategoryById(categoryId) {
     const response = await fetch(URL, { method: "DELETE" });
     if (!response.ok) throw new Error(response.message);
 
+    return { success: true };
+  } catch (err) {
+    throw new Error(err.message);
+  }
+}
+
+export async function createCategory(data) {
+  const URL = CREATE_CATEGORY;
+
+  try {
+    const response = await fetch(URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || "An error occurred");
+    }
     return { success: true };
   } catch (err) {
     throw new Error(err.message);

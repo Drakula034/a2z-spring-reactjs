@@ -38,6 +38,9 @@ export const CATEGORY_TOGGLE_ENABLED_STATUS = (categoryId) =>
 export const DELETE_CATEGORY_BY_ID = (categoryId) =>
   `${CATEGORY_SERVICE_BASE_URL}/${categoryId}`;
 
+export const CREATE_CATEGORY = `${CATEGORY_SERVICE_BASE_URL}/add`;
+export const UPDATE_CATEGORY = `${CATEGORY_SERVICE_BASE_URL}/update`;
+
 // brands
 
 export const BRAND_SERVICE_BASE_URL = "http://localhost:8000/api/admin/brands";

@@ -18,10 +18,12 @@ const Container = styled.div`
   /* height: 90%; */
   /* width: 80%; */
 `;
-
+const StyledSpan = styled.span`
+  color: red;
+`;
 const StyledImageInput = styled(StyledLogoInput)``;
 
-function CategoryForm({ title, categoryToEdit }) {
+function CategoryForm({ title, categoryToEdit, onSubmit }) {
   const navigate = useNavigate();
   const {
     register,
@@ -38,20 +40,24 @@ function CategoryForm({ title, categoryToEdit }) {
   });
 
   const handleFormSubmit = (data) => {
-    console.log(data);
-    reset();
+    // console.log("logging");
+    // console.log(data);
+    onSubmit(data);
+    // reset();
   };
 
-  const createNew = () => {
-    handleFormSubmit();
-    navigate(-1);
-  };
+  // const createNew = (e) => {
+  //   e.preventDefault();
+  //   handleSubmit(handleFormSubmit)();
+  //   // navigate(-1);
+  // };
   const cancel = () => {
     reset();
     navigate("/admin/categories");
   };
   return (
-    <Container>
+    // <Container>
+    <StyledForm onSubmit={handleSubmit(handleFormSubmit)}>
       <Title>
         <img
           src="/public/assets/a2z-transparent.png"
@@ -66,46 +72,50 @@ function CategoryForm({ title, categoryToEdit }) {
         />
         {title}
       </Title>
-      <StyledForm onSubmit={handleSubmit(handleFormSubmit)}>
-        <StyledInput style={{ marginTop: "1rem" }}>
-          <label>Category Name</label>
-          <input
-            type="text"
-            placeholder="Enter Category Name"
-            name="categoryName"
-            {...register("categoryName", { required: true })}
-            defaultValue={formValues.categoryName}
-          />
-        </StyledInput>
-        <StyledInputDescription>
-          <label>Category Description</label>
-          <textarea
-            name="categoryDescription"
-            {...register("categoryDescription")}
-            maxLength={4000}
-            defaultValue={formValues.categoryDescription}
-            // minLength={5}
-          />
-        </StyledInputDescription>
-        <StyledEnabled>
-          <label>Enabled</label>
-          <input
-            type="checkbox"
-            name="enabled"
-            {...register("enabled", { required: true })}
-            defaultChecked={formValues.enabled}
-          />
-        </StyledEnabled>
-        <StyledImageInput>
-          <label htmlFor="photo">Image</label>
-          <input type="file" name="photo" {...register("photo")} />
-        </StyledImageInput>
-        <StyledButtons>
-          <AddButton buttonText="Save" createNew={createNew} />
-          <CancelButton buttonText="Cancel" handleCancel={cancel} />
-        </StyledButtons>
-      </StyledForm>
-    </Container>
+      <StyledInput style={{ marginTop: "1rem" }}>
+        <label>Category Name</label>
+        <input
+          type="text"
+          placeholder="Enter Category Name"
+          name="categoryName"
+          {...register("categoryName", { required: true })}
+          defaultValue={formValues.categoryName}
+        />
+        {errors.categoryName && <StyledSpan>This field is required</StyledSpan>}
+      </StyledInput>
+      <StyledInputDescription>
+        <label>Category Description</label>
+        <textarea
+          name="categoryDescription"
+          {...register("categoryDescription")}
+          maxLength={4000}
+          defaultValue={formValues.categoryDescription}
+          // minLength={5}
+        />
+      </StyledInputDescription>
+      <StyledEnabled>
+        <label>Enabled</label>
+        <input
+          type="checkbox"
+          name="enabled"
+          {...register("enabled", { required: true })}
+          defaultChecked={formValues.enabled}
+        />
+      </StyledEnabled>
+      <StyledImageInput>
+        <label>Image</label>
+        <input type="file" name="photo" {...register("photo")} />
+      </StyledImageInput>
+      <StyledButtons>
+        <AddButton
+          buttonText={"Save"}
+          type="submit"
+          styled={{ marginRight: "1rem" }}
+        />
+        <CancelButton buttonText="Cancel" handleCancel={cancel} />
+      </StyledButtons>
+    </StyledForm>
+    // </Container>
   );
 }
 
