@@ -79,8 +79,8 @@ function UserForm({ title, onSubmit, userToEdit, formType }) {
       onSubmit(data, userId);
     }
 
-    // reset();
-    // navigate(-1);
+    reset();
+    navigate(-1);
   };
 
   const handleCancel = () => {
