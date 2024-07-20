@@ -1,10 +1,7 @@
 package com.a2z.product_service.controller.admin;
 
 import com.a2z.product_service.mapper.CategoryMapper;
-import com.a2z.product_service.model.dto.CategoryDto;
-import com.a2z.product_service.model.dto.CategoryNameDto;
-import com.a2z.product_service.model.dto.CategoryResponseDto;
-import com.a2z.product_service.model.dto.CategoryResponseForControl;
+import com.a2z.product_service.model.dto.*;
 import com.a2z.product_service.model.entity.Category;
 import com.a2z.product_service.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,11 +21,27 @@ public class CategoryController {
     private CategoryService categoryService;
 
     @PostMapping("/add")
-    public ResponseEntity<String> addCategory(@RequestBody CategoryDto categoryDto){
+    public ResponseEntity<Boolean> addCategory(@RequestBody CategoryDto categoryDto){
         Category category = CategoryMapper.categoryDtoMapToCategory(categoryDto, new Category());
-        categoryService.createCategory(category);
+//        System.out.println(category.getImage());
+        boolean isCreated = categoryService.createCategory(category);
+//        System.out.println(isCreated);
 
-        return new ResponseEntity<>("Category "+category+" added", HttpStatus.CREATED );
+        if(isCreated)return ResponseEntity.status(HttpStatus.OK).build();
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+    }
+
+    @PutMapping("/update")
+    public ResponseEntity<Boolean> updateCategory(@RequestBody CategoryResponseWithIdDto categoryResponse){
+        if(categoryResponse.getCategoryId() == null || categoryResponse.getCategoryId()<=0){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+
+        Category category = CategoryMapper.categoryResponseWithIdDtoMapToCategory(categoryResponse, new Category());
+        boolean isUpdated = categoryService.updateCategory(category);
+        if(isUpdated) return ResponseEntity.status(HttpStatus.OK).build();
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+
     }
     @GetMapping("/control-panel")
     public ResponseEntity<CategoryResponseForControl> getEnabledAndDisabledCategories(){

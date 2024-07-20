@@ -27,10 +27,52 @@ public class CategoryServiceImpl implements CategoryService {
     private CategoryRepository categoryRepository;
     private CategoryMapper categoryMapper;
     @Override
-    public Category createCategory(Category category) {
-        return categoryRepository.save(category);
+    public boolean createCategory(Category category) {
+        try {
+//            Category categoryToSave = new Category();
+//            categoryToSave.setCategoryName(category.getCategoryName());
+//            categoryToSave.setEnabled(category.isEnabled());
+//            categoryToSave.setDescription(category.getDescription());
+//            categoryToSave.setImage(category.getImage());
+//
+//            System.out.println(category.getImage());
 
+            // Save the categoryToSave object
+            Category savedCategory = categoryRepository.save(category);
+
+        } catch (Exception ex) {
+            ex.printStackTrace(); // Log the exception for debugging purposes
+            return false;
+        }
+        return true;
     }
+
+    @Override
+    public boolean updateCategory(Category category) {
+        try {
+            Optional<Category> existingCategoryOptional = categoryRepository.findById(category.getCategoryId());
+            if (existingCategoryOptional.isPresent()) {
+                Category existingCategory = existingCategoryOptional.get();
+                existingCategory.setCategoryName(category.getCategoryName());
+                existingCategory.setEnabled(category.isEnabled());
+                existingCategory.setDescription(category.getDescription());
+                existingCategory.setImage(category.getImage());
+
+                // Save the updated category
+                categoryRepository.save(existingCategory);
+                return true;
+            } else {
+                // Category not found
+                return false;
+            }
+        } catch (Exception ex) {
+            // Log the exception for debugging purposes
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
+
 
     @Override
     public CategoryResponseForControl getEnabledAndDisabledCategory() {

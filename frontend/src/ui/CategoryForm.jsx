@@ -23,7 +23,7 @@ const StyledSpan = styled.span`
 `;
 const StyledImageInput = styled(StyledLogoInput)``;
 
-function CategoryForm({ title, categoryToEdit, onSubmit }) {
+function CategoryForm({ title, categoryToEdit, onSubmit, formType }) {
   const navigate = useNavigate();
   const {
     register,
@@ -31,6 +31,7 @@ function CategoryForm({ title, categoryToEdit, onSubmit }) {
     reset,
     formState: { errors },
   } = useForm();
+  // console.log("categoryToEdit", categoryToEdit);
 
   const [formValues] = useState({
     categoryName: categoryToEdit?.categoryName || "",
@@ -38,12 +39,18 @@ function CategoryForm({ title, categoryToEdit, onSubmit }) {
     enabled: categoryToEdit?.enabled || false,
     photo: categoryToEdit?.photo || "",
   });
+  const categoryId = categoryToEdit?.categoryId;
 
   const handleFormSubmit = (data) => {
     // console.log("logging");
     // console.log(data);
-    onSubmit(data);
-    // reset();
+    if (formType == "edit") {
+      onSubmit(data, categoryId);
+    } else {
+      onSubmit(data);
+    }
+    reset();
+    navigate(-1);
   };
 
   // const createNew = (e) => {
@@ -98,7 +105,7 @@ function CategoryForm({ title, categoryToEdit, onSubmit }) {
         <input
           type="checkbox"
           name="enabled"
-          {...register("enabled", { required: true })}
+          {...register("enabled")}
           defaultChecked={formValues.enabled}
         />
       </StyledEnabled>

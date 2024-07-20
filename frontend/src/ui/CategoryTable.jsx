@@ -78,8 +78,27 @@ function CategoryTable({ rowData }) {
     {
       field: "images",
       headerName: "Image",
+      // cellRenderer: (props) => {
+      //   return <AddPhotoIfNotFound icon={<MdOutlineCategory />} />;
+      // },
       cellRenderer: (props) => {
-        return <AddPhotoIfNotFound icon={<MdOutlineCategory />} />;
+        const photoUrl = props.data?.image; // Extract the photo URL (image name)
+        // console.log(props.data);
+
+        return photoUrl ? (
+          <img
+            src={`/assets/categories/${photoUrl}`} // Adjust path to be relative from public directory
+            alt="photo"
+            style={{
+              width: "100px",
+              height: "auto",
+              padding: "2px 0",
+              display: "block",
+            }} // Adjust styles as needed
+          />
+        ) : (
+          <AddPhotoIfNotFound icon={<MdOutlineCategory />} />
+        );
       },
       flex: 1,
     },

@@ -11,7 +11,8 @@ import java.util.*;
 @Service
 public interface CategoryService {
 
-    Category createCategory(Category category);
+    boolean createCategory(Category category);
+    boolean updateCategory(Category category);
     CategoryResponseForControl getEnabledAndDisabledCategory();
     List<CategoryResponseDto> getCategoryByPage(Integer page);
     List<CategoryNameDto> getAllCategoryNames();

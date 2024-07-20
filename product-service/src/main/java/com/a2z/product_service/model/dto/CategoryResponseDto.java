@@ -22,4 +22,8 @@ public class CategoryResponseDto {
     private String description;
     private String image;
     private String enabled;
+
+    public String isEnabled() {
+        return enabled;
+    }
 }

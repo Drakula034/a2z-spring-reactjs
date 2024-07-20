@@ -19,13 +19,6 @@ import {
   Title,
 } from "./AdminFormStyles";
 
-const StyledInputGroup = styled.div`
-  display: grid;
-  grid-template-columns: max-content 1fr;
-  /* grid-auto-flow: row; */
-  column-gap: 1rem;
-  row-gap: 0.5rem;
-`;
 const StyledSpan = styled.span`
   color: red;
 `;
@@ -36,16 +29,6 @@ function UserForm({ title, onSubmit, userToEdit, formType }) {
   const { data: rolesData = [] } = useQuery("getAllRoles", useGetAllRoles());
   const navigate = useNavigate();
   const location = useLocation();
-  //   const { roles } = rolesData;
-  //   console.log(rolesData);
-  // const [userId, setUserId] = useState(null);
-
-  // useEffect(() => {
-  //   // const queryParams = new URLSearchParams(location.search);
-  //   // const id = queryParams.get("userId");
-  //   // setUserId(id);
-  //   setUserId(userToEdit?.userId);
-  // }, [location]);
 
   const userId = userToEdit?.userId;
   // console.log(userId);

@@ -18,7 +18,11 @@ function AddCategory() {
     addNewCategory(categoryData);
   };
   return (
-    <CategoryForm title={"Add Category"} onSubmit={handleCreateCategory} />
+    <CategoryForm
+      title={"Add Category"}
+      onSubmit={handleCreateCategory}
+      formType={"edit"}
+    />
   );
 }
 

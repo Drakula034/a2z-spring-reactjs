@@ -5,6 +5,7 @@ import {
   CREATE_CATEGORY,
   DELETE_CATEGORY_BY_ID,
   GET_ALL_CATEGORY,
+  UPDATE_CATEGORY,
 } from "../../../constants/endpoint-constants";
 export async function getEnabledDisabledCategory() {
   const url = CATEGORY_SERVICE_ENABLED_DISABLED_URL;
@@ -79,6 +80,28 @@ export async function createCategory(data) {
     const response = await fetch(URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || "An error occurred");
+    }
+    return { success: true };
+  } catch (err) {
+    throw new Error(err.message);
+  }
+}
+
+export async function updateCategory(data) {
+  const URL = UPDATE_CATEGORY;
+
+  try {
+    const response = await fetch(URL, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify(data),
     });
 
