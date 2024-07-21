@@ -6,6 +6,7 @@ import ProductDescriptionForm from "./ProductForm/ProductDescriptionForm";
 import ProductImagesForm from "./ProductForm/ProductImagesForm";
 import ProductDetailsForm from "./ProductForm/ProductDetailsForm";
 import ProductShippingForm from "./ProductForm/ProductShippingForm";
+import AddProductOverViewForm from "../features/products-management/AddProductOverViewForm";
 
 const Title = styled.h2`
   font-size: 1.6rem;
@@ -18,8 +19,10 @@ function ProductForm() {
       <Title>{"Add Product"}</Title>
       <ProductFormHeader />
       <Routes>
-        <Route index element={<ProductOverviewForm />} />
-        <Route path="overview" element={<ProductOverviewForm />} />
+        <Route index element={<AddProductOverViewForm />} />
+        <Route path="overview" element={<AddProductOverViewForm />} />
+        {/* <Route index element={<ProductOverviewForm />} />
+        <Route path="overview" element={<ProductOverviewForm />} /> */}
         <Route path="description" element={<ProductDescriptionForm />} />
         <Route path="images" element={<ProductImagesForm />} />
         <Route path="details" element={<ProductDetailsForm />} />

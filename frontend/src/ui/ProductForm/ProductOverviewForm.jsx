@@ -16,90 +16,6 @@ import {
 } from "../AdminFormStyles";
 import { CommonStyledSpan } from "../../styles/CommonStyles";
 
-// const StyledForm = styled.form`
-//   border: 1px solid var(--color-grey-300);
-//   margin: 2rem 10rem;
-//   z-index: 2;
-//   box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
-//   display: grid;
-//   grid-auto-flow: row;
-//   justify-items: center;
-//   row-gap: 0.5rem;
-//   font-family: "IBM Plex Sans", sans-serif;
-// `;
-
-// const StyledInput = styled.div`
-//   display: grid;
-//   grid-template-columns: 1fr 3fr;
-//   column-gap: 1rem;
-//   align-items: center;
-//   width: 80%; /* Ensure the input takes up the full available width */
-//   margin-bottom: 1rem;
-
-//   label {
-//     grid-column: 1 / span 1;
-//     font-weight: bold;
-//     margin-bottom: 0.25rem;
-//   }
-
-//   input {
-//     grid-column: 2 / span 1;
-//     padding: 0.5rem;
-//     border: 1px solid var(--color-grey-300);
-//     border-radius: 4px;
-//     width: 80%; /* Adjust width to 100% to fill the container */
-//   }
-// `;
-// const StyledSelectCategory = styled.div`
-//   display: grid;
-//   grid-template-columns: 1fr 3fr;
-//   column-gap: 1rem;
-//   align-items: center;
-//   width: 80%; /* Ensure the input takes up the full available width */
-//   margin-bottom: 1rem;
-
-//   label {
-//     grid-column: 1 / span 1;
-//     font-weight: bold;
-//     margin-bottom: 0.25rem;
-//   }
-
-//   .select-category {
-//     grid-column: 2 / span 1;
-//     /* width: max-content; */
-//   }
-// `;
-// const StyledEnabled = styled.div`
-//   display: grid;
-//   grid-template-columns: 1fr 3fr;
-//   column-gap: 1rem;
-//   justify-items: start; /* Align items vertically to the center */
-//   width: 80%;
-
-//   label {
-//     grid-column: 1;
-//     font-weight: bold;
-//     margin-bottom: 0.25rem;
-//   }
-
-//   input {
-//     grid-column: 2; /* Explicitly place input in the second column */
-//     padding: 0.5rem;
-//     border: 1px solid var(--color-grey-300);
-//     border-radius: 4px;
-//     width: 10%; /* Adjust width to fill the container */
-
-//     /* justify-self: start; */
-//     /* align-self: start; */
-//     /* accent-color: var(--color-green-400); */
-
-//     &:checked {
-//       background-color: white;
-//       accent-color: var(--color-green-400);
-//     }
-//   }
-// `;
-
 const customStyles = {
   multiValue: (base) => ({
     ...base,
@@ -117,7 +33,7 @@ const customStyles = {
     display: "none", // Hide the remove button
   }),
 };
-function ProductOverviewForm() {
+function ProductOverviewForm({ formType, onSubmit }) {
   const navigate = useNavigate();
   const {
     register,
@@ -171,7 +87,10 @@ function ProductOverviewForm() {
     setSelectedBrands(selectedOptions);
   };
   const handleFormSubmit = (data) => {
-    console.log(data);
+    // console.log(data);
+    if (formType === "add") {
+      onSubmit(data);
+    }
     // reset();
     // navigate(-1);
   };
@@ -207,7 +126,7 @@ function ProductOverviewForm() {
         {/* <input type="text" name="brand" {...register("brand")} /> */}
         <div className="select-category">
           <Select
-            isMulti
+            // isMulti
             name="productBrands"
             {...register("productBrands")}
             options={brands}
@@ -226,7 +145,7 @@ function ProductOverviewForm() {
         {/* <input type="text" name="category" {...register("category")} /> */}
         <div className="select-category">
           <Select
-            isMulti
+            // isMulti
             name="productCategories"
             {...register("productCategories")}
             options={categories}

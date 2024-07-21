@@ -2,6 +2,7 @@ package com.a2z.product_service.controller.admin;
 
 import com.a2z.product_service.mapper.ProductMapper;
 import com.a2z.product_service.model.dto.ProductDtoForOrder;
+import com.a2z.product_service.model.dto.ProductOverViewDto;
 import com.a2z.product_service.model.dto.ProductResponseForControl;
 import com.a2z.product_service.model.dto.ProductResponseForProductAdminPage;
 import com.a2z.product_service.model.entity.Product;
@@ -35,6 +36,23 @@ public class ProductController {
 //
 //        return ResponseEntity.status(HttpStatus.CREATED ).body("Product saved with id: " +savedProductId);
 //    }
+
+    @PostMapping("/addOverview")
+    public ResponseEntity<Boolean> addProductOverView(@RequestBody ProductOverViewDto productOverViewDto){
+        if(productOverViewDto.getName() == null || productOverViewDto.getName().isEmpty()){
+            throw new Error("Please add product name");
+        }
+
+        Product product= productMapper.productOverViewDtoMapToProduct(productOverViewDto, new Product());
+
+        Integer savedProductId = productService.addProductOverView(product);
+        if(savedProductId > 0){
+            return ResponseEntity.status(HttpStatus.CREATED).build();
+        }
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+
+    }
 
     @RequestMapping("/{productId}")
     public ResponseEntity<ProductDtoForOrder> getProductByIdForOrderService(@PathVariable String productId){

@@ -18,8 +18,8 @@ public class ProductOverViewDto {
     private boolean enabled;
     private boolean inStock;
 
-    private float cost;
-    private float price;
-    private float discountPercent;
+    private Float cost;
+    private Float price;
+    private Float discountPercent;
 
 }

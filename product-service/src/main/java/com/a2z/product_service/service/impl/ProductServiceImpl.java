@@ -69,6 +69,13 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public Integer addProductOverView(Product product) {
+        Product savedProduct = productRepository.save(product);
+        if(savedProduct.getId() == null)return -1;
+        return savedProduct.getId();
+    }
+
+    @Override
     public Product getProductById(Integer productId) {
         Optional<Product> product = productRepository.findById(productId);
 

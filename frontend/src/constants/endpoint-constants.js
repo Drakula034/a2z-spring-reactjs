@@ -69,3 +69,8 @@ export const GET_PRODUCT_BY_PAGE = (page) => {
 
 export const PRODUCTS_TOGGLE_ENABLED_STATUS = (productId) =>
   `${PRODUCT_SERVICE_BASE_URL}/${productId}/toggle-status`;
+
+export const DELETE_PRODUCT_BY_ID = (productId) =>
+  `${PRODUCT_SERVICE_BASE_URL}/${productId}`;
+
+export const CREATE_PRODUCT_OVERVIEW = `${PRODUCT_SERVICE_BASE_URL}/addOverview`;

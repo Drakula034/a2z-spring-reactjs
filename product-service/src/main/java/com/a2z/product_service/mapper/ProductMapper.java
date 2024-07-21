@@ -2,6 +2,7 @@ package com.a2z.product_service.mapper;
 
 import com.a2z.product_service.model.dto.ProductDto_v1;
 import com.a2z.product_service.model.dto.ProductDtoForOrder;
+import com.a2z.product_service.model.dto.ProductOverViewDto;
 import com.a2z.product_service.model.dto.ProductResponseForProductAdminPage;
 import com.a2z.product_service.model.entity.Brand;
 import com.a2z.product_service.model.entity.Category;
@@ -13,16 +14,23 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class ProductMapper {
-    @Autowired
-    private  CategoryRepository categoryRepository;
-    @Autowired
-    private  BrandsRepository brandsRepository;
+    private final CategoryRepository categoryRepository;
+    private final BrandsRepository brandsRepository;
 
-    public ProductDto_v1 productMapTpProductDto(Product product, ProductDto_v1 productDto){
+    @Autowired
+    public ProductMapper(CategoryRepository categoryRepository, BrandsRepository brandsRepository) {
+        this.categoryRepository = categoryRepository;
+        this.brandsRepository = brandsRepository;
+    }
+
+
+
+
+    public ProductDto_v1 productMapTpProductDto(Product product, ProductDto_v1 productDto) {
         return productDto;
     }
 
-    public  Product productDtoMapToProduct(ProductDto_v1 productDto, Product product){
+    public Product productDtoMapToProduct(ProductDto_v1 productDto, Product product) {
         product.setName(productDto.getName());
         product.setAlias(productDto.getAlias());
         product.setShortDescription(productDto.getShortDescription());
@@ -52,7 +60,7 @@ public class ProductMapper {
         return product;
     }
 
-    public static ProductDtoForOrder productMapToProductDtoForOrder(Product product, ProductDtoForOrder productDtoForOrder){
+    public static ProductDtoForOrder productMapToProductDtoForOrder(Product product, ProductDtoForOrder productDtoForOrder) {
         productDtoForOrder.setName(product.getName());
         productDtoForOrder.setCost(product.getCost());
         productDtoForOrder.setPrice(product.getPrice());
@@ -61,7 +69,7 @@ public class ProductMapper {
         return productDtoForOrder;
     }
 
-    public static ProductResponseForProductAdminPage productMapToProductResponseForProductAdmin(Product product, ProductResponseForProductAdminPage productResponse){
+    public static ProductResponseForProductAdminPage productMapToProductResponseForProductAdmin(Product product, ProductResponseForProductAdminPage productResponse) {
         productResponse.setProductId(product.getId());
         productResponse.setProductName(product.getName());
         if (product.getBrand() != null && product.getBrand().getName() != null) {
@@ -78,5 +86,44 @@ public class ProductMapper {
         productResponse.setImage(product.getMainImage());
 
         return productResponse;
+    }
+
+    public  Product productOverViewDtoMapToProduct(ProductOverViewDto productOverViewDto, Product product) {
+        product.setName(productOverViewDto.getName());
+        if (productOverViewDto.getAlias() != null && productOverViewDto.getAlias().equals("")) {
+            product.setAlias(productOverViewDto.getAlias());
+        } else {
+            String[] parts = product.getName().split("\\s+");
+            String alias = String.join("-", parts);
+
+            product.setAlias(alias);
+        }
+        if (productOverViewDto.getCategoryName() != null) {
+            Category category = categoryRepository.findByCategoryName(productOverViewDto.getCategoryName());
+            System.out.println("Category" + category.getCategoryName());
+            product.setCategory(category);
+        }
+        if (productOverViewDto.getBrandName() != null) {
+            Brand brand = brandsRepository.findByName(productOverViewDto.getBrandName());
+            product.setBrand(brand);
+        }
+        if (productOverViewDto.getCost() != null) {
+            product.setCost(productOverViewDto.getCost());
+        }
+//         else {
+//            // Optionally handle the case where cost is null
+//            // For example, you might set a default cost or leave it unchanged
+//            product.setCost(0.0f); // Example default value
+//        }
+        if (productOverViewDto.getPrice() != null) {
+            product.setPrice(productOverViewDto.getPrice());
+        }
+        if (productOverViewDto.getDiscountPercent() != null) {
+            product.setDiscountPercent(productOverViewDto.getDiscountPercent());
+        }
+        product.setEnabled(productOverViewDto.isEnabled());
+        product.setInStock(productOverViewDto.isInStock());
+
+        return product;
     }
 }

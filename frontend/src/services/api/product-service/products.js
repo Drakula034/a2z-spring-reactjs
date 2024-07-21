@@ -1,4 +1,5 @@
 import {
+  CREATE_PRODUCT_OVERVIEW,
   GET_PRODUCT_BY_PAGE,
   PRODUCT_SERVICE_ENABLED_DISABLED_URL,
   PRODUCTS_TOGGLE_ENABLED_STATUS,
@@ -34,6 +35,24 @@ export async function toggleProductEnabledStatus(productId) {
 
   try {
     const response = await fetch(URL, { mode: "cors", method: "PUT" });
+    if (!response.ok) throw new Error(response.message);
+
+    return { success: true };
+  } catch (err) {
+    throw new Error(err.message);
+  }
+}
+
+export async function addProductOverView(data) {
+  const URL = CREATE_PRODUCT_OVERVIEW;
+
+  try {
+    const response = await fetch(URL, {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: { "Content-Type": "application/json" },
+    });
+
     if (!response.ok) throw new Error(response.message);
 
     return { success: true };

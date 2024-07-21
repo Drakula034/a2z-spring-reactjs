@@ -11,6 +11,7 @@ import java.util.*;
 public interface ProductService {
 
     Integer addProduct(Product product);
+    Integer addProductOverView(Product product);
     Product getProductById(Integer productId);
     ProductResponseForControl getProductEnabledDisabledCount();
 
