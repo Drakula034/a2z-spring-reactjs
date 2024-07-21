@@ -56,20 +56,6 @@ public class ProductServiceImpl implements ProductService {
         if(product.getId() == null){
             product.setCreatedTime(new Date());
         }
-////        fot Category
-//        Category category = product.getCategory();
-//        String categoryName = category.getCategory();
-//        Category existingCategory = categoryRepository.findByCategoryName(categoryName);
-//
-//        newProduct.setCategory(existingCategory);
-//
-////        for brand
-//        Brand brand = product.getBrand();
-//        String brandName = brand.getName();
-//        Brand existingBrand = brandsRepository.findByName(brandName);
-//        newProduct.setBrand(existingBrand);
-
-
 
         if(product.getAlias() == null || product.getAlias().isEmpty()){
             String defaultAlias = product.getName().replaceAll(" ", "_");

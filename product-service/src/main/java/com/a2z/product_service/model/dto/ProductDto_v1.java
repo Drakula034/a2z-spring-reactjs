@@ -1,40 +1,35 @@
 package com.a2z.product_service.model.dto;
 
-import com.a2z.product_service.model.entity.Brand;
-import com.a2z.product_service.model.entity.Category;
-import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Date;
-
 @Setter
 @Getter
-public class ProductDto {
+public class ProductDto_v1 {
 
+//    for overview
 
     private String name;
     private String alias;
-
+// for description
     private String shortDescription;
     private String fullDescription;
 
-//    private Date createdTime;
-//    private Date updatedTime;
-
+//    for overview
     private boolean enabled;
     private boolean inStock;
 
     private float cost;
-
     private float price;
     private float discountPercent;
 
+//    for shipping
 
     private float length;
     private float width;
     private float height;
     private float weight;
+//    for cateogry and brand-> overview
     private String categoryName;
     private String brandName;
 

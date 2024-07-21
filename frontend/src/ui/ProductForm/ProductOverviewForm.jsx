@@ -14,6 +14,7 @@ import {
   StyledInput,
   StyledSelectCategory,
 } from "../AdminFormStyles";
+import { CommonStyledSpan } from "../../styles/CommonStyles";
 
 // const StyledForm = styled.form`
 //   border: 1px solid var(--color-grey-300);
@@ -175,9 +176,6 @@ function ProductOverviewForm() {
     // navigate(-1);
   };
 
-  const createNew = () => {
-    handleFormSubmit();
-  };
   const onCancel = () => {
     // reset();
     // navigate(-1);
@@ -186,7 +184,14 @@ function ProductOverviewForm() {
     <StyledForm onSubmit={handleSubmit(handleFormSubmit)}>
       <StyledInput style={{ marginTop: "1rem" }}>
         <label>Product Name</label>
-        <input type="text" name="productName" {...register("productName")} />
+        <input
+          type="text"
+          name="productName"
+          {...register("productName", { required: true })}
+        />
+        {errors.productName && (
+          <CommonStyledSpan>Product Name is required</CommonStyledSpan>
+        )}
       </StyledInput>
       <StyledInput>
         <label>Alias</label>
@@ -256,7 +261,7 @@ function ProductOverviewForm() {
         <input type="number" name="discount" {...register("discount")} />
       </StyledInput>
       <StyledButtons>
-        <AddButton buttonText="Save" createNew={createNew} />
+        <AddButton buttonText="Save" />
         <CancelButton buttonText="Cancel" handleCancel={onCancel} />
       </StyledButtons>
     </StyledForm>
