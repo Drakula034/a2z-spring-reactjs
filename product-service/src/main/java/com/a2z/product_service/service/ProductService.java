@@ -1,5 +1,6 @@
 package com.a2z.product_service.service;
 
+import com.a2z.product_service.model.dto.ProductOverViewDto;
 import com.a2z.product_service.model.dto.ProductResponseForControl;
 import com.a2z.product_service.model.dto.ProductResponseForProductAdminPage;
 import com.a2z.product_service.model.entity.Product;
@@ -17,4 +18,5 @@ public interface ProductService {
 
     List<ProductResponseForProductAdminPage> getProductByPage(Integer page);
     boolean toggleProductEnabledStatus(Integer productId);
+    Product getProductOverView(Integer productId);
 }

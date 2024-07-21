@@ -126,4 +126,17 @@ public class ProductMapper {
 
         return product;
     }
+
+    public ProductOverViewDto productMapToProductOverViewDto(Product product,ProductOverViewDto productOverViewDto){
+        productOverViewDto.setName(product.getName());
+        productOverViewDto.setAlias(product.getAlias());
+        productOverViewDto.setCategoryName(product.getCategory().getCategoryName());
+        productOverViewDto.setBrandName(product.getBrand().getName());
+        productOverViewDto.setCost(product.getCost());
+        productOverViewDto.setPrice(product.getPrice());
+        productOverViewDto.setDiscountPercent(product.getDiscountPercent());
+        productOverViewDto.setEnabled(product.isEnabled());
+        productOverViewDto.setInStock(product.getInStock());
+        return productOverViewDto;
+    }
 }

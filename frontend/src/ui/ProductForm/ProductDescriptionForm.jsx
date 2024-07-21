@@ -9,20 +9,7 @@ import {
   StyledButtons,
 } from "../AdminFormStyles";
 
-// const ShortDescription = styled.div`
-//   margin-bottom: 1rem;
-// `;
-// const Description = styled.div`
-//   margin-top: 1rem;
-// `;
-// const StyledButtons = styled.div`
-//   display: flex;
-//   flex-direction: row;
-//   justify-content: space-between;
-//   margin-top: 1.5rem;
-// `;
-
-function ProductDescriptionForm() {
+function ProductDescriptionForm({ formType, onSubmit }) {
   const editor = useRef(null);
   const [shortDescription, setShortDescription] = useState("");
   const [description, setDescription] = useState("");
@@ -33,8 +20,9 @@ function ProductDescriptionForm() {
   };
 
   const createNew = () => {
-    console.log("description", description);
+    onSubmit({ shortDescription, description });
   };
+
   return (
     <div
       style={{

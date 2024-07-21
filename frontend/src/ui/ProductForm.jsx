@@ -1,12 +1,11 @@
 import { Route, Routes } from "react-router-dom";
 import ProductFormHeader from "./ProductFormHeader";
 import styled from "styled-components";
-import ProductOverviewForm from "./ProductForm/ProductOverviewForm";
-import ProductDescriptionForm from "./ProductForm/ProductDescriptionForm";
 import ProductImagesForm from "./ProductForm/ProductImagesForm";
 import ProductDetailsForm from "./ProductForm/ProductDetailsForm";
 import ProductShippingForm from "./ProductForm/ProductShippingForm";
 import AddProductOverViewForm from "../features/products-management/AddProductOverViewForm";
+import AddProductDescriptionForm from "../features/products-management/AddProductDescriptionForm";
 
 const Title = styled.h2`
   font-size: 1.6rem;
@@ -14,6 +13,7 @@ const Title = styled.h2`
   margin: 1rem;
 `;
 function ProductForm() {
+  const productId = false;
   return (
     <>
       <Title>{"Add Product"}</Title>
@@ -23,10 +23,14 @@ function ProductForm() {
         <Route path="overview" element={<AddProductOverViewForm />} />
         {/* <Route index element={<ProductOverviewForm />} />
         <Route path="overview" element={<ProductOverviewForm />} /> */}
-        <Route path="description" element={<ProductDescriptionForm />} />
-        <Route path="images" element={<ProductImagesForm />} />
-        <Route path="details" element={<ProductDetailsForm />} />
-        <Route path="shipping" element={<ProductShippingForm />} />
+        {productId && (
+          <>
+            <Route path="description" element={<AddProductDescriptionForm />} />
+            <Route path="images" element={<ProductImagesForm />} />
+            <Route path="details" element={<ProductDetailsForm />} />
+            <Route path="shipping" element={<ProductShippingForm />} />
+          </>
+        )}
       </Routes>
     </>
   );

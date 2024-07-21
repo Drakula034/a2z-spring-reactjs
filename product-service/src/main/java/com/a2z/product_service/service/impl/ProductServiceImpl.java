@@ -1,6 +1,7 @@
 package com.a2z.product_service.service.impl;
 
 import com.a2z.product_service.mapper.ProductMapper;
+import com.a2z.product_service.model.dto.ProductOverViewDto;
 import com.a2z.product_service.model.dto.ProductResponseForControl;
 import com.a2z.product_service.model.dto.ProductResponseForProductAdminPage;
 import com.a2z.product_service.model.entity.Brand;
@@ -108,5 +109,11 @@ public class ProductServiceImpl implements ProductService {
         product.setEnabled(!product.isEnabled());
         Product savedProduct = productRepository.save(product);
         return savedProduct.getId() > 0;
+    }
+
+    @Override
+    public Product getProductOverView(Integer productId) {
+
+        return productRepository.findById(productId).get();
     }
 }
