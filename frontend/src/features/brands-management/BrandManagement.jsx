@@ -65,7 +65,7 @@ function BrandManagement() {
   return (
     // <div>
     <Container>
-      <ManagementTitle>Categories Management</ManagementTitle>
+      <ManagementTitle>Brands Management</ManagementTitle>
       <ManagementSearchAndAdd
         buttonText={"Add Brand"}
         createNew={createNewBrand}

@@ -4,6 +4,7 @@ import {
   CREATE_BRAND,
   DELETE_BRAND_BY_ID,
   GET_ALL_BRANDS,
+  UPDATE_BRAND,
 } from "../../../constants/endpoint-constants";
 
 export async function getBrandCount() {
@@ -53,15 +54,22 @@ export async function getAllBrandsNames() {
 }
 
 export async function deleteBrandById(brandId) {
+  console.log("API call - Brand ID:", brandId);
   const URL = DELETE_BRAND_BY_ID(brandId);
 
   try {
-    const response = await fetch(URL, { mode: "cors", method: "DELETE" });
-    if (!response.ok) throw new Error(response.message);
+    const response = await fetch(URL, { method: "DELETE" });
+
+    if (!response.ok) {
+      // Parse the error message from the response body if available
+      const errorData = await response.json();
+      throw new Error(errorData.message || "Failed to delete the brand.");
+    }
 
     return { success: true };
   } catch (err) {
-    throw new Error(err.message);
+    // Provide a fallback message in case err.message is undefined
+    throw new Error(err.message || "An unexpected error occurred.");
   }
 }
 
@@ -71,6 +79,28 @@ export async function createBrand(data) {
   try {
     const res = await fetch(URL, {
       method: "POST",
+      body: JSON.stringify(data),
+      headers: { "Content-Type": "application/json" },
+    });
+    if (!res.ok) {
+      const errorData = await res.json();
+      throw new Error(errorData.message || "An error occurred");
+    }
+
+    return { success: true };
+  } catch (err) {
+    throw new Error(err.message);
+  }
+}
+
+export async function updateBrand(data, brandId) {
+  console.log("API call - Brand ID:", brandId);
+  console.log("API call - data:", data);
+  const URL = UPDATE_BRAND(brandId);
+
+  try {
+    const res = await fetch(URL, {
+      method: "PUT",
       body: JSON.stringify(data),
       headers: { "Content-Type": "application/json" },
     });

@@ -43,6 +43,10 @@ function BrandTable({ rowData }) {
     []
   );
   const { deleteBrandByBrandId } = useDeleteBrandByBrandId();
+
+  const handleBrandDeleteByBrandId = (brandId) => {
+    deleteBrandByBrandId(brandId);
+  };
   const selectDeleteIcon = (brandId, brandName) => {
     setBrandIdName({ brandId: brandId, brandName: brandName });
     setIsOpen(true);
@@ -74,27 +78,6 @@ function BrandTable({ rowData }) {
           .map((category) => category.categoryName)
           .join(", ");
       },
-      // renderCell: (params) => {
-      //   return (
-      //     <div>
-      //       {params.data.categories.map((category) => (
-      //         <span
-      //           key={category.categoryId}
-      //           style={{
-      //             display: "inline-block",
-      //             backgroundColor: "#f0f0f0",
-      //             borderRadius: "5px",
-      //             padding: "5px 10px",
-      //             margin: "2px",
-      //             color: "blue",
-      //             border: "1px solid blue",
-      //           }}
-      //         >
-      //           {category.categoryName}
-      //         </span>
-      //       ))}
-      //     </div>
-      //   );
     },
 
     {
@@ -129,9 +112,9 @@ function BrandTable({ rowData }) {
   const close = () => {
     setIsOpen(false);
   };
-  const confirm = (brandId) => {
+  const confirm = () => {
     setIsOpen(false);
-    deleteBrandByBrandId(brandId);
+    handleBrandDeleteByBrandId(brandIdName.brandId);
   };
   return (
     <GridContainer>

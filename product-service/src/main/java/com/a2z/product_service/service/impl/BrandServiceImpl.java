@@ -15,6 +15,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
 import java.util.*;
 
 @Service
@@ -25,40 +26,7 @@ public class BrandServiceImpl implements BrandService {
 
     private final CategoryRepository categoryRepository;
 
-    @Override
-//    public Brand addBrand(Brand brand) {
-//            Brand addBrand = new Brand();
-//            addBrand.setName(brand.getName());
-//            addBrand.setLogo(brand.getLogo());
-//
-//            // No need to create a new Brand object, use the one passed as a parameter
-//            Brand savedBrand = brandsRepository.save(addBrand);
-//
-//            // Retrieve existing categories by name and add them to the brand
-//            Set<Category> categories = brand.getCategories();
-//            Set<Category> existingCategories = new HashSet<>();
-//
-//            for (Category category : categories) {
-//                Category existingCategory = categoryRepository.findByCategoryName(category.getCategoryName());
-//                if (existingCategory != null) {
-//                    existingCategories.add(existingCategory);
-//                }
-//            }
-//
-//            // Set the categories to the brand and save
-//            savedBrand.setCategories(existingCategories);
-//            savedBrand = brandsRepository.save(savedBrand);
-//
-//            // Print the saved brand for debugging purposes
-////            System.out.println(savedBrand);
-//
-//            return savedBrand;
-//
-//
-//    }
-    public boolean addBrand(Brand brand) {
-        // Retrieve existing categories by name and add them to the brand
-        Set<Category> categories = brand.getCategories();
+    private Set<Category> getExistingCategories(Set<Category> categories) {
         Set<Category> existingCategories = new HashSet<>();
 
         for (Category category : categories) {
@@ -68,7 +36,16 @@ public class BrandServiceImpl implements BrandService {
             }
         }
 
-        // Set the categories to the brand
+        return existingCategories;
+    }
+
+
+    @Override
+    public boolean addBrand(Brand brand) {
+        // Retrieve existing categories by name and add them to the brand
+        Set<Category> categories = brand.getCategories();
+
+        Set<Category>existingCategories = getExistingCategories(categories);
         brand.setCategories(existingCategories);
 
         // Save the brand with its categories
@@ -122,5 +99,33 @@ public class BrandServiceImpl implements BrandService {
             // Handle the case where the category does not exist
             throw new NoSuchElementException("Brand with ID " + brandId + " not found.");
         }
+    }
+
+    @Override
+    public boolean updateBrand(Brand brand) {
+        try{
+            Optional<Brand> existingBrandOptional = brandsRepository.findById(brand.getId());
+            if(existingBrandOptional.isPresent()){
+                Brand existingBrand = existingBrandOptional.get();
+                existingBrand.setName(brand.getName());
+                existingBrand.setLogo(brand.getLogo());
+
+                Set<Category> categories = brand.getCategories();
+
+                Set<Category> existingCategories = getExistingCategories(categories);
+
+                // Set the categories to the brand
+                brand.setCategories(existingCategories);
+                brandsRepository.save(existingBrand);
+                return true;
+            }else{
+                // Handle the case where the brand does not exist
+                throw new NoSuchElementException("Brand with ID " + brand.getId() + " not found.");
+            }
+        }catch(Exception ex){
+           throw new Error(ex.getMessage());
+//           return false;
+        }
+//        return false;
     }
 }

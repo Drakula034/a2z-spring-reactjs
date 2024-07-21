@@ -62,7 +62,7 @@ function BrandForm({ title, onSubmit, formType }) {
     brandCategories: brandToEdit?.categories || [],
   });
 
-  //   console.log(formValues);
+  console.log(formValues);
 
   const { data: categoryList } = useGetCategoryAll();
 
@@ -97,24 +97,24 @@ function BrandForm({ title, onSubmit, formType }) {
   const cancel = () => {
     // console.log("cancel");
     reset();
-    navigate(-1);
+    // navigate(-1);
+    navigate("/admin/brands");
   };
 
   const handleCategoryChange = (selectedCategory) => {
     setSelectCategories(selectedCategory);
   };
-
+  const brandId = brandToEdit?.brandId;
   const handleFormSubmit = (data) => {
     // console.log(data);
-
-    onSubmit(data);
-    // reset();
-    // navigate(-1);
+    if (formType === "edit") {
+      onSubmit(data, brandId);
+    } else {
+      onSubmit(data);
+    }
+    reset();
+    navigate(-1);
   };
-  // const createNew = () => {
-  //   // console.log("submitted");
-  //   handleFormSubmit();
-  // };
 
   return (
     <StyledForm onSubmit={handleSubmit(handleFormSubmit)}>
@@ -151,12 +151,9 @@ function BrandForm({ title, onSubmit, formType }) {
           name="brandLogo"
           {...register("brandLogo", { required: formType === "add" })}
           onChange={handleChange}
-          defaultValue={formValues.brandLogo}
+          // defaultValue={formValues.brandLogo}
         />
-        {image && (
-          //   <ShowImage>
-          <img src={image} />
-        )}
+        {image && <img src={image} />}
         {formType === "add" && errors.brandLogo && (
           <CommonStyledSpan>This field is required</CommonStyledSpan>
         )}
@@ -179,13 +176,6 @@ function BrandForm({ title, onSubmit, formType }) {
           />
         </div>
       </StyledSelectCategory>
-      {/* {selectCategories && (
-        <div>
-          {selectCategories.map((category, index) => (
-            <p key={index}>{category.label}</p>
-          ))}
-        </div>
-      )} */}
 
       <StyledButtons>
         <AddButton buttonText="Save" />

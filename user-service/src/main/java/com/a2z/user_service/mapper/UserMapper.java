@@ -130,9 +130,9 @@ public class UserMapper {
         if (userUpdateDto.getPassword() != null) {
             user.setPassword(userUpdateDto.getPassword());
         }
-        System.out.println("roles: " + user.getRoles());
-        System.out.println("users: " + user.toString());
-        System.out.println("photos: " + user.getPhotos());
+//        System.out.println("roles: " + user.getRoles());
+//        System.out.println("users: " + user.toString());
+//        System.out.println("photos: " + user.getPhotos());
 
         return user;
     }
