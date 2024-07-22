@@ -34,7 +34,7 @@ function EditUser() {
       userId: userId,
     };
     updateUser(userData);
-    console.log(userData);
+    // console.log(userData);
   };
 
   return (

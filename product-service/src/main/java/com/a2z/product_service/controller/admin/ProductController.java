@@ -68,6 +68,25 @@ public class ProductController {
         return ResponseEntity.status(HttpStatus.OK).body(productOverViewDto);
     }
 
+    @PutMapping("/{productId}/editOverView")
+    public ResponseEntity<Boolean> updateProductOverView(@PathVariable Integer productId, @RequestBody ProductOverViewDto productOverViewDto) {
+        if (productRepository.findById(productId).isEmpty()) {
+            throw new NotFoundException("Product id is invalid");
+        }
+
+        Product product = productMapper.productOverViewDtoMapToProduct(productOverViewDto, new Product());
+        System.out.println(product.toString());
+        product.setId(productId);
+
+        boolean isProductUpdated = productService.updateProductOverView(product);
+
+        if (isProductUpdated) {
+            return ResponseEntity.status(HttpStatus.OK).build();
+        }
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+    }
+
     @RequestMapping("/{productId}")
     public ResponseEntity<ProductDtoForOrder> getProductByIdForOrderService(@PathVariable String productId) {
         Integer id = Integer.parseInt(productId);

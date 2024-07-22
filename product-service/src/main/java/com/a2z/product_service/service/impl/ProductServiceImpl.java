@@ -116,4 +116,45 @@ public class ProductServiceImpl implements ProductService {
 
         return productRepository.findById(productId).get();
     }
+
+    @Override
+    public Boolean updateProductOverView(Product updatedProduct) {
+        // Step 1: Retrieve the existing product from the database
+        Product existingProduct = productRepository.findById(updatedProduct.getId())
+                .orElseThrow(() -> new RuntimeException("Product not found"));
+
+        // Step 2: Update only the fields that are not null in the provided product
+        if (updatedProduct.getName() != null) {
+            existingProduct.setName(updatedProduct.getName());
+        }
+        if (updatedProduct.getAlias() != null) {
+            existingProduct.setAlias(updatedProduct.getAlias());
+        }
+        if (updatedProduct.getBrand() != null) {
+            existingProduct.setBrand(updatedProduct.getBrand());
+        }
+        if (updatedProduct.getCategory() != null) {
+            existingProduct.setCategory(updatedProduct.getCategory());
+        }
+
+            existingProduct.setEnabled(updatedProduct.isEnabled());
+
+
+            existingProduct.setInStock(updatedProduct.getInStock());
+
+        if (updatedProduct.getCost() != existingProduct.getCost()) {
+            existingProduct.setCost(updatedProduct.getCost());
+        }
+        if (updatedProduct.getPrice() != existingProduct.getPrice()) {
+            existingProduct.setPrice(updatedProduct.getPrice());
+        }
+        if (updatedProduct.getDiscountPercent() != existingProduct.getDiscountPercent()) {
+            existingProduct.setDiscountPercent(updatedProduct.getDiscountPercent());
+        }
+
+        // Step 3: Save the updated product entity back to the database
+        productRepository.save(existingProduct);
+        return true;
+    }
+
 }

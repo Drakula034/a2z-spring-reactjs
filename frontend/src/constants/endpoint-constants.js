@@ -74,3 +74,8 @@ export const DELETE_PRODUCT_BY_ID = (productId) =>
   `${PRODUCT_SERVICE_BASE_URL}/${productId}`;
 
 export const CREATE_PRODUCT_OVERVIEW = `${PRODUCT_SERVICE_BASE_URL}/addOverview`;
+
+export const GET_PRODUCT_OVERVIEW_BY_ID = (productId) =>
+  `${PRODUCT_SERVICE_BASE_URL}/${productId}/editOverView`;
+export const UPDATE_PRODUCT_OVERVIEW = (productId) =>
+  `${PRODUCT_SERVICE_BASE_URL}/${productId}/editOverView`;

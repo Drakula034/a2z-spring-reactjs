@@ -19,4 +19,5 @@ public interface ProductService {
     List<ProductResponseForProductAdminPage> getProductByPage(Integer page);
     boolean toggleProductEnabledStatus(Integer productId);
     Product getProductOverView(Integer productId);
+    Boolean updateProductOverView( Product product);
 }
