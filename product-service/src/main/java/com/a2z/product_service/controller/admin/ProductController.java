@@ -139,6 +139,29 @@ public class ProductController {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 
     }
+    @GetMapping("/{productId}/getShippingDetails")
+    public ResponseEntity<ProductShippingDto> getProductShippingDetails(@PathVariable Integer productId){
+        if (productRepository.findById(productId).isEmpty()) {
+            throw new NotFoundException("Product id is invalid");
+        }
+       Product product = productService.getProductShippingDetails(productId);
+        ProductShippingDto productShippingDto = productMapper.productMapToProductShippingDto(product, new ProductShippingDto());
+        return ResponseEntity.status(HttpStatus.OK).body(productShippingDto);
+    }
+
+    @PutMapping("/{productId}/updateShippingDetails")
+    public ResponseEntity<Boolean> updateProductShippingDetails(@PathVariable Integer productId,
+                                                                @RequestBody ProductShippingDto productShippingDto){
+        if (productRepository.findById(productId).isEmpty()) {
+            throw new NotFoundException("Product id is invalid");
+        }
+        Product product = productMapper.productShippingDtoMapToProduct(productShippingDto, new Product());
+        boolean isUpdated = productService.updateProductShippingDetails(product);
+        if(isUpdated){
+            return ResponseEntity.status(HttpStatus.OK).build();
+        }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+    }
 
     @RequestMapping("/{productId}")
     public ResponseEntity<ProductDtoForOrder> getProductByIdForOrderService(@PathVariable String productId) {

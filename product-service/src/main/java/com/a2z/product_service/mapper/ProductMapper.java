@@ -239,4 +239,35 @@ public class ProductMapper {
         Optional<Product> product = productRepository.findById(productId);
         return product.get(); // Return null if the product is not found
     }
+
+    public ProductShippingDto productMapToProductShippingDto(Product product, ProductShippingDto productShippingDto){
+        productShippingDto.setHeight(product.getHeight());
+        productShippingDto.setWidth(product.getWidth());
+        productShippingDto.setLength(product.getLength());
+        productShippingDto.setWeight(product.getWeight());
+
+        return productShippingDto;
+    }
+
+    public Product productShippingDtoMapToProduct(ProductShippingDto productShippingDto, Product product) {
+        if (productShippingDto.getHeight() != null) {
+            product.setHeight(productShippingDto.getHeight());
+        }
+
+        if (productShippingDto.getWidth() != null) {
+            product.setWidth(productShippingDto.getWidth());
+        }
+
+        if (productShippingDto.getHeight() != null) {
+            product.setHeight(productShippingDto.getHeight());
+        }
+
+        if (productShippingDto.getWeight() != null) {
+            product.setWeight(productShippingDto.getWeight());
+        }
+
+        return product;
+    }
+
+
 }

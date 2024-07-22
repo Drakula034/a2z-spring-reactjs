@@ -210,5 +210,16 @@ public class ProductServiceImpl implements ProductService {
         }
     }
 
+    @Override
+    public Product getProductShippingDetails(Integer productId) {
+        Product existingProduct = productRepository.findById(productId).orElseThrow(() -> new RuntimeException("Product not found"));
+        return existingProduct;
+    }
+
+    @Override
+    public boolean updateProductShippingDetails(Product product) {
+        return false;
+    }
+
 
 }

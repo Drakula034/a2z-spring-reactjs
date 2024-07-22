@@ -7,8 +7,8 @@ import lombok.Setter;
 @Setter
 public class ProductShippingDto {
 
-    private float length;
-    private float width;
-    private float height;
-    private float weight;
+    private Float length;
+    private Float width;
+    private Float height;
+    private Float weight;
 }

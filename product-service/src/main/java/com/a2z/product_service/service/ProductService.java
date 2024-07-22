@@ -24,4 +24,6 @@ public interface ProductService {
     Product getProductDescription(Integer productId);
     Product getProductImages(Integer productId);
     Boolean updateProductImages(Product product);
+    Product getProductShippingDetails(Integer productId);
+    boolean updateProductShippingDetails(Product product);
 }

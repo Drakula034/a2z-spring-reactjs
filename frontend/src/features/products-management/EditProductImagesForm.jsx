@@ -12,7 +12,7 @@ function EditProductImagesForm() {
     mainImage: data?.mainImage ?? "",
     productImages: data?.productImages || [],
   };
-  console.log(imagesData);
+  // console.log(imagesData);
   // console.log(productId);
   console.log(data);
   const handleProductImagesFormSubmit = (data) => {
