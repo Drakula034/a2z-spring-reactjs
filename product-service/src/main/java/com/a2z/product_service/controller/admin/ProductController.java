@@ -89,8 +89,6 @@ public class ProductController {
         if (productRepository.findById(productId).isEmpty()) {
             throw new NotFoundException("Product id is invalid");
         }
-
-//        Product product = productRepository.findById(productId);
         Product product = productMapper.productDescriptionDtoMapToProduct(productDescriptionDto, new Product());
         product.setId(productId);
 

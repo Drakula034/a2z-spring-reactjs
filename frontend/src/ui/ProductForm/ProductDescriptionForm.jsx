@@ -8,19 +8,26 @@ import {
   ShortDescription,
   StyledButtons,
 } from "../AdminFormStyles";
+import { useNavigate } from "react-router-dom";
 
-function ProductDescriptionForm({ formType, onSubmit }) {
+function ProductDescriptionForm({ onSubmit, descriptionData }) {
+  const navigate = useNavigate();
   const editor = useRef(null);
-  const [shortDescription, setShortDescription] = useState("");
-  const [description, setDescription] = useState("");
+  const [shortDescription, setShortDescription] = useState(
+    descriptionData?.shortDescription || ""
+  );
+  const [fullDescription, setFullDescription] = useState(
+    descriptionData?.fullDescription || ""
+  );
 
   const onCancel = () => {
     setShortDescription("");
-    setDescription("");
+    setFullDescription("");
+    navigate("/admin/products");
   };
 
   const createNew = () => {
-    onSubmit({ shortDescription, description });
+    onSubmit({ shortDescription, fullDescription });
   };
 
   return (
@@ -45,12 +52,12 @@ function ProductDescriptionForm({ formType, onSubmit }) {
         <label>Description</label>
         <JoditEditor
           ref={editor}
-          value={description}
-          onChange={(newContent) => setDescription(newContent)}
+          value={fullDescription}
+          onChange={(newContent) => setFullDescription(newContent)}
         />
       </Description>
       <StyledButtons>
-        <AddButton buttonText="Save" createNew={createNew} />
+        <AddButton buttonText="Save" type="submit" createNew={createNew} />
         <CancelButton buttonText="Cancel" handleCancel={onCancel} />
       </StyledButtons>
     </div>

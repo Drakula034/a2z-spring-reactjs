@@ -98,7 +98,7 @@ function ProductTable({ rowData }) {
               const productId = params.data.productId;
               //   const categoryToEdit = params.data;
               const url = location.pathname;
-              navigate(`${url}/edit?productId=${productId}`, {
+              navigate(`${url}/edit/${productId}/overview`, {
                 // state: { categoryToEdit },
               });
             }}

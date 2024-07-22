@@ -5,9 +5,10 @@ import useGetProductOverviewData from "./useGetProductOverviewData";
 import useUpdateProductOverview from "./useUpdateProductOverView";
 
 function EditProductOverViewForm() {
-  const location = useLocation();
-  const queryParams = new URLSearchParams(location.search); // Use location.search
-  const productId = queryParams.get("productId");
+  // const location = useLocation();
+  // const queryParams = new URLSearchParams(location.search); // Use location.search
+  // const productId = queryParams.get("productId");
+  const { productId } = useParams();
   const { data } = useGetProductOverviewData(productId);
   const { updateProductOverView } = useUpdateProductOverview();
   //   console.log(queryParams.get("productId"));
@@ -28,8 +29,6 @@ function EditProductOverViewForm() {
       price: data?.listPrice || 0,
       discountPercent: data?.discount || 0,
     };
-    // console.log("productOverViewData", productOverViewData);
-    // console.log(isNaN(productId) ? 0 : productId);
     updateProductOverView({ data: productOverViewData, productId });
   };
   return (

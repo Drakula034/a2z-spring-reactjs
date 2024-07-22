@@ -12,7 +12,7 @@ function ProductsPage() {
       <Routes>
         <Route index element={<ProductManagement />} />
         <Route path="create/*" element={<ProductForm />} />
-        <Route path="edit/*" element={<EditProduct />} />
+        <Route path="edit/:productId/*" element={<EditProduct />} />
       </Routes>
       <Outlet />
     </>

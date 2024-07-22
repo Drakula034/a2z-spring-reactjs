@@ -1,9 +1,11 @@
 import {
   CREATE_PRODUCT_OVERVIEW,
   GET_PRODUCT_BY_PAGE,
+  GET_PRODUCT_DESCRIPTION,
   GET_PRODUCT_OVERVIEW_BY_ID,
   PRODUCT_SERVICE_ENABLED_DISABLED_URL,
   PRODUCTS_TOGGLE_ENABLED_STATUS,
+  UPDATE_PRODUCT_DESCRIPTION,
   UPDATE_PRODUCT_OVERVIEW,
 } from "../../../constants/endpoint-constants";
 
@@ -101,5 +103,44 @@ export async function updateProductOverView(data, productId) {
     // Optionally log the error or perform additional error handling
     console.error("Update failed:", err);
     return { success: false, error: err.message };
+  }
+}
+
+export async function getProductDescription(productId) {
+  const URL = GET_PRODUCT_DESCRIPTION(productId);
+  try {
+    const res = await fetch(URL, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    });
+
+    if (!res.ok) {
+      throw new Error("Something went wrong");
+    }
+    const data = await res.json();
+    return data;
+  } catch (err) {
+    throw new Error(err.message);
+  }
+}
+
+export async function updateProductDescription(data, productId) {
+  productId = parseInt(productId, 10);
+  const URL = UPDATE_PRODUCT_DESCRIPTION(productId);
+  try {
+    const res = await fetch(URL, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+
+    if (!res.ok) {
+      const errorText = await res.text(); // or res.json() if the error response is JSON
+      throw new Error(errorText || "Something went wrong");
+    }
+
+    return { success: true };
+  } catch (err) {
+    throw new Error(err.message);
   }
 }

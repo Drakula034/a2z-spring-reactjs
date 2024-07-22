@@ -10,13 +10,13 @@ const useUpdateProductOverview = () => {
   } = useMutation(
     ({ data, productId }) => updateProductOverViewDataApi(data, productId),
     {
-      onSuccess: (productId) => {
+      onSuccess: (_, productId) => {
         toast.success(
           `Product overview for productId ${productId} updated successfully`
         );
         queryClient.invalidateQueries("productsByPage");
       },
-      onError: (productId) => {
+      onError: (_, productId) => {
         toast.error(
           `Unable to update product overview for productId ${productId}`
         );

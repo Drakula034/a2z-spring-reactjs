@@ -79,3 +79,8 @@ export const GET_PRODUCT_OVERVIEW_BY_ID = (productId) =>
   `${PRODUCT_SERVICE_BASE_URL}/${productId}/editOverView`;
 export const UPDATE_PRODUCT_OVERVIEW = (productId) =>
   `${PRODUCT_SERVICE_BASE_URL}/${productId}/editOverView`;
+
+export const UPDATE_PRODUCT_DESCRIPTION = (productId) =>
+  `${PRODUCT_SERVICE_BASE_URL}/${productId}/updateDescription`;
+export const GET_PRODUCT_DESCRIPTION = (productId) =>
+  `${PRODUCT_SERVICE_BASE_URL}/${productId}/getDescription`;
