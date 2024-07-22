@@ -1,9 +1,6 @@
 package com.a2z.product_service.mapper;
 
-import com.a2z.product_service.model.dto.ProductDto_v1;
-import com.a2z.product_service.model.dto.ProductDtoForOrder;
-import com.a2z.product_service.model.dto.ProductOverViewDto;
-import com.a2z.product_service.model.dto.ProductResponseForProductAdminPage;
+import com.a2z.product_service.model.dto.*;
 import com.a2z.product_service.model.entity.Brand;
 import com.a2z.product_service.model.entity.Category;
 import com.a2z.product_service.model.entity.Product;
@@ -139,27 +136,24 @@ public class ProductMapper {
         productOverViewDto.setInStock(product.getInStock());
         return productOverViewDto;
     }
-//    public Product productOverViewDtoMapToProduct(ProductOverViewDto productOverViewDto, Product product) {
-//        // Set product fields based on DTO values
-//        product.setName(productOverViewDto.getName());
-//        product.setAlias(productOverViewDto.getAlias());
-//
-//        // Assuming Category and Brand are already set or need to be fetched from repositories
-//        Category category = categoryRepository.findByCategoryName(productOverViewDto.getCategoryName());
-//        product.setCategory(category);
-//
-//        Brand brand = brandsRepository.findByName(productOverViewDto.getBrandName());
-//        product.setBrand(brand);
-//
-//        product.setCost(productOverViewDto.getCost());
-//        product.setPrice(productOverViewDto.getPrice());
-//        product.setDiscountPercent(productOverViewDto.getDiscountPercent());
-//        product.setEnabled(productOverViewDto.isEnabled());
-//        product.setInStock(productOverViewDto.isInStock());
-//
-//        return product;
-//    }
 
+    public ProductDescriptionDto productMapToProductDescriptionDto(Product product,ProductDescriptionDto productDescriptionDto){
+        productDescriptionDto.setFullDescription(product.getFullDescription());
+        productDescriptionDto.setShortDescription(product.getShortDescription());
+
+        return productDescriptionDto;
+    }
+
+    public Product productDescriptionDtoMapToProduct(ProductDescriptionDto productDescriptionDto, Product product){
+        if(productDescriptionDto.getFullDescription() != null && !productDescriptionDto.getFullDescription().isEmpty()){
+            product.setFullDescription(productDescriptionDto.getFullDescription());
+        }
+        if(productDescriptionDto.getShortDescription()!= null && !productDescriptionDto.getShortDescription().isEmpty()) {
+            product.setShortDescription(productDescriptionDto.getShortDescription());
+        }
+
+        return product;
+    }
 
 
 }

@@ -18,10 +18,7 @@ import org.springframework.stereotype.Service;
 
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -155,6 +152,23 @@ public class ProductServiceImpl implements ProductService {
         // Step 3: Save the updated product entity back to the database
         productRepository.save(existingProduct);
         return true;
+    }
+
+    @Override
+    public Boolean updateProductDescription(Product updateProduct) {
+        Product existingProduct = productRepository.findById(updateProduct.getId())
+                .orElseThrow(() -> new RuntimeException("Product not found"));
+        existingProduct.setShortDescription(updateProduct.getShortDescription());
+        existingProduct.setFullDescription(updateProduct.getFullDescription());
+        Product savedProduct = productRepository.save(existingProduct);
+        return Objects.equals(existingProduct.getShortDescription(), savedProduct.getShortDescription());
+    }
+
+    @Override
+    public Product getProductDescription(Integer productId) {
+        Product existingProduct = productRepository.findById(productId)
+                .orElseThrow(() -> new RuntimeException("Product not found"));
+        return existingProduct;
     }
 
 }

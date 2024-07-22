@@ -1,5 +1,6 @@
+import ProductDescriptionForm from "../../ui/ProductForm/ProductDescriptionForm";
 function EditProductDescriptionForm() {
-  return <div></div>;
+  return <ProductDescriptionForm />;
 }
 
 export default EditProductDescriptionForm;

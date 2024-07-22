@@ -20,4 +20,6 @@ public interface ProductService {
     boolean toggleProductEnabledStatus(Integer productId);
     Product getProductOverView(Integer productId);
     Boolean updateProductOverView( Product product);
+    Boolean updateProductDescription(Product product);
+    Product getProductDescription(Integer productId);
 }

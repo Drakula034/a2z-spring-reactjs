@@ -1,10 +1,7 @@
 package com.a2z.product_service.controller.admin;
 
 import com.a2z.product_service.mapper.ProductMapper;
-import com.a2z.product_service.model.dto.ProductDtoForOrder;
-import com.a2z.product_service.model.dto.ProductOverViewDto;
-import com.a2z.product_service.model.dto.ProductResponseForControl;
-import com.a2z.product_service.model.dto.ProductResponseForProductAdminPage;
+import com.a2z.product_service.model.dto.*;
 import com.a2z.product_service.model.entity.Product;
 import com.a2z.product_service.repository.ProductRepository;
 import com.a2z.product_service.service.ProductService;
@@ -85,6 +82,36 @@ public class ProductController {
         }
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+    }
+
+    @PutMapping("/{productId}/updateDescription")
+    public ResponseEntity<Boolean> updateProductDescription(@PathVariable Integer productId, @RequestBody ProductDescriptionDto productDescriptionDto) {
+        if (productRepository.findById(productId).isEmpty()) {
+            throw new NotFoundException("Product id is invalid");
+        }
+
+//        Product product = productRepository.findById(productId);
+        Product product = productMapper.productDescriptionDtoMapToProduct(productDescriptionDto, new Product());
+        product.setId(productId);
+
+        boolean isProductUpdated = productService.updateProductDescription(product);
+
+        if (isProductUpdated) {
+            return ResponseEntity.status(HttpStatus.OK).build();
+        }
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+
+
+    }
+    @GetMapping("/{productId}/getDescription")
+    public ResponseEntity<ProductDescriptionDto> getProductDescription(@PathVariable Integer productId){
+        if (productRepository.findById(productId).isEmpty()) {
+            throw new NotFoundException("Product id is invalid");
+        }
+        Product product = productService.getProductDescription(productId);
+        ProductDescriptionDto productDescriptionDto = productMapper.productMapToProductDescriptionDto(product, new ProductDescriptionDto());
+        return ResponseEntity.status(HttpStatus.OK).body(productDescriptionDto);
     }
 
     @RequestMapping("/{productId}")

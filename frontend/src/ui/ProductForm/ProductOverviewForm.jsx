@@ -46,14 +46,6 @@ function ProductOverviewForm({ formType, onSubmit, productOverviewData }) {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search); // Use location.search
   const productId = queryParams.get("productId");
-  // const [productOverViewData, setProductOverViewData] = useState({});
-  // const { data } = useGetProductOverviewData(productId);
-
-  // useEffect(() => {
-  //   if (data) {
-  //     setProductOverViewData(data);
-  //   }
-  // }, [data]);
 
   const [formValues] = useState({
     productName: productOverviewData?.name || "",
@@ -66,22 +58,6 @@ function ProductOverviewForm({ formType, onSubmit, productOverviewData }) {
     listPrice: productOverviewData?.price || "",
     discount: productOverviewData?.discountPercent || "",
   });
-
-  // useEffect(() => {
-  //   setFormValues({
-  //     productName: productOverViewData?.name || "",
-  //     alias: productOverViewData?.productAlias || "",
-  //     productBrands: productOverViewData?.brandName || "",
-  //     productCategories: productOverViewData?.categoryName || "",
-  //     enabled: productOverViewData?.enabled ?? false, // Ensure enabled is always boolean
-  //     inStock: productOverViewData?.inStock ?? false,
-  //     cost: productOverViewData?.cost || "",
-  //     listPrice: productOverViewData?.price || "",
-  //     discount: productOverViewData?.discountPercent || "",
-  //   });
-  // }, [productOverViewData]);
-
-  // console.log(formValues);
 
   const { data: categoryList } = useGetCategoryAll();
   const { data: brandsList } = useGetAllBrandByName();
@@ -133,13 +109,15 @@ function ProductOverviewForm({ formType, onSubmit, productOverviewData }) {
     } else {
       onSubmit(data, productId);
     }
-    // reset();
-    // navigate(-1);
+    reset();
+    navigate("/admin/products");
   };
 
-  const onCancel = () => {
-    // reset();
-    // navigate(-1);
+  const Cancel = () => {
+    // console.log("Resetting form...");
+    reset();
+    // console.log("Navigating back...");
+    navigate("/admin/products");
   };
   // console.log(brands);
 
@@ -258,8 +236,8 @@ function ProductOverviewForm({ formType, onSubmit, productOverviewData }) {
         />
       </StyledInput>
       <StyledButtons>
-        <AddButton buttonText="Save" />
-        <CancelButton buttonText="Cancel" handleCancel={onCancel} />
+        <AddButton buttonText="Save" type="submit" />
+        <CancelButton buttonText="Cancel" handleCancel={Cancel} />
       </StyledButtons>
     </StyledForm>
   );
