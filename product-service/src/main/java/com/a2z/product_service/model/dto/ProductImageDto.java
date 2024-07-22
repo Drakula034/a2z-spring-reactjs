@@ -7,6 +7,6 @@ import lombok.Setter;
 @Setter
 public class ProductImageDto {
 
-    private String image;
+    private String name;
     private Integer productId;
 }

@@ -22,4 +22,6 @@ public interface ProductService {
     Boolean updateProductOverView( Product product);
     Boolean updateProductDescription(Product product);
     Product getProductDescription(Integer productId);
+    Product getProductImages(Integer productId);
+    Boolean updateProductImages(Product product);
 }

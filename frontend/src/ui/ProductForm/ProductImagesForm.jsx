@@ -17,11 +17,13 @@ const StyledImages = styled.div`
   overflow-y: auto;
   /* justify-items: center; */
 `;
-function ProductImagesForm() {
+function ProductImagesForm({ onSubmit, imagesData }) {
   const navigate = useNavigate();
-  const [mainImage, setMainImage] = useState("");
-  const [additionalImages, setAdditionalImages] = useState([]);
-  // const [additionalImageCount, setAdditionalImageCount] = useState(0);
+  const [mainImage, setMainImage] = useState(imagesData?.mainImage ?? "");
+  const [additionalImages, setAdditionalImages] = useState(
+    imagesData?.productImages || []
+  );
+  // console.log(mainImage);
   // console.log(additionalImages);
   const removeAdditionalImage = (imageId) => {
     setAdditionalImages((prevImages) =>
@@ -34,12 +36,14 @@ function ProductImagesForm() {
       ...prevImages,
       { id: Date.now(), imageName: "" },
     ]);
+
     // setAdditionalImageCount((prevCount) => prevCount + 1);
   };
 
   const onSave = () => {
-    console.log(additionalImages);
-    console.log("main Images", mainImage);
+    // console.log(additionalImages);
+    // console.log("main Images", mainImage);
+    onSubmit({ mainImage, additionalImages });
   };
   const onCancel = () => {
     setAdditionalImages([]);

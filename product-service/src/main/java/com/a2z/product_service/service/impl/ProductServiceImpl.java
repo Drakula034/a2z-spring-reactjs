@@ -7,10 +7,12 @@ import com.a2z.product_service.model.dto.ProductResponseForProductAdminPage;
 import com.a2z.product_service.model.entity.Brand;
 import com.a2z.product_service.model.entity.Category;
 import com.a2z.product_service.model.entity.Product;
+import com.a2z.product_service.model.entity.ProductImage;
 import com.a2z.product_service.repository.BrandsRepository;
 import com.a2z.product_service.repository.CategoryRepository;
 import com.a2z.product_service.repository.ProductRepository;
 import com.a2z.product_service.service.ProductService;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -31,6 +33,7 @@ public class ProductServiceImpl implements ProductService {
     CategoryRepository categoryRepository;
     @Autowired
     BrandsRepository brandsRepository;
+
     @Override
     public Integer addProduct(Product product) {
         Product newProduct = Product.builder()
@@ -51,14 +54,14 @@ public class ProductServiceImpl implements ProductService {
                 .brand(product.getBrand())
                 .build();
 
-        if(product.getId() == null){
+        if (product.getId() == null) {
             product.setCreatedTime(new Date());
         }
 
-        if(product.getAlias() == null || product.getAlias().isEmpty()){
+        if (product.getAlias() == null || product.getAlias().isEmpty()) {
             String defaultAlias = product.getName().replaceAll(" ", "_");
             product.setAlias(defaultAlias);
-        }else{
+        } else {
             product.setAlias(product.getAlias().replaceAll(" ", "_"));
         }
 
@@ -69,7 +72,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Integer addProductOverView(Product product) {
         Product savedProduct = productRepository.save(product);
-        if(savedProduct.getId() == null)return -1;
+        if (savedProduct.getId() == null) return -1;
         return savedProduct.getId();
     }
 
@@ -91,13 +94,13 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<ProductResponseForProductAdminPage> getProductByPage(Integer page) {
-        Pageable pageable = PageRequest.of(page-1, PRODUCTS_PER_PAGE);
+        Pageable pageable = PageRequest.of(page - 1, PRODUCTS_PER_PAGE);
         List<Product> products = productRepository.findAll(pageable).getContent();
         List<ProductResponseForProductAdminPage> responseProductList = new ArrayList<>();
-        for(Product product : products) {
+        for (Product product : products) {
             responseProductList.add(ProductMapper.productMapToProductResponseForProductAdmin(product, new ProductResponseForProductAdminPage()));
         }
-         return responseProductList;
+        return responseProductList;
     }
 
     @Override
@@ -134,10 +137,10 @@ public class ProductServiceImpl implements ProductService {
             existingProduct.setCategory(updatedProduct.getCategory());
         }
 
-            existingProduct.setEnabled(updatedProduct.isEnabled());
+        existingProduct.setEnabled(updatedProduct.isEnabled());
 
 
-            existingProduct.setInStock(updatedProduct.getInStock());
+        existingProduct.setInStock(updatedProduct.getInStock());
 
         if (updatedProduct.getCost() != existingProduct.getCost()) {
             existingProduct.setCost(updatedProduct.getCost());
@@ -171,5 +174,41 @@ public class ProductServiceImpl implements ProductService {
                 .orElseThrow(() -> new RuntimeException("Product not found"));
         return existingProduct;
     }
+
+    @Override
+    public Product getProductImages(Integer productId) {
+        Product existingProduct = productRepository.findById(productId).orElseThrow(() -> new RuntimeException("Product not found"));
+        return existingProduct;
+    }
+
+    @Override
+    public Boolean updateProductImages(Product product) {
+        try {
+            // Fetch the existing product from the repository
+            Product existingProduct = productRepository.findById(product.getId())
+                    .orElseThrow(() -> new EntityNotFoundException("Product not found"));
+
+            // Clear existing images
+            existingProduct.getImages().clear();
+
+            existingProduct.setMainImage(product.getMainImage());
+
+            // Update the product with new images
+            for (ProductImage newImage : product.getImages()) {
+                newImage.setProduct(existingProduct);
+                existingProduct.getImages().add(newImage);
+            }
+
+            // Save the updated product
+            productRepository.save(existingProduct);
+
+            return true; // Indicate success
+        } catch (Exception e) {
+            // Handle exceptions and rollback the transaction if necessary
+            e.printStackTrace();
+            return false; // Indicate failure
+        }
+    }
+
 
 }

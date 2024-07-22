@@ -4,23 +4,27 @@ import com.a2z.product_service.model.dto.*;
 import com.a2z.product_service.model.entity.Brand;
 import com.a2z.product_service.model.entity.Category;
 import com.a2z.product_service.model.entity.Product;
+import com.a2z.product_service.model.entity.ProductImage;
 import com.a2z.product_service.repository.BrandsRepository;
 import com.a2z.product_service.repository.CategoryRepository;
+import com.a2z.product_service.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.*;
 
 @Component
 public class ProductMapper {
     private final CategoryRepository categoryRepository;
     private final BrandsRepository brandsRepository;
+    private final ProductRepository productRepository;
 
     @Autowired
-    public ProductMapper(CategoryRepository categoryRepository, BrandsRepository brandsRepository) {
+    public ProductMapper(CategoryRepository categoryRepository, BrandsRepository brandsRepository, ProductRepository productRepository) {
         this.categoryRepository = categoryRepository;
         this.brandsRepository = brandsRepository;
+        this.productRepository = productRepository;
     }
-
-
 
 
     public ProductDto_v1 productMapTpProductDto(Product product, ProductDto_v1 productDto) {
@@ -85,7 +89,7 @@ public class ProductMapper {
         return productResponse;
     }
 
-    public  Product productOverViewDtoMapToProduct(ProductOverViewDto productOverViewDto, Product product) {
+    public Product productOverViewDtoMapToProduct(ProductOverViewDto productOverViewDto, Product product) {
         product.setName(productOverViewDto.getName());
         if (productOverViewDto.getAlias() != null && productOverViewDto.getAlias().equals("")) {
             product.setAlias(productOverViewDto.getAlias());
@@ -124,7 +128,7 @@ public class ProductMapper {
         return product;
     }
 
-    public ProductOverViewDto productMapToProductOverViewDto(Product product,ProductOverViewDto productOverViewDto){
+    public ProductOverViewDto productMapToProductOverViewDto(Product product, ProductOverViewDto productOverViewDto) {
         productOverViewDto.setName(product.getName());
         productOverViewDto.setAlias(product.getAlias());
         productOverViewDto.setCategoryName(product.getCategory().getCategoryName());
@@ -137,23 +141,102 @@ public class ProductMapper {
         return productOverViewDto;
     }
 
-    public ProductDescriptionDto productMapToProductDescriptionDto(Product product,ProductDescriptionDto productDescriptionDto){
+    public ProductDescriptionDto productMapToProductDescriptionDto(Product product, ProductDescriptionDto productDescriptionDto) {
         productDescriptionDto.setFullDescription(product.getFullDescription());
         productDescriptionDto.setShortDescription(product.getShortDescription());
 
         return productDescriptionDto;
     }
 
-    public Product productDescriptionDtoMapToProduct(ProductDescriptionDto productDescriptionDto, Product product){
-        if(productDescriptionDto.getFullDescription() != null && !productDescriptionDto.getFullDescription().isEmpty()){
+    public Product productDescriptionDtoMapToProduct(ProductDescriptionDto productDescriptionDto, Product product) {
+        if (productDescriptionDto.getFullDescription() != null && !productDescriptionDto.getFullDescription().isEmpty()) {
             product.setFullDescription(productDescriptionDto.getFullDescription());
         }
-        if(productDescriptionDto.getShortDescription()!= null && !productDescriptionDto.getShortDescription().isEmpty()) {
+        if (productDescriptionDto.getShortDescription() != null && !productDescriptionDto.getShortDescription().isEmpty()) {
             product.setShortDescription(productDescriptionDto.getShortDescription());
         }
 
         return product;
     }
 
+    public ProductImageDto productImageDtoMapToProductImage(ProductImage productImage, ProductImageDto productImageDto) {
+        productImageDto.setName(productImage.getName());
+        productImageDto.setProductId(productImage.getProduct().getId());
+        return productImageDto;
+    }
 
+    public ProductListImageDto productMapToProductListImageDto(Product product, ProductListImageDto productListImageDto) {
+        productListImageDto.setMainImage(product.getMainImage());
+        List<ProductImage> productListImages = product.getImages();
+//        productListImageDto.setProductImages(productListImages);
+        List<ProductImageDto> productImageDtoList = productListImageDto.getProductImages();
+        for (ProductImage p : productListImages) {
+            ProductImageDto productImageDto1 = productImageDtoMapToProductImage(p, new ProductImageDto());
+            productImageDtoList.add(productImageDto1);
+        }
+        return productListImageDto;
+
+    }
+
+//    public ProductImage productImageDtoMapToProductImage(ProductImageDto productImageDto, ProductImage productImage){
+//
+//    }
+
+
+//    public Product productListImageDtoMapToProduct(ProductListImageDto productListImageDto, Product product) {
+//        product.setMainImage(productListImageDto.getMainImage());
+//        List<ProductImage> productListImages = product.getImages();
+//        List<ProductImageDto> productImageDtoList = productListImageDto.getProductImages();
+//        for(ProductImageDto p : productImageDtoList){
+//            ProductImage productImage =
+//            productListImages.add(productImage);
+//        }
+//
+//    }
+
+    public Product productListImageDtoMapToProduct(ProductListImageDto productListImageDto, Product product) {
+        if (productListImageDto == null || product == null) {
+            return null; // or throw an IllegalArgumentException
+        }
+
+        // Set the main image
+        product.setMainImage(productListImageDto.getMainImage());
+
+        // Get the list of current product images
+        List<ProductImage> productListImages = product.getImages();
+        if (productListImages == null) {
+            productListImages = new ArrayList<>();
+            product.setImages(productListImages);
+        } else {
+            productListImages.clear(); // Clear existing images if necessary
+        }
+
+        // Get the list of product image DTOs from the input DTO
+        List<ProductImageDto> productImageDtoList = productListImageDto.getProductImages();
+        for (ProductImageDto productImageDto : productImageDtoList) {
+            // Create a new ProductImage object
+            ProductImage productImage = new ProductImage();
+            productImage.setName(productImageDto.getName());
+
+            // Assuming you have a method to fetch Product by id
+            Product associatedProduct = fetchProductById(productImageDto.getProductId());
+            if (associatedProduct != null) {
+                productImage.setProduct(associatedProduct);
+            }
+
+            // Add the new product image to the list
+            productListImages.add(productImage);
+        }
+
+        return product;
+    }
+
+    // This is a placeholder method to fetch the Product entity by its id
+    private Product fetchProductById(Integer productId) {
+        // Implement the logic to fetch the product entity from the database
+        // For example, using a repository:
+        // return productRepository.findBy
+        Optional<Product> product = productRepository.findById(productId);
+        return product.get(); // Return null if the product is not found
+    }
 }

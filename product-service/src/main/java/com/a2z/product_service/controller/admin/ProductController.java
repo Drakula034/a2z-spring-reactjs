@@ -3,6 +3,7 @@ package com.a2z.product_service.controller.admin;
 import com.a2z.product_service.mapper.ProductMapper;
 import com.a2z.product_service.model.dto.*;
 import com.a2z.product_service.model.entity.Product;
+import com.a2z.product_service.model.entity.ProductImage;
 import com.a2z.product_service.repository.ProductRepository;
 import com.a2z.product_service.service.ProductService;
 import jakarta.ws.rs.NotFoundException;
@@ -110,6 +111,33 @@ public class ProductController {
         Product product = productService.getProductDescription(productId);
         ProductDescriptionDto productDescriptionDto = productMapper.productMapToProductDescriptionDto(product, new ProductDescriptionDto());
         return ResponseEntity.status(HttpStatus.OK).body(productDescriptionDto);
+    }
+
+    @GetMapping("/{productId}/getImages")
+    public ResponseEntity<ProductListImageDto> getProductListImages(@PathVariable Integer productId){
+        if (productRepository.findById(productId).isEmpty()) {
+            throw new NotFoundException("Product id is invalid");
+        }
+
+        Product product = productService.getProductImages(productId);
+//        List<ProductImage> productImages = product.getImages();
+        ProductListImageDto productListImageDto = productMapper.productMapToProductListImageDto(product, new ProductListImageDto());
+        return ResponseEntity.status(HttpStatus.OK).body(productListImageDto);
+
+    }
+    @PutMapping("/{productId}/updateImages")
+    public ResponseEntity<Boolean> addProductImages(@PathVariable Integer productId, @RequestBody ProductListImageDto productListImageDto){
+        if (productRepository.findById(productId).isEmpty()) {
+            throw new NotFoundException("Product id is invalid");
+        }
+        Product product = productMapper.productListImageDtoMapToProduct(productListImageDto, new Product());
+        product.setId(productId);
+        boolean isProductUpdated = productService.updateProductImages(product);
+        if (isProductUpdated) {
+            return ResponseEntity.status(HttpStatus.OK).build();
+        }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+
     }
 
     @RequestMapping("/{productId}")

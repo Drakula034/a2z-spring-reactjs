@@ -6,6 +6,8 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
+import javax.net.ssl.SSLSession;
+
 @Entity
 @Table(name = "product_images")
 @NoArgsConstructor
@@ -25,6 +27,21 @@ public class ProductImage {
 
     public ProductImage(String imageName, Product product) {
         this.name = imageName;
+        this.product = product;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
         this.product = product;
     }
 }

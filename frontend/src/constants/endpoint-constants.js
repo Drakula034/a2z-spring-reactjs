@@ -84,3 +84,8 @@ export const UPDATE_PRODUCT_DESCRIPTION = (productId) =>
   `${PRODUCT_SERVICE_BASE_URL}/${productId}/updateDescription`;
 export const GET_PRODUCT_DESCRIPTION = (productId) =>
   `${PRODUCT_SERVICE_BASE_URL}/${productId}/getDescription`;
+
+export const GET_PRODUCT_IMAGES = (productId) =>
+  `${PRODUCT_SERVICE_BASE_URL}/${productId}/getImages`;
+export const UPDATE_PRODUCT_IMAGES = (productId) =>
+  `${PRODUCT_SERVICE_BASE_URL}/${productId}/updateImages`;
