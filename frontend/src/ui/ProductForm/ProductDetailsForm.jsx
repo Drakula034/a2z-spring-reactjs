@@ -3,18 +3,45 @@ import ProductDetailsFormInput from "./ProductDetailsFormInput";
 import { StyledButtons } from "../AdminFormStyles";
 import AddButton from "../AddButton";
 import CancelButton from "../CancelButton";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const StyledProductDetails = styled.div`
   margin: 2rem 5rem 0.5rem 5rem;
   border: 1px solid var(--color-grey-300);
   width: 80%;
   height: 70vh;
+  overflow-y: auto;
 `;
-function ProductDetailsForm() {
-  const [inputRows, setInputRows] = useState([
-    { id: Date.now(), inputName: "", inputValue: "" },
-  ]);
+
+const generateUniqueId = () => "_" + Math.random().toString(36).substring(2, 9);
+function ProductDetailsForm({ onSubmit, productDetailsData }) {
+  const navigate = useNavigate();
+  // const [inputRows, setInputRows] = useState([]);
+  // const [inputRows, setInputRows] = useState([
+  //   { id: Date.now(), inputName: "", inputValue: "" },
+  // ]);
+  // console.log(productDetailsData.productDetails?.length);
+
+  const [inputRows, setInputRows] = useState([]);
+
+  useEffect(() => {
+    // Check if productDetailsData is defined and has the productDetails array
+    if (productDetailsData && productDetailsData.productDetails.length > 0) {
+      const transformedData = productDetailsData.productDetails?.map(
+        (detail) => ({
+          id: generateUniqueId(), // Use the utility function
+          inputName: detail?.name || "",
+          inputValue: detail?.value || "",
+        })
+      );
+
+      // console.log("transformedData", transformedData);
+      setInputRows(transformedData);
+    }
+  }, [productDetailsData]);
+
+  // console.log("inputRows", inputRows);
 
   const handleAddRow = () => {
     const lastInputRows = inputRows[inputRows.length - 1];
@@ -43,7 +70,13 @@ function ProductDetailsForm() {
   const resetFirstAndLastRow = () => {
     setInputRows([{ id: Date.now(), inputName: "", inputValue: "" }]);
   };
-  const saveDetails = () => {};
+  const saveDetails = () => {
+    onSubmit(inputRows);
+    navigate("/admin/products");
+  };
+  const onCancel = () => {
+    navigate("/admin/products");
+  };
 
   return (
     <div>
@@ -65,7 +98,7 @@ function ProductDetailsForm() {
       <StyledButtons>
         <AddButton buttonText={"Add More Details"} createNew={handleAddRow} />
         <AddButton buttonText={"Save"} createNew={saveDetails} />
-        <CancelButton buttonText={"Cancel"} />
+        <CancelButton buttonText={"Cancel"} handleCancel={onCancel} />
       </StyledButtons>
     </div>
   );

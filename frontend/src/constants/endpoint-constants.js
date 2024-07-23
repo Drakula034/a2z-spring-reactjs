@@ -94,3 +94,8 @@ export const UPDATE_PRODUCT_SHIPPING_DETAILS = (productId) =>
   `${PRODUCT_SERVICE_BASE_URL}/${productId}/updateShippingDetails`;
 export const GET_PRODUCT_SHIPPING_DETAILS = (productId) =>
   `${PRODUCT_SERVICE_BASE_URL}/${productId}/getShippingDetails`;
+
+export const GET_PRODUCT_PRODUCT_DETAILS = (productId) =>
+  `${PRODUCT_SERVICE_BASE_URL}/${productId}/productDetails`;
+export const UPDATE_PRODUCT_PRODUCT_DETAILS = (productId) =>
+  `${PRODUCT_SERVICE_BASE_URL}/${productId}/updateProductDetails`;

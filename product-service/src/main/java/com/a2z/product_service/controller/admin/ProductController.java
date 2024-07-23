@@ -166,11 +166,30 @@ public class ProductController {
     }
 
     @GetMapping("/{productId}/productDetails")
-    public ResponseEntity<List<ProductDetailsDto>> getAllProductDetails(@PathVariable Integer productId){
+    public ResponseEntity<ProductListDetailsDto> getAllProductDetails(@PathVariable Integer productId){
         if(productRepository.findById(productId).isEmpty()){
             throw new NotFoundException("Invalid product id has been passed");
         }
 
+        Product product = productService.getProductProductDetails(productId);
+        ProductListDetailsDto productListDetailsDto= productMapper.productMapToProductListDetailsDto(product, new ProductListDetailsDto());
+        return ResponseEntity.status(HttpStatus.OK).body(productListDetailsDto);
+    }
+
+    @PutMapping("/{productId}/updateProductDetails")
+    public ResponseEntity<Boolean> updateProductProductDetails(@PathVariable Integer productId,@RequestBody ProductListDetailsDto productListDetailsDto){
+        if(productRepository.findById(productId).isEmpty()){
+            throw new NotFoundException("Invalid product id has been passed");
+        }
+        System.out.println(productListDetailsDto.getProductDetails().size());
+        Product product = productMapper.productListDetailsDtoMapToProduct(productListDetailsDto, new Product());
+        product.setId(productId);
+//        System.out.println(product.getProductDetails().toString());
+        boolean isUpdated = productService.updateProductProductDetails(product);
+        if(isUpdated){
+            return ResponseEntity.status(HttpStatus.OK).build();
+        }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 
     }
 

@@ -64,7 +64,15 @@ function ProductTable({ rowData }) {
     {
       field: "image",
       headerName: "Image",
-      cellRenderer: () => <AddPhotoIfNotFound icon={<CgProductHunt />} />,
+      cellRenderer: (props) => {
+        const photo = props.data?.image || "";
+        console.log(photo);
+        return photo ? (
+          <img src={`/public/assets/products/${photo}`} alt="product image" />
+        ) : (
+          <AddPhotoIfNotFound icon={<CgProductHunt />} />
+        );
+      },
       flex: 1,
     },
     { field: "productName", headerName: "Name", flex: 3 },

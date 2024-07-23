@@ -4,10 +4,7 @@ import com.a2z.product_service.mapper.ProductMapper;
 import com.a2z.product_service.model.dto.ProductOverViewDto;
 import com.a2z.product_service.model.dto.ProductResponseForControl;
 import com.a2z.product_service.model.dto.ProductResponseForProductAdminPage;
-import com.a2z.product_service.model.entity.Brand;
-import com.a2z.product_service.model.entity.Category;
-import com.a2z.product_service.model.entity.Product;
-import com.a2z.product_service.model.entity.ProductImage;
+import com.a2z.product_service.model.entity.*;
 import com.a2z.product_service.repository.BrandsRepository;
 import com.a2z.product_service.repository.CategoryRepository;
 import com.a2z.product_service.repository.ProductRepository;
@@ -19,8 +16,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 
+import java.lang.reflect.Field;
 import java.time.LocalDate;
 import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -236,10 +236,59 @@ public class ProductServiceImpl implements ProductService {
         return existingProduct;
     }
 
-    @Override
+   @Override
     public boolean updateProductProductDetails(Product product) {
-        return false;
+        // Retrieve the existing product
+        Product existingProduct = productRepository.findById(product.getId())
+                .orElseThrow(() -> new RuntimeException("Invalid Product Id"));
+
+        // Get existing product details and their names
+        Map<String, ProductDetails> existingDetailsMap = existingProduct.getProductDetails().stream()
+                .collect(Collectors.toMap(ProductDetails::getName, Function.identity()));
+
+        // Iterate over new product details
+        for (ProductDetails newDetail : product.getProductDetails()) {
+            String detailName = newDetail.getName();
+
+            if (existingDetailsMap.containsKey(detailName)) {
+                // Update existing detail
+                ProductDetails existingDetail = existingDetailsMap.get(detailName);
+                updateProductDetails(existingDetail, newDetail);
+            } else {
+                // Add new detail
+                newDetail.setProduct(existingProduct);
+                existingProduct.getProductDetails().add(newDetail);
+            }
+        }
+
+        // Remove details from existing product that are no longer present
+        existingProduct.getProductDetails().removeIf(detail -> !product.getProductDetails().stream()
+                .anyMatch(newDetail -> newDetail.getName().equals(detail.getName())));
+
+        // Save the updated product
+        Product savedProduct = productRepository.save(existingProduct);
+
+        return savedProduct.getId() > 0;
     }
+
+    private void updateProductDetails(ProductDetails existingDetail, ProductDetails newDetail) {
+        // Use reflection to update all fields
+        Field[] fields = ProductDetails.class.getDeclaredFields();
+        for (Field field : fields) {
+            field.setAccessible(true); // Allow access to private fields
+            try {
+                Object newValue = field.get(newDetail);
+                if (newValue != null) {
+                    field.set(existingDetail, newValue);
+                }
+            } catch (IllegalAccessException e) {
+                throw new RuntimeException("Failed to update product details", e);
+            }
+        }
+    }
+
+
+
 
 
 }

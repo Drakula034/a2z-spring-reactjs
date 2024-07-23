@@ -266,11 +266,39 @@ public class ProductMapper {
         return product;
     }
 
-    public List<ProductDetailsDto> productMapToProductDetails(Product product,ProductDetailsDto productDetailsDto){
-        List<ProductDetails> productDetails =  product.getProductDetails();
+    private ProductDetailsDto productDetailsMapToProductDetailsDto(ProductDetails productDetails, ProductDetailsDto productDetailsDto){
+//        productDetailsDto.setProductId(productDetails.getProductId());
+        productDetailsDto.setName(productDetails.getName());
+        productDetailsDto.setValue(productDetails.getValue());
+
+        return productDetailsDto;
+    }
+
+    public ProductListDetailsDto productMapToProductListDetailsDto(Product product, ProductListDetailsDto productListDetailsDto){
+        List<ProductDetails> productDetailsList =  product.getProductDetails();
+        List<ProductDetailsDto> productDetailsDtos = productListDetailsDto.getProductDetails();
+        for(ProductDetails p : productDetailsList){
+            ProductDetailsDto productDetailsDto1 = productDetailsMapToProductDetailsDto(p, new ProductDetailsDto());
+            productDetailsDto1.setProductId(product.getId());
+            productDetailsDtos.add(productDetailsDto1);
+        }
+
+        return productListDetailsDto;
 
     }
-    public Product productDetailsDtoMapToProduct(ProductDetailsDto productDetailsDto, Product product){}
+    public Product productListDetailsDtoMapToProduct(ProductListDetailsDto productListDetailsDto, Product product){
+        List<ProductDetails> productDetailsList =  product.getProductDetails();
+        List<ProductDetailsDto> productDetailsDtos = productListDetailsDto.getProductDetails();
+        for(ProductDetailsDto p : productDetailsDtos) {
+            ProductDetails productDetails = new ProductDetails();
+            productDetails.setName(p.getName());
+            productDetails.setValue(p.getValue());
+            productDetails.setProduct(productRepository.findById(p.getProductId()).get());
+            productDetailsList.add(productDetails);
+        }
+
+        return product;
+    }
 
 
 }

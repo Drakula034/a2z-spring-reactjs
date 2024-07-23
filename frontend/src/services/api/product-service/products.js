@@ -11,6 +11,8 @@ import {
   UPDATE_PRODUCT_IMAGES,
   UPDATE_PRODUCT_OVERVIEW,
   UPDATE_PRODUCT_SHIPPING_DETAILS,
+  GET_PRODUCT_PRODUCT_DETAILS,
+  UPDATE_PRODUCT_PRODUCT_DETAILS,
 } from "../../../constants/endpoint-constants";
 
 export async function getEnabledDisabledProductCount() {
@@ -218,6 +220,43 @@ export async function updateProductShippingDetails(data, productId) {
 
     if (!res.ok) {
       const errorText = await res.text(); // or res.json() if the error response is JSON}
+      throw new Error(errorText || "Something went wrong");
+    }
+
+    return { success: true };
+  } catch (err) {
+    throw new Error(err.message);
+  }
+}
+
+export async function getProductProductDetails(productId) {
+  productId = parseInt(productId, 10);
+  const url = GET_PRODUCT_PRODUCT_DETAILS(productId);
+
+  try {
+    const res = await fetch(url, { method: "GET" });
+    if (!res.ok) throw new Error(res.message);
+
+    const data = await res.json();
+    return data;
+  } catch (err) {
+    throw new Error(err.message);
+  }
+}
+
+export async function updateProductProductDetails(data, productId) {
+  productId = parseInt(productId, 10);
+  const url = UPDATE_PRODUCT_PRODUCT_DETAILS(productId);
+
+  try {
+    const res = await fetch(url, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+
+    if (!res.ok) {
+      const errorText = await res.text();
       throw new Error(errorText || "Something went wrong");
     }
 
