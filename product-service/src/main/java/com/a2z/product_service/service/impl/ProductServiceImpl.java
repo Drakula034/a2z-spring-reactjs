@@ -10,6 +10,7 @@ import com.a2z.product_service.repository.CategoryRepository;
 import com.a2z.product_service.repository.ProductRepository;
 import com.a2z.product_service.service.ProductService;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -181,34 +182,80 @@ public class ProductServiceImpl implements ProductService {
         return existingProduct;
     }
 
+
+
     @Override
+    @Transactional
     public Boolean updateProductImages(Product product) {
         try {
             // Fetch the existing product from the repository
             Product existingProduct = productRepository.findById(product.getId())
                     .orElseThrow(() -> new EntityNotFoundException("Product not found"));
 
-            // Clear existing images
-            existingProduct.getImages().clear();
+            // Create a map of existing images by name
+            Map<String, ProductImage> existingImagesMap = existingProduct.getImages().stream()
+                    .collect(Collectors.toMap(ProductImage::getName, Function.identity(), (existing, replacement) -> existing));
 
+            // Debug: Print existing images
+            System.out.println("Existing Images: " + existingProduct.getImages().toString());
+
+            // Set the main image
             existingProduct.setMainImage(product.getMainImage());
 
-            // Update the product with new images
+
+            System.out.println("Images after removal: " + existingProduct.getImages());
+
+            // Iterate over new images
             for (ProductImage newImage : product.getImages()) {
-                newImage.setProduct(existingProduct);
-                existingProduct.getImages().add(newImage);
+                String imageName = newImage.getName();
+                if (existingImagesMap.containsKey(imageName)) {
+                    // Update existing image
+                    ProductImage existingImage = existingImagesMap.get(imageName);
+                    updateProductImages(existingImage, newImage);
+                } else {
+                    // Add new image
+                    newImage.setProduct(existingProduct);  // Set the existing product
+                    existingProduct.getImages().add(newImage);
+                }
             }
 
-            // Save the updated product
-            productRepository.save(existingProduct);
+//            // Remove images from existing product that are no longer present
+//            existingProduct.getImages().removeIf(image -> !product.getImages().stream()
+//                    .anyMatch(newImage -> newImage.getName().equals(image.getName())));
 
-            return true; // Indicate success
+            // Remove images from existing product that are no longer present
+            List<ProductImage> imagesToRemove = existingProduct.getImages().stream()
+                    .filter(image -> !product.getImages().stream()
+                            .anyMatch(newImage -> newImage.getName().equals(image.getName())))
+                    .toList();
+
+            existingProduct.getImages().removeAll(imagesToRemove);
+            // Debugging output
+            System.out.println("Images to Remove: " + imagesToRemove.toString());
+            System.out.println("Images after removal: " + existingProduct.getImages().toString());
+
+            // Save the updated product
+            Product savedProduct = productRepository.save(existingProduct);
+
+            // Debug: Print saved product
+            System.out.println("Saved Product: " + savedProduct.getImages().toString());
+
+            return savedProduct.getId() > 0; // Indicate success
         } catch (Exception e) {
             // Handle exceptions and rollback the transaction if necessary
             e.printStackTrace();
             return false; // Indicate failure
         }
     }
+
+    private void updateProductImages(ProductImage existingImage, ProductImage newImage) {
+        // Update fields of existing image with new values
+        if (newImage.getName() != null) existingImage.setName(newImage.getName());
+        // You don't need to update productId here as it's set through the product association
+    }
+
+
+
 
     @Override
     public Product getProductShippingDetails(Integer productId) {
@@ -236,7 +283,7 @@ public class ProductServiceImpl implements ProductService {
         return existingProduct;
     }
 
-   @Override
+    @Override
     public boolean updateProductProductDetails(Product product) {
         // Retrieve the existing product
         Product existingProduct = productRepository.findById(product.getId())
@@ -286,9 +333,6 @@ public class ProductServiceImpl implements ProductService {
             }
         }
     }
-
-
-
 
 
 }

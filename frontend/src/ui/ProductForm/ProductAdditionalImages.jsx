@@ -17,6 +17,8 @@ function ProductAdditionalImages({
   additionalImageCount,
 }) {
   const [image, setImage] = useState({ id: "", imageName: "" });
+  const [imageChanged, setChangedImage] = useState(false);
+  console.log(imageRow);
 
   const handleAdditionalImageChange = (event) => {
     // setImage({ id: "", imageName: "" }); // Clear previous image
@@ -26,6 +28,7 @@ function ProductAdditionalImages({
       const newImage = { id: Date.now(), imageName: file.name };
       reader.onload = () => {
         setImage({ id: newImage.id, imageName: reader.result });
+        setChangedImage(true);
       };
       // const newImage = { id: imageRow.id, imageName: file.name };
       setAdditionalImages((prevImages) =>
@@ -47,11 +50,13 @@ function ProductAdditionalImages({
           <MdCancel onClick={onRemove} />
         </ImageLabel>
         <StyledImage>
-          {image.imageName ? (
+          {imageChanged ? (
             <img
               src={image.imageName}
               alt={`additional image ${additionalImageCount + 1}`}
             />
+          ) : imageRow?.imageName ? (
+            <img src={`/public/assets/products/${imageRow.imageName}`} />
           ) : (
             <CiImageOn size={100} />
           )}

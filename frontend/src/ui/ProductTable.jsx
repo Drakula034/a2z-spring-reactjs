@@ -49,7 +49,7 @@ function ProductTable({ rowData }) {
   const { togglingProductStatus } = useProductToggleEnabledStatus();
 
   const handleProductEnabledTogglingStatus = (productId) => {
-    console.log(productId);
+    // console.log(productId);
     togglingProductStatus(productId);
   };
 
@@ -66,7 +66,7 @@ function ProductTable({ rowData }) {
       headerName: "Image",
       cellRenderer: (props) => {
         const photo = props.data?.image || "";
-        console.log(photo);
+        // console.log(photo);
         return photo ? (
           <img src={`/public/assets/products/${photo}`} alt="product image" />
         ) : (

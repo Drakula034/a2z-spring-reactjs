@@ -17,14 +17,25 @@ const StyledImages = styled.div`
   overflow-y: auto;
   /* justify-items: center; */
 `;
+const generateUniqueId = () => "_" + Math.random().toString(36).substring(2, 9);
 function ProductImagesForm({ onSubmit, imagesData }) {
   const navigate = useNavigate();
   const [mainImage, setMainImage] = useState(imagesData?.mainImage ?? "");
-  const [additionalImages, setAdditionalImages] = useState(
-    imagesData?.productImages || []
-  );
+
+  console.log("productImages", imagesData.productImages);
+  const [additionalImages, setAdditionalImages] = useState([]);
+
+  useEffect(() => {
+    if (imagesData.productImages && imagesData.productImages.length > 0) {
+      const transformedData = imagesData.productImages?.map((image) => ({
+        id: generateUniqueId(),
+        imageName: image.name || "",
+      }));
+      setAdditionalImages(transformedData);
+    }
+  }, [imagesData?.productImages]);
   // console.log(mainImage);
-  // console.log(additionalImages);
+  console.log("additionalImages", additionalImages);
   const removeAdditionalImage = (imageId) => {
     setAdditionalImages((prevImages) =>
       prevImages.filter((image) => image.id !== imageId)
@@ -54,7 +65,7 @@ function ProductImagesForm({ onSubmit, imagesData }) {
   return (
     <div>
       <StyledImages>
-        <ProductMainImage setMainImage={setMainImage} />
+        <ProductMainImage setMainImage={setMainImage} mainImage={mainImage} />
         {additionalImages.length > 0 &&
           additionalImages.map((imageRow, index) => (
             <div key={index}>

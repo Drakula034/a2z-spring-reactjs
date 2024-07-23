@@ -24,7 +24,7 @@ function EditProductImagesForm() {
       })),
     };
 
-    // console.log(preparedProductImagesData);
+    console.log("preparedProductImagesData", preparedProductImagesData);
     // console.log("data", data);
 
     updateProductImages({ data: preparedProductImagesData, productId });
