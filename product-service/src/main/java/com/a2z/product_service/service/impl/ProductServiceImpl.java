@@ -218,6 +218,26 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public boolean updateProductShippingDetails(Product product) {
+        Product existingProduct = productRepository.findById(product.getId()).orElseThrow(() -> new RuntimeException("Invalid Product Id"));
+
+        existingProduct.setLength(product.getLength());
+        existingProduct.setWidth(product.getWidth());
+        existingProduct.setHeight(product.getHeight());
+        existingProduct.setWeight(product.getWeight());
+
+        Product savedProduct = productRepository.save(existingProduct);
+
+        return savedProduct.getId() > 0;
+    }
+
+    @Override
+    public Product getProductProductDetails(Integer productId) {
+        Product existingProduct = productRepository.findById(productId).orElseThrow(() -> new RuntimeException("Product not found"));
+        return existingProduct;
+    }
+
+    @Override
+    public boolean updateProductProductDetails(Product product) {
         return false;
     }
 

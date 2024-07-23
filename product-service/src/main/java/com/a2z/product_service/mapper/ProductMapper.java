@@ -1,10 +1,7 @@
 package com.a2z.product_service.mapper;
 
 import com.a2z.product_service.model.dto.*;
-import com.a2z.product_service.model.entity.Brand;
-import com.a2z.product_service.model.entity.Category;
-import com.a2z.product_service.model.entity.Product;
-import com.a2z.product_service.model.entity.ProductImage;
+import com.a2z.product_service.model.entity.*;
 import com.a2z.product_service.repository.BrandsRepository;
 import com.a2z.product_service.repository.CategoryRepository;
 import com.a2z.product_service.repository.ProductRepository;
@@ -268,6 +265,12 @@ public class ProductMapper {
 
         return product;
     }
+
+    public List<ProductDetailsDto> productMapToProductDetails(Product product,ProductDetailsDto productDetailsDto){
+        List<ProductDetails> productDetails =  product.getProductDetails();
+
+    }
+    public Product productDetailsDtoMapToProduct(ProductDetailsDto productDetailsDto, Product product){}
 
 
 }

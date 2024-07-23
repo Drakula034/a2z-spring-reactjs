@@ -28,6 +28,7 @@ function ProductDescriptionForm({ onSubmit, descriptionData }) {
 
   const createNew = () => {
     onSubmit({ shortDescription, fullDescription });
+    navigate("/admin/products");
   };
 
   return (

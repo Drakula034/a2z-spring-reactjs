@@ -1,13 +1,13 @@
 import toast from "react-hot-toast";
 import { useMutation, useQueryClient } from "react-query";
-
+import { updateProductShippingDetails as updateProductShippingDetailsApi } from "../../services/api/product-service/products";
 const useUpdateProductShippingDetails = () => {
   const queryClient = useQueryClient();
   const {
     mutate: updateProductShippingDetails,
     isLoading: isProductShippingDetailsUpdating,
   } = useMutation(
-    ({ data, productId }) => updateProductShippingDetails(data, productId),
+    ({ data, productId }) => updateProductShippingDetailsApi(data, productId),
     {
       onSuccess: (_, productId) => {
         toast.success(
@@ -22,6 +22,11 @@ const useUpdateProductShippingDetails = () => {
       },
     }
   );
+
+  return {
+    updateProductShippingDetails,
+    isProductShippingDetailsUpdating,
+  };
 };
 
 export default useUpdateProductShippingDetails;

@@ -207,6 +207,8 @@ export async function updateProductShippingDetails(data, productId) {
   productId = parseInt(productId, 10);
   const url = UPDATE_PRODUCT_SHIPPING_DETAILS(productId);
 
+  console.log("Prepared Product Shipping Details Data:", data);
+
   try {
     const res = await fetch(url, {
       method: "PUT",

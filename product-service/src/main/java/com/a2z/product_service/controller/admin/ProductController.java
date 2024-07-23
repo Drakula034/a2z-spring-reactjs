@@ -156,11 +156,22 @@ public class ProductController {
             throw new NotFoundException("Product id is invalid");
         }
         Product product = productMapper.productShippingDtoMapToProduct(productShippingDto, new Product());
+        product.setId(productId);
+        System.out.println(product.getHeight());
         boolean isUpdated = productService.updateProductShippingDetails(product);
         if(isUpdated){
             return ResponseEntity.status(HttpStatus.OK).build();
         }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+    }
+
+    @GetMapping("/{productId}/productDetails")
+    public ResponseEntity<List<ProductDetailsDto>> getAllProductDetails(@PathVariable Integer productId){
+        if(productRepository.findById(productId).isEmpty()){
+            throw new NotFoundException("Invalid product id has been passed");
+        }
+
+
     }
 
     @RequestMapping("/{productId}")
