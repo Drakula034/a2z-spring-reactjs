@@ -3,6 +3,7 @@ import GlobalStyles from "./styles/GlobalStyles";
 import AdminControl from "./pages/admin/control/AdminControl";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { Toaster } from "react-hot-toast";
+import CustomerRoute from "./pages/customer/route/CustomerRoute";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -19,6 +20,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/admin/*" element={<AdminControl />} />
+          <Route path="/*" element={<CustomerRoute />} />
         </Routes>
       </BrowserRouter>
       <Toaster
