@@ -113,7 +113,9 @@ function CategoryTable({ rowData }) {
       cellRenderer: (params) => (
         <input
           type="checkbox"
-          checked={params.data.enabled === "true"}
+          checked={
+            params.data.enabled === "true" || params.data.enabled === "1"
+          }
           onChange={() => handleCategoryTogglingStatus(params.data.categoryId)}
         />
       ),
