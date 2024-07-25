@@ -76,6 +76,7 @@ function ProductShippingForm({ onSubmit, settingsData }) {
         <input
           type="number"
           name="weight"
+          step="0.01"
           {...register("weight")}
           defaultValue={formValues.weight}
         />

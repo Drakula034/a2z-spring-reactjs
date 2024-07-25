@@ -73,6 +73,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Integer addProductOverView(Product product) {
         Product savedProduct = productRepository.save(product);
+        System.out.println(savedProduct.toString());
         if (savedProduct.getId() == null) return -1;
         return savedProduct.getId();
     }
@@ -162,8 +163,15 @@ public class ProductServiceImpl implements ProductService {
     public Boolean updateProductDescription(Product updateProduct) {
         Product existingProduct = productRepository.findById(updateProduct.getId())
                 .orElseThrow(() -> new RuntimeException("Product not found"));
-        existingProduct.setShortDescription(updateProduct.getShortDescription());
-        existingProduct.setFullDescription(updateProduct.getFullDescription());
+        if (updateProduct.getFullDescription() != null) {
+            existingProduct.setFullDescription(updateProduct.getFullDescription());
+
+        }
+        if (updateProduct.getShortDescription() != null) {
+
+            existingProduct.setShortDescription(updateProduct.getShortDescription());
+        }
+//        existingProduct.setShortDescription(updateProduct.getShortDescription());
         Product savedProduct = productRepository.save(existingProduct);
 //        return Objects.equals(existingProduct.getShortDescription(), savedProduct.getShortDescription());
         return true;
@@ -181,7 +189,6 @@ public class ProductServiceImpl implements ProductService {
         Product existingProduct = productRepository.findById(productId).orElseThrow(() -> new RuntimeException("Product not found"));
         return existingProduct;
     }
-
 
 
     @Override
@@ -255,8 +262,6 @@ public class ProductServiceImpl implements ProductService {
     }
 
 
-
-
     @Override
     public Product getProductShippingDetails(Integer productId) {
         Product existingProduct = productRepository.findById(productId).orElseThrow(() -> new RuntimeException("Product not found"));
@@ -271,6 +276,7 @@ public class ProductServiceImpl implements ProductService {
         existingProduct.setWidth(product.getWidth());
         existingProduct.setHeight(product.getHeight());
         existingProduct.setWeight(product.getWeight());
+        System.out.println(existingProduct.getLength() + " " + existingProduct.getWidth() + " " + existingProduct.getHeight() + " " + existingProduct.getLength());
 
         Product savedProduct = productRepository.save(existingProduct);
 

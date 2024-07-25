@@ -22,9 +22,9 @@ public class Product {
     private String name;
     @Column(unique = true, length = 256, nullable = true)
     private String alias;
-    @Column(length = 512, nullable = true, name = "short_description")
+    @Column(columnDefinition = "longtext", nullable = true, name = "short_description")
     private String shortDescription;
-    @Column(length = 4000, nullable = true, name = "full_description")
+    @Column(length = 8000, nullable = true, name = "full_description")
     private String fullDescription;
 
     @Column(name = "created_time")
@@ -75,4 +75,32 @@ public class Product {
     public void addProductDetails(String name, String value) {
         this.productDetails.add(new ProductDetails(name, value, this));
     }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", alias='" + alias + '\'' +
+                ", shortDescription='" + shortDescription + '\'' +
+                ", fullDescription='" + fullDescription + '\'' +
+                ", createdTime=" + createdTime +
+                ", updatedTime=" + updatedTime +
+                ", enabled=" + enabled +
+                ", inStock=" + inStock +
+                ", cost=" + cost +
+                ", price=" + price +
+                ", discountPercent=" + discountPercent +
+                ", length=" + length +
+                ", width=" + width +
+                ", height=" + height +
+                ", weight=" + weight +
+                ", category=" + (category != null ? category.getCategoryName() : "null") +
+                ", brand=" + (brand != null ? brand.getName() : "null") +
+                ", mainImage='" + mainImage + '\'' +
+                ", images=" + images +
+                ", productDetails=" + productDetails +
+                '}';
+    }
+
 }

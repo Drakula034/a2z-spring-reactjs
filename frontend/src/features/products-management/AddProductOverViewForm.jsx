@@ -17,7 +17,7 @@ function AddProductOverViewForm() {
       categoryName: category || "",
       brandName: brand || "",
     };
-    // console.log(productOverViewData);
+    console.log(productOverViewData);
 
     addProductOverView(productOverViewData);
   };

@@ -38,6 +38,8 @@ function ProductDetailsForm({ onSubmit, productDetailsData }) {
 
       // console.log("transformedData", transformedData);
       setInputRows(transformedData);
+    } else {
+      setInputRows([{ id: Date.now(), inputName: "", inputValue: "" }]);
     }
   }, [productDetailsData]);
 

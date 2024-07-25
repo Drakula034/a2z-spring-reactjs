@@ -68,7 +68,14 @@ function ProductTable({ rowData }) {
         const photo = props.data?.image || "";
         // console.log(photo);
         return photo ? (
-          <img src={`/public/assets/products/${photo}`} alt="product image" />
+          <img
+            src={`/public/assets/products/${photo}`}
+            alt="product image"
+            style={{
+              width: "100px",
+              height: "100px",
+            }}
+          />
         ) : (
           <AddPhotoIfNotFound icon={<CgProductHunt />} />
         );

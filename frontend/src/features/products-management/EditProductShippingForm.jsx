@@ -7,14 +7,15 @@ function EditProductShippingForm() {
   const { productId } = useParams();
   const { data: settingsData } = useGetProductShippingDetails(productId);
   const { updateProductShippingDetails } = useUpdateProductShippingDetails();
-  // console.log(settingsData);
+  console.log(settingsData);
   const handleProductSetting = (data) => {
     const prepareSettingData = {
-      length: parseInt(data?.length, 10) || 0,
-      width: parseInt(data?.width, 10) || 0,
-      height: parseInt(data?.height, 10) || 0,
-      weight: parseInt(data?.weight, 10) || 0,
+      length: parseFloat(data?.length) || 0,
+      width: parseFloat(data?.width) || 0,
+      height: parseFloat(data?.height) || 0,
+      weight: parseFloat(data?.weight) || 0,
     };
+
     console.log(prepareSettingData);
     updateProductShippingDetails({ data: prepareSettingData, productId });
   };

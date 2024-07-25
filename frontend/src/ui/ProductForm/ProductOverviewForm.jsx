@@ -131,7 +131,7 @@ function ProductOverviewForm({ formType, onSubmit, productOverviewData }) {
 
   let categoryIndex = null;
   for (let i = 0; i < brands.length; i++) {
-    if (categories[i].label === formValues.productCategories) {
+    if (categories[i]?.label === formValues.productCategories) {
       categoryIndex = i;
       break;
     }

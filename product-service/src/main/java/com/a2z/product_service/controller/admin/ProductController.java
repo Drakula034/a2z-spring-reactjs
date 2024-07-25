@@ -46,8 +46,9 @@ public class ProductController {
         }
 
         Product product = productMapper.productOverViewDtoMapToProduct(productOverViewDto, new Product());
-
+//        System.out.println(product.toString());
         Integer savedProductId = productService.addProductOverView(product);
+//        System.out.println(product.getAlias());
         if (savedProductId > 0) {
             return ResponseEntity.status(HttpStatus.CREATED).build();
         }
@@ -155,6 +156,8 @@ public class ProductController {
         if (productRepository.findById(productId).isEmpty()) {
             throw new NotFoundException("Product id is invalid");
         }
+        System.out.println(productShippingDto.getLength() );
+        System.out.println(productShippingDto.getWeight());
         Product product = productMapper.productShippingDtoMapToProduct(productShippingDto, new Product());
         product.setId(productId);
         System.out.println(product.getHeight());

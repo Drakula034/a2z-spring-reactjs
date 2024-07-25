@@ -88,7 +88,7 @@ public class ProductMapper {
 
     public Product productOverViewDtoMapToProduct(ProductOverViewDto productOverViewDto, Product product) {
         product.setName(productOverViewDto.getName());
-        if (productOverViewDto.getAlias() != null && productOverViewDto.getAlias().equals("")) {
+        if (productOverViewDto.getAlias() != null && !productOverViewDto.getAlias().isEmpty()) {
             product.setAlias(productOverViewDto.getAlias());
         } else {
             String[] parts = product.getName().split("\\s+");
@@ -247,8 +247,8 @@ public class ProductMapper {
     }
 
     public Product productShippingDtoMapToProduct(ProductShippingDto productShippingDto, Product product) {
-        if (productShippingDto.getHeight() != null) {
-            product.setHeight(productShippingDto.getHeight());
+        if (productShippingDto.getLength() != null) {
+            product.setLength(productShippingDto.getLength());
         }
 
         if (productShippingDto.getWidth() != null) {

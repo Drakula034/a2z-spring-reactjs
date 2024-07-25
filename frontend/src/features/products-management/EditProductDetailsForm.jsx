@@ -6,6 +6,8 @@ function EditProductDetailsForm() {
   const { productId } = useParams();
   const { data: productDetailsData } = useGetProductProductDetails(productId);
   const { updateProductProductDetails } = useUpdateProductProductDetails();
+
+  // console.log(productDetailsData);
   const handleProductProductDetailsFormSubmit = (data) => {
     const productDetails = data.map((detail) => {
       return {
@@ -19,7 +21,7 @@ function EditProductDetailsForm() {
     });
 
     // console.log(data);
-    console.log("preparedProductDetailsData", { productDetails });
+    // console.log("preparedProductDetailsData", { productDetails });
     updateProductProductDetails({
       data: { productDetails },
       productId: productId,

@@ -62,7 +62,7 @@ function BrandForm({ title, onSubmit, formType }) {
     brandCategories: brandToEdit?.categories || [],
   });
 
-  console.log(formValues);
+  // console.log(formValues);
 
   const { data: categoryList } = useGetCategoryAll();
 
