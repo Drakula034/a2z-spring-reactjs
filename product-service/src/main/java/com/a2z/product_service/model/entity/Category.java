@@ -29,5 +29,8 @@ public class Category {
         return enabled;
     }
 
-
+    @Override
+    public String toString() {
+        return categoryName;
+    }
 }

@@ -46,6 +46,7 @@ public class BrandController {
 
         Brand brand = BrandMapper.brandDtoMapToBrand(brandDto, new Brand());
         brand.setId(brandId);
+//        System.out.println(brand.getCategories().toString());
         boolean isUpdated = brandService.updateBrand(brand);
         if(isUpdated)return ResponseEntity.status(HttpStatus.OK).build();
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();

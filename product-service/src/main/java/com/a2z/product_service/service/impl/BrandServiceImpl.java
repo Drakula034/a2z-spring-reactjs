@@ -103,29 +103,28 @@ public class BrandServiceImpl implements BrandService {
 
     @Override
     public boolean updateBrand(Brand brand) {
-        try{
+        try {
             Optional<Brand> existingBrandOptional = brandsRepository.findById(brand.getId());
-            if(existingBrandOptional.isPresent()){
+            if (existingBrandOptional.isPresent()) {
                 Brand existingBrand = existingBrandOptional.get();
                 existingBrand.setName(brand.getName());
                 existingBrand.setLogo(brand.getLogo());
 
                 Set<Category> categories = brand.getCategories();
-
                 Set<Category> existingCategories = getExistingCategories(categories);
 
-                // Set the categories to the brand
-                brand.setCategories(existingCategories);
+                // Set the categories to the existing brand
+                existingBrand.setCategories(existingCategories);
+
                 brandsRepository.save(existingBrand);
                 return true;
-            }else{
+            } else {
                 // Handle the case where the brand does not exist
                 throw new NoSuchElementException("Brand with ID " + brand.getId() + " not found.");
             }
-        }catch(Exception ex){
-           throw new Error(ex.getMessage());
-//           return false;
+        } catch (Exception ex) {
+            throw new Error(ex.getMessage());
         }
-//        return false;
     }
+
 }
