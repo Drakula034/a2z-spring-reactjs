@@ -13,7 +13,8 @@ function EditProductOverViewForm() {
   const { updateProductOverView } = useUpdateProductOverview();
   //   console.log(queryParams.get("productId"));
   //   console.log("data", data);
-  const handleOverviewFormSubmit = (data, productId) => {
+  console.log("productId", productId);
+  const handleOverviewFormSubmit = (data) => {
     // console.log("data", data);
     // console.log("productId", productId);
     const brandName = data?.productBrands?.label || null; // Direct access since it's an object
@@ -29,6 +30,7 @@ function EditProductOverViewForm() {
       price: data?.listPrice || 0,
       discountPercent: data?.discount || 0,
     };
+    // console.log(productId);
     updateProductOverView({ data: productOverViewData, productId });
   };
   return (
