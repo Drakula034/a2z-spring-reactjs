@@ -3,7 +3,7 @@ package com.a2z.product_service.controller.admin;
 import com.a2z.product_service.mapper.ProductMapper;
 import com.a2z.product_service.model.dto.*;
 import com.a2z.product_service.model.entity.Product;
-import com.a2z.product_service.model.entity.ProductImage;
+import com.a2z.product_service.repository.CategoryRepository;
 import com.a2z.product_service.repository.ProductRepository;
 import com.a2z.product_service.service.ProductService;
 import jakarta.ws.rs.NotFoundException;
@@ -22,12 +22,14 @@ public class ProductController {
     private final ProductService productService;
     private final ProductMapper productMapper;
     private final ProductRepository productRepository;
+    private final CategoryRepository categoryRepository;
 
     @Autowired
-    public ProductController(ProductService productService, ProductMapper productMapper, ProductRepository productRepository) {
+    public ProductController(ProductService productService, ProductMapper productMapper, ProductRepository productRepository, CategoryRepository categoryRepository) {
         this.productService = productService;
         this.productMapper = productMapper;
         this.productRepository = productRepository;
+        this.categoryRepository = categoryRepository;
     }
 
 //    @RequestMapping("/add")
@@ -225,4 +227,5 @@ public class ProductController {
         if (isProductEnabled) return ResponseEntity.status(HttpStatus.OK).build();
         return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
+
 }

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CategoryRepository extends JpaRepository<Category, Integer>  {
-    Category findByCategoryName(String categoryName);
+
 
     @Query("select count(c) from Category c where c.enabled = 'true'")
     Integer countEnabledCategory();
@@ -17,5 +17,9 @@ public interface CategoryRepository extends JpaRepository<Category, Integer>  {
     Integer countDisabledCategory();
 
     Page<Category> findAll(Pageable pageable);
+    Category findByCategoryName(String categoryName);
+
+
+
 }
 

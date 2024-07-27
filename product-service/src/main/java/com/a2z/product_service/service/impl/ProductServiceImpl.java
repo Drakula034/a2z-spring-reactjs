@@ -323,7 +323,6 @@ public class ProductServiceImpl implements ProductService {
 
         return savedProduct.getId() > 0;
     }
-
     private void updateProductDetails(ProductDetails existingDetail, ProductDetails newDetail) {
         // Use reflection to update all fields
         Field[] fields = ProductDetails.class.getDeclaredFields();
@@ -339,6 +338,7 @@ public class ProductServiceImpl implements ProductService {
             }
         }
     }
+
 
 
 }
