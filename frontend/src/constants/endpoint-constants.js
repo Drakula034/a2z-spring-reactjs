@@ -61,6 +61,8 @@ export const UPDATE_BRAND = (brandId) =>
 
 export const PRODUCT_SERVICE_BASE_URL =
   "http://localhost:8000/api/admin/products";
+export const PRODUCT_SERVICE_BASE_FOR_CUSTOMER =
+  "http://localhost:8000/api/customer/products";
 
 export const PRODUCT_SERVICE_ENABLED_DISABLED_URL = `${PRODUCT_SERVICE_BASE_URL}/control-panel`;
 export const GET_PRODUCT_BY_PAGE = (page) => {
@@ -99,3 +101,7 @@ export const GET_PRODUCT_PRODUCT_DETAILS = (productId) =>
   `${PRODUCT_SERVICE_BASE_URL}/${productId}/productDetails`;
 export const UPDATE_PRODUCT_PRODUCT_DETAILS = (productId) =>
   `${PRODUCT_SERVICE_BASE_URL}/${productId}/updateProductDetails`;
+
+// product for customer
+export const GET_PRODUCT_FOR_CUSTOMER_MAIN_PAGE = (categoryName) =>
+  `${PRODUCT_SERVICE_BASE_FOR_CUSTOMER}/list/${categoryName}`;

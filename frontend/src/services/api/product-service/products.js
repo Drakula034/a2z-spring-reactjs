@@ -13,6 +13,7 @@ import {
   UPDATE_PRODUCT_SHIPPING_DETAILS,
   GET_PRODUCT_PRODUCT_DETAILS,
   UPDATE_PRODUCT_PRODUCT_DETAILS,
+  GET_PRODUCT_FOR_CUSTOMER_MAIN_PAGE,
 } from "../../../constants/endpoint-constants";
 
 export async function getEnabledDisabledProductCount() {
@@ -261,6 +262,23 @@ export async function updateProductProductDetails(data, productId) {
     }
 
     return { success: true };
+  } catch (err) {
+    throw new Error(err.message);
+  }
+}
+
+export async function getProductsForCustomerMainPage(categoryName) {
+  const url = GET_PRODUCT_FOR_CUSTOMER_MAIN_PAGE(categoryName);
+
+  try {
+    const res = await fetch(url, { method: "GET" });
+    if (!res.ok) {
+      const errorText = await res.text();
+      throw new Error(errorText || "Something went wrong");
+    }
+
+    const data = await res.json();
+    return data;
   } catch (err) {
     throw new Error(err.message);
   }
