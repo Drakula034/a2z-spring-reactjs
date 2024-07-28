@@ -267,8 +267,12 @@ export async function updateProductProductDetails(data, productId) {
   }
 }
 
-export async function getProductsForCustomerMainPage(categoryName) {
-  const url = GET_PRODUCT_FOR_CUSTOMER_MAIN_PAGE(categoryName);
+export async function getProductsForCustomerMainPage(
+  categoryName,
+  categoryCnt
+) {
+  const url = GET_PRODUCT_FOR_CUSTOMER_MAIN_PAGE(categoryName, categoryCnt);
+  console.log(url);
 
   try {
     const res = await fetch(url, { method: "GET" });

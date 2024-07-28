@@ -13,7 +13,7 @@ import java.util.List;
 
 @Service
 public class ProductServiceForCustomer implements com.a2z.product_service.service.ProductServiceForCustomer {
-    private final int PRODUCTS_PER_PAGE_FOR_CUSTOMER_HOME_PAGE = 4;
+
 
     @Autowired
     ProductRepository productRepository;
@@ -24,8 +24,8 @@ public class ProductServiceForCustomer implements com.a2z.product_service.servic
     BrandsRepository brandsRepository;
 
     @Override
-    public List<Product> getProductForCustomerHomePage(String categoryName) {
-        Pageable pageable = PageRequest.of(0,PRODUCTS_PER_PAGE_FOR_CUSTOMER_HOME_PAGE);
+    public List<Product> getProductForCustomerHomePage(String categoryName, int limit) {
+        Pageable pageable = PageRequest.of(0,limit);
         return productRepository.findDistinctProductsByCategoryName(categoryName, pageable);
     }
 }

@@ -1,10 +1,10 @@
 import { useQuery } from "react-query";
 
 import { getProductsForCustomerMainPage as getProductsForCustomerMainPageApi } from "../../services/api/product-service/products";
-function useGetProductsForCategoryInHomePage(categoryName) {
+function useGetProductsForCategoryInHomePage(categoryName, categoryCnt) {
   const query = useQuery(
-    ["useGetProductsForLaptopInHomePage", categoryName],
-    () => getProductsForCustomerMainPageApi(categoryName),
+    ["useGetProductsForLaptopInHomePage", categoryName, categoryCnt],
+    () => getProductsForCustomerMainPageApi(categoryName, categoryCnt),
     {
       keepPreviousData: true,
     }

@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import ProductContainerInMainPage from "../ProductContainerInMainPage";
+import { useNavigate } from "react-router-dom";
 
 const Container = styled.div`
   background-color: var(--color-grey-100);
@@ -56,11 +57,16 @@ const StyledSections = styled.div`
 `;
 
 function PageSectionContent({ categoryMainPageData, typesOfData }) {
+  const navigate = useNavigate();
   return (
     <Container>
       <StyledHeader>
         <Title>Top {typesOfData} deals</Title>
-        <Button>View All</Button>
+        <Button
+          onClick={() => navigate(`/products/${typesOfData.toLowerCase()}`)}
+        >
+          View All
+        </Button>
       </StyledHeader>
 
       <StyledSections>

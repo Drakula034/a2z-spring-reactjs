@@ -8,11 +8,15 @@ const Container = styled.div`
   overflow-y: auto;
 `;
 function PageContent() {
-  const categoryName = "Laptop";
-  const { data: laptopMainPageData } =
-    useGetProductsForCategoryInHomePage("Laptop");
-  const { data: smartPhonesMainPageData } =
-    useGetProductsForCategoryInHomePage("SmartPhones");
+  const categoryCnt = 4;
+  const { data: laptopMainPageData } = useGetProductsForCategoryInHomePage(
+    "Laptop",
+    categoryCnt
+  );
+  const { data: smartPhonesMainPageData } = useGetProductsForCategoryInHomePage(
+    "SmartPhones",
+    categoryCnt
+  );
   console.log(smartPhonesMainPageData);
   // console.log(laptopMainPageData);
   return (

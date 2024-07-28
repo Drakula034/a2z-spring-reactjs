@@ -103,5 +103,5 @@ export const UPDATE_PRODUCT_PRODUCT_DETAILS = (productId) =>
   `${PRODUCT_SERVICE_BASE_URL}/${productId}/updateProductDetails`;
 
 // product for customer
-export const GET_PRODUCT_FOR_CUSTOMER_MAIN_PAGE = (categoryName) =>
-  `${PRODUCT_SERVICE_BASE_FOR_CUSTOMER}/list/${categoryName}`;
+export const GET_PRODUCT_FOR_CUSTOMER_MAIN_PAGE = (categoryName, categoryCnt) =>
+  `${PRODUCT_SERVICE_BASE_FOR_CUSTOMER}/list/${categoryName}?limit=${categoryCnt}`;
