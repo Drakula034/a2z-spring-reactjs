@@ -2,8 +2,9 @@ import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 
 const StyledFooter = styled.div`
-  height: auto;
+  height: 100px;
   text-decoration: none;
+  background-color: black;
 `;
 function Footer() {
   return (

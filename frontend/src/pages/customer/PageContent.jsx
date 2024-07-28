@@ -28,7 +28,7 @@ function PageContent() {
         />
         <PageSectionContent
           categoryMainPageData={smartPhonesMainPageData}
-          typesOfData={"SmartPhone"}
+          typesOfData={"SmartPhones"}
         />
       </StyledContainer>
     </Container>

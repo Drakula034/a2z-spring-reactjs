@@ -31,6 +31,7 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     List<Product> findDistinctProductsByCategoryName(@Param("categoryName") String categoryName, Pageable pageable);
 
 
-    @Query("select p from Product p where p.category.categoryName = :categoryName")
-    List<Product> getAllProductsByCategoryName(String categoryName, Pageable pageable);
+    @Query("select p from Product p where lower(p.category.categoryName) = lower(:categoryName)")
+    List<Product> getAllProductsByCategoryName(@Param("categoryName") String categoryName, Pageable pageable);
+
 }

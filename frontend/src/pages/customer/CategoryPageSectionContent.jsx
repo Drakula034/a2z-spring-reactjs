@@ -2,6 +2,8 @@ import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 import useGetProductsForCategoryInHomePage from "./useGetProductsForCategoryInHomePage";
 import useGetProductsForCategoryInCategoryPage from "./useGetProductsForCategoryInCategoryPage";
+import ProductContainerInMainPage from "../../ui/ProductContainerInMainPage";
+import ProductContainerForCategory from "../../ui/ProductContainerForCategory";
 
 const Container = styled.div`
   background-color: "red";
@@ -16,14 +18,15 @@ function CategoryPageSectionContent() {
     category,
     querySize
   );
-  console.log(fetchedCategoryData);
+  //   console.log(fetchedCategoryData);
 
   return (
     <Container>
-      Lorem ipsum dolor sit amet consectetur, adipisicing elit. Recusandae
-      perspiciatis harum accusantium assumenda, deleniti consequuntur, omnis
-      tenetur facere id nemo quo pariatur at voluptatibus adipisci aliquid
-      nostrum. Illo, officiis est?
+      {/* <ProductContainerInMainPage product={fetchedCategoryData} /> */}
+      <h2 style={{ textAlign: "center", marginBottom: "1rem" }}>
+        Welcome to {category} section
+      </h2>
+      <ProductContainerForCategory products={fetchedCategoryData} />
     </Container>
   );
 }
