@@ -63,7 +63,9 @@ function PageSectionContent({ categoryMainPageData, typesOfData }) {
       <StyledHeader>
         <Title>Top {typesOfData} deals</Title>
         <Button
-          onClick={() => navigate(`/products/${typesOfData.toLowerCase()}`)}
+          onClick={() =>
+            navigate(`/products?category=${typesOfData.toLowerCase()}`)
+          }
         >
           View All
         </Button>

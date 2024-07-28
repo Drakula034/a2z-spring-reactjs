@@ -105,3 +105,9 @@ export const UPDATE_PRODUCT_PRODUCT_DETAILS = (productId) =>
 // product for customer
 export const GET_PRODUCT_FOR_CUSTOMER_MAIN_PAGE = (categoryName, categoryCnt) =>
   `${PRODUCT_SERVICE_BASE_FOR_CUSTOMER}/list/${categoryName}?limit=${categoryCnt}`;
+
+export const GET_PRODUCT_FOR_CUSTOMER_CATEGORY_PAGE = (
+  categoryName,
+  categoryCnt
+) =>
+  `${PRODUCT_SERVICE_BASE_FOR_CUSTOMER}/category/${categoryName}?limit=${categoryCnt}`;

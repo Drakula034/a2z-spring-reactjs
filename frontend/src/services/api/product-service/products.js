@@ -14,6 +14,7 @@ import {
   GET_PRODUCT_PRODUCT_DETAILS,
   UPDATE_PRODUCT_PRODUCT_DETAILS,
   GET_PRODUCT_FOR_CUSTOMER_MAIN_PAGE,
+  GET_PRODUCT_FOR_CUSTOMER_CATEGORY_PAGE,
 } from "../../../constants/endpoint-constants";
 
 export async function getEnabledDisabledProductCount() {
@@ -272,7 +273,7 @@ export async function getProductsForCustomerMainPage(
   categoryCnt
 ) {
   const url = GET_PRODUCT_FOR_CUSTOMER_MAIN_PAGE(categoryName, categoryCnt);
-  console.log(url);
+  // console.log(url);
 
   try {
     const res = await fetch(url, { method: "GET" });
@@ -281,6 +282,22 @@ export async function getProductsForCustomerMainPage(
       throw new Error(errorText || "Something went wrong");
     }
 
+    const data = await res.json();
+    return data;
+  } catch (err) {
+    throw new Error(err.message);
+  }
+}
+
+export async function getProductsForCategoryPage(categoryName, categoryCnt) {
+  const url = GET_PRODUCT_FOR_CUSTOMER_CATEGORY_PAGE(categoryName, categoryCnt);
+
+  try {
+    const res = await fetch(url, { method: "GET" });
+    if (!res.ok) {
+      const errorText = await res.text();
+      throw new Error(errorText || "Something went wrong");
+    }
     const data = await res.json();
     return data;
   } catch (err) {

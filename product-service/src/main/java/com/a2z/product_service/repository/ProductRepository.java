@@ -15,11 +15,13 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 
     @Query("select count(p) from Product p where p.enabled = true ")
     Integer getEnabledProductCount();
+
     @Query("select count(p) from Product p where p.enabled = false ")
     Integer getDisabledProductCount();
 
     @Query("select count(p) from Product p where p.inStock = true ")
     Integer getInStockProductsCount();
+
     @Query("select count(p) from Product p where p.inStock = false ")
     Integer getOutOfStockProductsCount();
 
@@ -27,4 +29,8 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 
     @Query("SELECT p FROM Product p WHERE p.category.categoryName = :categoryName GROUP BY p.brand.id")
     List<Product> findDistinctProductsByCategoryName(@Param("categoryName") String categoryName, Pageable pageable);
+
+
+    @Query("select p from Product p where p.category.categoryName = :categoryName")
+    List<Product> getAllProductsByCategoryName(String categoryName, Pageable pageable);
 }

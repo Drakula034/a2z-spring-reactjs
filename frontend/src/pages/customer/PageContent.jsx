@@ -17,7 +17,7 @@ function PageContent() {
     "SmartPhones",
     categoryCnt
   );
-  console.log(smartPhonesMainPageData);
+  // console.log(smartPhonesMainPageData);
   // console.log(laptopMainPageData);
   return (
     <Container>

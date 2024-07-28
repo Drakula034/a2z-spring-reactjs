@@ -2,9 +2,11 @@ import styled from "styled-components";
 import LoginButton from "../LoginButton";
 import CartButton from "../CartButton";
 import { CiSearch } from "react-icons/ci";
+import { useNavigate } from "react-router-dom";
 
 const StyledContainer = styled.div`
-  position: fixed; /* Fixes the header at the top */
+  position: ${({ headerPosition }) =>
+    headerPosition || "fixed"}; /* Fixes the header at the top */
   top: 0;
   left: 0;
   width: 100%;
@@ -59,11 +61,16 @@ const SearchContainer = styled.div`
   }
 `;
 
-function MainHeader() {
+function MainHeader({ headerPosition }) {
+  const navigate = useNavigate();
   return (
     <StyledContainer>
       <StyledHeader>
-        <img src="/assets/a2z-transparent.png" alt="" />
+        <img
+          src="/assets/a2z-transparent.png"
+          alt=""
+          onClick={() => navigate("/")}
+        />
         <SearchContainer>
           <CiSearch />
           <input type="text" placeholder="Search by Product and Brand.." />
