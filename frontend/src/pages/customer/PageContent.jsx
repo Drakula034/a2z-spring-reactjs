@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { StyledContainer } from "../../ui/customer-page/PageContent.styles";
-import useGetProductsForLaptopInHomePage from "./useGetProductsForLaptopInHomePage";
+import useGetProductsForCategoryInHomePage from "./useGetProductsForCategoryInHomePage";
 import PageSectionContent from "../../ui/customer-page/PageSectionContent";
 
 const Container = styled.div`
@@ -10,12 +10,22 @@ const Container = styled.div`
 function PageContent() {
   const categoryName = "Laptop";
   const { data: laptopMainPageData } =
-    useGetProductsForLaptopInHomePage(categoryName);
+    useGetProductsForCategoryInHomePage("Laptop");
+  const { data: smartPhonesMainPageData } =
+    useGetProductsForCategoryInHomePage("SmartPhones");
+  console.log(smartPhonesMainPageData);
   // console.log(laptopMainPageData);
   return (
     <Container>
       <StyledContainer>
-        <PageSectionContent laptopMainPageData={laptopMainPageData} />
+        <PageSectionContent
+          categoryMainPageData={laptopMainPageData}
+          typesOfData={"Laptop"}
+        />
+        <PageSectionContent
+          categoryMainPageData={smartPhonesMainPageData}
+          typesOfData={"SmartPhone"}
+        />
       </StyledContainer>
     </Container>
   );

@@ -8,6 +8,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column; /* Change to column to stack header and sections vertically */
   z-index: 100;
+  margin-bottom: 1rem;
 `;
 
 const StyledHeader = styled.div`
@@ -54,16 +55,16 @@ const StyledSections = styled.div`
   margin-bottom: 0.5rem;
 `;
 
-function PageSectionContent({ laptopMainPageData }) {
+function PageSectionContent({ categoryMainPageData, typesOfData }) {
   return (
     <Container>
       <StyledHeader>
-        <Title>Top Laptop deals</Title>
+        <Title>Top {typesOfData} deals</Title>
         <Button>View All</Button>
       </StyledHeader>
 
       <StyledSections>
-        {(laptopMainPageData || []).map((item, index) => (
+        {(categoryMainPageData || []).map((item, index) => (
           <ProductContainerInMainPage key={index} product={item} />
         ))}
       </StyledSections>

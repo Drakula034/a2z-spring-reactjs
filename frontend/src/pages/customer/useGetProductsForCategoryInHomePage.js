@@ -1,7 +1,7 @@
 import { useQuery } from "react-query";
 
 import { getProductsForCustomerMainPage as getProductsForCustomerMainPageApi } from "../../services/api/product-service/products";
-function useGetProductsForLaptopInHomePage(categoryName) {
+function useGetProductsForCategoryInHomePage(categoryName) {
   const query = useQuery(
     ["useGetProductsForLaptopInHomePage", categoryName],
     () => getProductsForCustomerMainPageApi(categoryName),
@@ -13,4 +13,4 @@ function useGetProductsForLaptopInHomePage(categoryName) {
   return query;
 }
 
-export default useGetProductsForLaptopInHomePage;
+export default useGetProductsForCategoryInHomePage;
