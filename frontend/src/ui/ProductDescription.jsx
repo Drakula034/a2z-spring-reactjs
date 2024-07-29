@@ -11,14 +11,14 @@ const Container = styled.div`
     font-family: "Times New Roman", Times, serif;
   }
 `;
-function ProductFullDescription({ fullDescription }) {
+function ProductDescription({ description, title }) {
   //   return <pre>{escapeHtml(fullDescription)}</pre>;
   return (
     <Container>
-      <h2>Product Description</h2>
-      <div dangerouslySetInnerHTML={{ __html: fullDescription }} />
+      <h2>{title}</h2>
+      <div dangerouslySetInnerHTML={{ __html: description }} />
     </Container>
   );
 }
 
-export default ProductFullDescription;
+export default ProductDescription;

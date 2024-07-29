@@ -25,11 +25,11 @@ const Container = styled.div`
 
 const MainImage = styled.img`
   margin-top: 2rem;
-  width: 100%;
+  width: 90%;
   height: 30rem;
   object-fit: contain;
   /* border: 2px solid #2285e8; Add a border to the main image */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Add a shadow */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Optional: Add a shadow */
 `;
 function ProductImagesContainer({ productListImageDto }) {
   //   const [mainImage, setMainImage] = useState("");
@@ -38,7 +38,7 @@ function ProductImagesContainer({ productListImageDto }) {
     ...(productListImageDto?.productImages || []).map((image) => image.name),
   ];
 
-  console.log(images);
+  // console.log(images);
   const [mainImage, setMainImage] = useState(images[0] || "");
   //   useEffect(() => {
   //     if (images) {
