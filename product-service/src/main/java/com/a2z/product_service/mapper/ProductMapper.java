@@ -28,6 +28,7 @@ public class ProductMapper {
         return productDto;
     }
 
+
     public Product productDtoMapToProduct(ProductDto_v1 productDto, Product product) {
         product.setName(productDto.getName());
         product.setAlias(productDto.getAlias());
@@ -125,7 +126,7 @@ public class ProductMapper {
         return product;
     }
 
-    public ProductOverViewDto productMapToProductOverViewDto(Product product, ProductOverViewDto productOverViewDto) {
+    public ProductOverViewDto productMapToProductOverviewDto(Product product, ProductOverViewDto productOverViewDto){
         productOverViewDto.setName(product.getName());
         productOverViewDto.setAlias(product.getAlias());
         productOverViewDto.setCategoryName(product.getCategory().getCategoryName());
@@ -137,6 +138,19 @@ public class ProductMapper {
         productOverViewDto.setInStock(product.getInStock());
         return productOverViewDto;
     }
+
+//    public ProductOverViewDto productMapToProductOverViewDto(Product product, ProductOverViewDto productOverViewDto) {
+//        productOverViewDto.setName(product.getName());
+//        productOverViewDto.setAlias(product.getAlias());
+//        productOverViewDto.setCategoryName(product.getCategory().getCategoryName());
+//        productOverViewDto.setBrandName(product.getBrand().getName());
+//        productOverViewDto.setCost(product.getCost());
+//        productOverViewDto.setPrice(product.getPrice());
+//        productOverViewDto.setDiscountPercent(product.getDiscountPercent());
+//        productOverViewDto.setEnabled(product.isEnabled());
+//        productOverViewDto.setInStock(product.getInStock());
+//        return productOverViewDto;
+//    }
 
     public ProductDescriptionDto productMapToProductDescriptionDto(Product product, ProductDescriptionDto productDescriptionDto) {
         productDescriptionDto.setFullDescription(product.getFullDescription());

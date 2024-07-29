@@ -34,4 +34,10 @@ public class ProductServiceForCustomer implements com.a2z.product_service.servic
         Pageable pageable = PageRequest.of(0, limit);
         return productRepository.getAllProductsByCategoryName(categoryName, pageable);
     }
+
+    @Override
+    public Product getProductById(Integer productId) {
+        return productRepository.findById(productId).orElse(null);
+//        return null;
+    }
 }

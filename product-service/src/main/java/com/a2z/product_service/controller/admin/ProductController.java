@@ -65,7 +65,7 @@ public class ProductController {
             throw new NotFoundException("Product id is invalid");
         }
         Product product = productService.getProductOverView(productId);
-        ProductOverViewDto productOverViewDto = productMapper.productMapToProductOverViewDto(product, new ProductOverViewDto());
+        ProductOverViewDto productOverViewDto = productMapper.productMapToProductOverviewDto(product, new ProductOverViewDto());
         return ResponseEntity.status(HttpStatus.OK).body(productOverViewDto);
     }
 

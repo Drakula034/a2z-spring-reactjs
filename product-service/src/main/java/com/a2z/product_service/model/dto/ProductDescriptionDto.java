@@ -12,4 +12,8 @@ public class ProductDescriptionDto {
     private String shortDescription;
     @Size(max = 4000)
     private String fullDescription;
+
+    public String toString(){
+        return "Short Description: " + shortDescription + ", Full Description: " + fullDescription;
+    }
 }

@@ -11,4 +11,13 @@ public class ProductShippingDto {
     private Float width;
     private Float height;
     private Float weight;
+
+    public String toString(){
+        return "ProductShippingDto{" +
+                "length=" + length +
+                ", width=" + width +
+                ", height=" + height +
+                ", weight=" + weight +
+                '}';
+    }
 }

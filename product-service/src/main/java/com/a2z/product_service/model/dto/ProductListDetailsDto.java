@@ -10,4 +10,10 @@ import java.util.List;
 @Setter
 public class ProductListDetailsDto {
     private List<ProductDetailsDto> productDetails = new ArrayList<>();
+
+    public String toString(){
+        return "ProductListDetailsDto{" +
+                "productDetails=" + productDetails.toString() +
+                '}';
+    }
 }

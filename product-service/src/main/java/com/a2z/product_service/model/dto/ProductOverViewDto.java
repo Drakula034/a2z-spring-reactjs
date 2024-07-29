@@ -22,4 +22,18 @@ public class ProductOverViewDto {
     private Float price;
     private Float discountPercent;
 
+    public String toString(){
+        return "ProductOverViewDto{" +
+                "name='" + name + '\'' +
+                ", alias='" + alias + '\'' +
+                ", categoryName='" + categoryName + '\'' +
+                ", brandName='" + brandName + '\'' +
+                ", enabled=" + enabled +
+                ", inStock=" + inStock +
+                ", cost=" + cost +
+                ", price=" + price +
+                ", discountPercent=" + discountPercent +
+                '}';
+    }
+
 }

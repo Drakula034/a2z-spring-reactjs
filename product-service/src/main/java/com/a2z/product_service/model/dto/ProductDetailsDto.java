@@ -10,4 +10,12 @@ public class ProductDetailsDto {
     private String name;
     private String value;
     private Integer productId;
+
+    public String toString(){
+        return "ProductDetailsDto{" +
+                "name='" + name + '\'' +
+                ", value='" + value + '\'' +
+                ", productId=" + productId +
+                '}';
+    }
 }
