@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -20,9 +21,14 @@ const Container = styled.div`
 `;
 
 function ProductContainerInMainPage({ product }) {
+  const navigate = useNavigate();
+  const handleClick = (e) => {
+    console.log(product.id);
+    navigate(`/products?productId=${product.id}`, { replace: true });
+  };
   return (
     <Container>
-      <div>
+      <div onClick={handleClick}>
         <img
           src={`/public/assets/products/${product.productMainImage}`}
           alt={product.name}

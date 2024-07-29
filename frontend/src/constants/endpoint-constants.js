@@ -111,3 +111,6 @@ export const GET_PRODUCT_FOR_CUSTOMER_CATEGORY_PAGE = (
   categoryCnt
 ) =>
   `${PRODUCT_SERVICE_BASE_FOR_CUSTOMER}/category/${categoryName}?limit=${categoryCnt}`;
+
+export const GET_PRODUCT_BY_PRODUCT_ID = (productId) =>
+  `${PRODUCT_SERVICE_BASE_FOR_CUSTOMER}?productId=${productId}`;

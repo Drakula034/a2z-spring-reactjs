@@ -64,8 +64,8 @@ public class ProductControllerForCustomer {
 
     }
 
-    @GetMapping("/{productId}")
-    public ResponseEntity<String> getProductInfo(@PathVariable Integer productId){
+    @GetMapping("")
+    public ResponseEntity<ProductResponseDtoForCustomer> getProductInfo(@RequestParam Integer productId){
         if(productRepository.findById(productId).isEmpty()) {
             throw new NotFoundException("Product Id is not found");
         }
@@ -80,7 +80,7 @@ public class ProductControllerForCustomer {
         System.out.println("product shipping details" + productResponseDtoForCustomer.getProductShippingDto().toString());
 
 
-        return ResponseEntity.status(HttpStatus.OK).build();
+        return ResponseEntity.status(HttpStatus.OK).body(productResponseDtoForCustomer);
 
     }
 }

@@ -7,7 +7,7 @@ const Container = styled.div`
   grid-gap: 20px;
 `;
 function ProductContainerForCategory({ products }) {
-  console.log(products);
+  // console.log(products);
   return (
     <Container>
       {(products || []).map((product) => (

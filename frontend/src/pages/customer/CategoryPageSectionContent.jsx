@@ -9,11 +9,11 @@ const Container = styled.div`
   background-color: "red";
 `;
 const querySize = 9;
-function CategoryPageSectionContent() {
+function CategoryPageSectionContent({ category }) {
   const location = useLocation();
-  const queryParams = new URLSearchParams(location.search);
-  const category = queryParams.get("category");
-  //   console.log(category);
+  // const queryParams = new URLSearchParams(location.search);
+  // const category = queryParams.get("category");
+  console.log(category);
   const { data: fetchedCategoryData } = useGetProductsForCategoryInCategoryPage(
     category,
     querySize
