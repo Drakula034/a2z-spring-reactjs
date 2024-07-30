@@ -17,7 +17,7 @@ const Container = styled.div`
 // Grid container for the first half of the page
 const StyledFirstHalf = styled.div`
   display: grid;
-  grid-template-columns: 1.4fr 1fr 13rem;
+  grid-template-columns: 1.2fr 1fr 13rem;
   gap: 1rem;
   margin-top: 2rem;
   height: auto; /* Adjust height based on content */
@@ -59,6 +59,8 @@ function ProductDetailsPage({ productId }) {
     }
   }, [productsData]);
 
+  const inStock = productOverViewData?.inStock || false;
+
   return (
     <Container>
       <StyledFirstHalf>
@@ -68,7 +70,7 @@ function ProductDetailsPage({ productId }) {
           productOverViewData={productOverViewData}
           productListDetailsDto={productListDetailsDto}
         />
-        <ProductOrderContainer />
+        <ProductOrderContainer inStock={inStock} />
       </StyledFirstHalf>
       <DescriptionContainer>
         <ProductDescription

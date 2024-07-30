@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 // Optional: Add some basic styling
 const FeatureContainer = styled.div`
-  margin: 1rem 0;
+  margin: 0.5rem 0;
   /* padding: 0.5rem; */
   /* border-bottom: 1px solid #ddd; */
 `;
@@ -13,7 +13,7 @@ const FeatureItem = styled.div`
 `;
 
 function ProductFeaturesContainer({ features }) {
-  console.log("features", features);
+  //   console.log("features", features);
 
   return (
     <div>

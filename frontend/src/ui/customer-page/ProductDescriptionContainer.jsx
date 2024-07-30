@@ -19,9 +19,9 @@ function ProductDescriptionContainer({
   productListDetailsDto,
 }) {
   const currencySymbol = "₹";
-  console.log("productListDetailsDto", productListDetailsDto);
-  console.log("productOverViewData", productOverViewData);
-  console.log("productShortDescription", productShortDescription);
+  // console.log("productListDetailsDto", productListDetailsDto);
+  // console.log("productOverViewData", productOverViewData);
+  // console.log("productShortDescription", productShortDescription);
   const {
     discountPercent,
     price: mrp,
@@ -57,8 +57,14 @@ function ProductDescriptionContainer({
           {currencySymbol + mrp}
         </span>
       </h4>
+      <div
+        style={{ color: "green", border: "1px solid var(--color-grey-500)" }}
+      ></div>
       <ProductFeaturesContainer features={productListDetailsDto} />
       {/* Features */}
+      <div
+        style={{ color: "green", border: "1px solid var(--color-grey-500)" }}
+      ></div>
       <ProductDescription
         title={"About This Item"}
         description={productShortDescription}

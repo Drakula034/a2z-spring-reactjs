@@ -40,22 +40,6 @@ function ProductImagesContainer({ productListImageDto }) {
 
   // console.log(images);
   const [mainImage, setMainImage] = useState(images[0] || "");
-  //   useEffect(() => {
-  //     if (images) {
-  //       setMainImage(images[0]);
-  //     }
-  //   }, [images]);
-  //   const changeMainImage = (e) => {
-  //     console.log(e.target);
-  //   };
-
-  //   const [mainImage, setMainImage] = useState("");
-
-  //   useEffect(() => {
-  //     if (images.length > 0) {
-  //       setMainImage(images[0]);
-  //     }
-  //   }, [images]);
 
   return (
     <Container>
