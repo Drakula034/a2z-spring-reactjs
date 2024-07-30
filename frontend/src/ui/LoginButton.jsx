@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { RxAvatar } from "react-icons/rx";
 import styled from "styled-components";
 const StyledButton = styled.button`
@@ -13,7 +14,8 @@ const StyledButton = styled.button`
   transition: background-color 0.3s;
 
   &:hover {
-    background-color: #0056b3; /* Adjust as needed */
+    background-color: #0056b3;
+    /* <SignInModal /> */
   }
 
   span {

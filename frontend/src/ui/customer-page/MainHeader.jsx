@@ -3,20 +3,19 @@ import LoginButton from "../LoginButton";
 import CartButton from "../CartButton";
 import { CiSearch } from "react-icons/ci";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import SignInModal from "../SignInModal"; // Import the SigninModal component
 
 const StyledContainer = styled.div`
-  position: ${({ headerPosition }) =>
-    headerPosition || "fixed"}; /* Fixes the header at the top */
+  position: ${({ headerPosition }) => headerPosition || "fixed"};
   top: 0;
   left: 0;
   width: 100%;
   height: 4rem;
-  width: 100%;
   z-index: 1000;
   display: flex;
   align-items: center;
   justify-content: center;
-
   background-color: #fff;
 `;
 
@@ -25,14 +24,13 @@ const StyledHeader = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-items: center;
   column-gap: 2rem;
   margin-left: 4rem;
 
   img {
     height: 3rem;
     width: 5rem;
-    align-self: flex-start;
+    cursor: pointer;
   }
 `;
 
@@ -44,7 +42,7 @@ const SearchContainer = styled.div`
   input {
     height: 2.5rem;
     width: 40rem;
-    padding: 0.5rem 2rem 0.5rem 3rem; /* Add padding to accommodate the icon */
+    padding: 0.5rem 2rem 0.5rem 3rem;
     border-radius: 0.5rem;
     border: none;
     outline: none;
@@ -54,28 +52,49 @@ const SearchContainer = styled.div`
 
   svg {
     position: absolute;
-    left: 0.75rem; /* Adjust icon position */
+    left: 0.75rem;
     color: var(--color-grey-400);
     width: 1.5rem;
     height: 1.5rem;
   }
 `;
 
+const LoginButtonContainer = styled.div`
+  position: relative;
+
+  &:hover .dropdown {
+    display: block;
+  }
+`;
+
+const DropdownContainer = styled.div`
+  position: absolute;
+  top: 100%; // Position the dropdown below the LoginButton
+  left: 0;
+  display: none;
+  z-index: 1000; // Ensure the dropdown appears above other content
+`;
+
 function MainHeader({ headerPosition }) {
   const navigate = useNavigate();
   return (
-    <StyledContainer>
+    <StyledContainer headerPosition={headerPosition}>
       <StyledHeader>
         <img
           src="/assets/a2z-transparent.png"
-          alt=""
+          alt="Logo"
           onClick={() => navigate("/")}
         />
         <SearchContainer>
           <CiSearch />
           <input type="text" placeholder="Search by Product and Brand.." />
         </SearchContainer>
-        <LoginButton />
+        <LoginButtonContainer>
+          <LoginButton />
+          <DropdownContainer className="dropdown">
+            <SignInModal />
+          </DropdownContainer>
+        </LoginButtonContainer>
         <CartButton />
       </StyledHeader>
     </StyledContainer>
