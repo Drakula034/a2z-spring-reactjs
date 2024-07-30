@@ -31,6 +31,10 @@ const StyledHeader = styled.div`
     height: 3rem;
     width: 5rem;
     cursor: pointer;
+    &:hover {
+      /* background-color: #0056b3; Adjust as needed */
+      border: 1px solid blue;
+    }
   }
 `;
 

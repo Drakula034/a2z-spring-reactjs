@@ -14,6 +14,7 @@ const StyledContainer = styled.div`
 
   &:hover {
     /* background-color: #0056b3; Adjust as needed */
+    border: 1px solid blue;
   }
 
   span {

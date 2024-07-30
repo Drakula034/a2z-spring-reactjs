@@ -8,6 +8,7 @@ const Container = styled.div`
   align-items: center;
   justify-items: center;
   gap: 5px; /* Add space between the elements */
+  cursor: pointer;
 
   img {
     width: 100%;
