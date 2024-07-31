@@ -17,4 +17,10 @@ public class CustomerServiceImpl implements CustomerService {
 //        System.out.println(savedCustomer.toString());
         return savedCustomer.getId() > 0;
     }
+
+    @Override
+    public Customer getCustomerByCustomerId(Integer customerId) {
+        return customerRepository.findById(customerId).orElse(null);
+
+    }
 }

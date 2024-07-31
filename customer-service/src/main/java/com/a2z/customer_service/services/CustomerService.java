@@ -7,4 +7,5 @@ import org.springframework.stereotype.Service;
 public interface CustomerService {
 
     boolean registerCustomer(Customer customer);
+    Customer getCustomerByCustomerId(Integer customerId);
 }

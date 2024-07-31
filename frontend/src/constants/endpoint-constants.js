@@ -1,8 +1,12 @@
+import {
+  USER_SERVICE_BASE_URL,
+  USER_SERVICE_ROLES_BASE_URL,
+  CATEGORY_SERVICE_BASE_URL,
+  BRAND_SERVICE_BASE_URL,
+  PRODUCT_SERVICE_BASE_URL,
+  PRODUCT_SERVICE_BASE_FOR_CUSTOMER,
+} from "./url-constants";
 // user-services
-
-export const USER_SERVICE_BASE_URL = "http://localhost:8000/api/admin/users";
-export const USER_SERVICE_ROLES_BASE_URL =
-  "http://localhost:8000/api/admin/roles";
 
 export const ALL_USER_INFO = `${USER_SERVICE_BASE_URL}/all`;
 export const USER_BY_ID = (userId) => `${USER_SERVICE_BASE_URL}/${userId}`;
@@ -23,9 +27,6 @@ export const UPDATE_USER = `${USER_SERVICE_BASE_URL}/update`;
 // product-service
 // categroy
 
-export const CATEGORY_SERVICE_BASE_URL =
-  "http://localhost:8000/api/admin/categories";
-
 export const CATEGORY_SERVICE_ENABLED_DISABLED_URL = `${CATEGORY_SERVICE_BASE_URL}/control-panel`;
 export const CATEGORY_BY_PAGE = (page) => {
   return `${CATEGORY_SERVICE_BASE_URL}?page=${page}`;
@@ -43,7 +44,6 @@ export const UPDATE_CATEGORY = `${CATEGORY_SERVICE_BASE_URL}/update`;
 
 // brands
 
-export const BRAND_SERVICE_BASE_URL = "http://localhost:8000/api/admin/brands";
 export const BRANS_SERVICE_TOTAL_COUNT = `${BRAND_SERVICE_BASE_URL}/control-panel`;
 export const BRANDS_BY_PAGE = (page) => {
   return `${BRAND_SERVICE_BASE_URL}?page=${page}`;
@@ -58,11 +58,6 @@ export const UPDATE_BRAND = (brandId) =>
   `${BRAND_SERVICE_BASE_URL}/${brandId}/update`;
 
 // product
-
-export const PRODUCT_SERVICE_BASE_URL =
-  "http://localhost:8000/api/admin/products";
-export const PRODUCT_SERVICE_BASE_FOR_CUSTOMER =
-  "http://localhost:8000/api/customer/products";
 
 export const PRODUCT_SERVICE_ENABLED_DISABLED_URL = `${PRODUCT_SERVICE_BASE_URL}/control-panel`;
 export const GET_PRODUCT_BY_PAGE = (page) => {
