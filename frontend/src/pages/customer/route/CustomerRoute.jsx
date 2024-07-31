@@ -8,7 +8,9 @@ function CustomerRoute() {
     <Routes>
       <Route index element={<MainPage />} />
       <Route path="/products/*" element={<CategoryPage />} />
-      <Route path="/account/*" element={<LoginPage />} />
+      <Route path="/account/login/*" element={<LoginPage />} />
+      {/* /* http://localhost:5173/account/login?ret=/
+      http://localhost:5173/account/login?signup=true */}
     </Routes>
   );
 }

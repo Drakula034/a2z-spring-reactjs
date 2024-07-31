@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -77,6 +78,7 @@ const Container = styled.div`
 `;
 
 function LogIn() {
+  const navigate = useNavigate();
   const [logInInfo, setLogInInfo] = useState({ email: "", password: "" });
 
   const inputChange = (e) => {
@@ -114,7 +116,10 @@ function LogIn() {
           Continue
         </button>
         <h5>
-          New Here? <span>Create an account</span>
+          New Here?{" "}
+          <span onClick={() => navigate("/account/login?signup=true")}>
+            Create an account
+          </span>
         </h5>
       </div>
     </Container>
