@@ -76,7 +76,7 @@ public class ProductController {
         }
 
         Product product = productMapper.productOverViewDtoMapToProduct(productOverViewDto, new Product());
-        System.out.println(product.toString());
+//        System.out.println(product.toString());
         product.setId(productId);
 
         boolean isProductUpdated = productService.updateProductOverView(product);
@@ -162,7 +162,7 @@ public class ProductController {
         System.out.println(productShippingDto.getWeight());
         Product product = productMapper.productShippingDtoMapToProduct(productShippingDto, new Product());
         product.setId(productId);
-        System.out.println(product.getHeight());
+//        System.out.println(product.getHeight());
         boolean isUpdated = productService.updateProductShippingDetails(product);
         if(isUpdated){
             return ResponseEntity.status(HttpStatus.OK).build();

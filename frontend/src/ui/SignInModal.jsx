@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -42,11 +43,15 @@ const Button = styled.button`
 `;
 
 function SignInModal() {
+  const navigate = useNavigate();
   return (
     <Container>
-      <Button>Sign In</Button>
+      <Button onClick={() => navigate("/account/login?ret/")}>Sign In</Button>
       <h5>
-        New Customer? <span>Sign Up</span>
+        New Customer?{" "}
+        <span onClick={() => navigate("/account/login?signup=true")}>
+          Sign Up
+        </span>
       </h5>
     </Container>
   );

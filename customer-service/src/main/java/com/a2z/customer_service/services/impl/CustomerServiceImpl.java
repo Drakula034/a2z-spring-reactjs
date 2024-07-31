@@ -15,6 +15,6 @@ public class CustomerServiceImpl implements CustomerService {
     public boolean registerCustomer(Customer customer) {
         Customer savedCustomer = customerRepository.save(customer);
 //        System.out.println(savedCustomer.toString());
-        return savedCustomer.getId() > 0 ? true : false;
+        return savedCustomer.getId() > 0;
     }
 }

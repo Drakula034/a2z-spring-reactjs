@@ -73,11 +73,11 @@ public class ProductControllerForCustomer {
 
         ProductResponseDtoForCustomer productResponseDtoForCustomer = productMapperForCustomer
                 .productMapTpProductResponseDtoForCustomer(product, new ProductResponseDtoForCustomer());
-        System.out.println("overview details"+productResponseDtoForCustomer.getProductOverViewDto().toString());
-        System.out.println("image details" + productResponseDtoForCustomer.getProductListImageDto().toString());
-        System.out.println("product description" + productResponseDtoForCustomer.getProductDescriptionDto().toString());
-        System.out.println("product details" + productResponseDtoForCustomer.getProductListDetailsDto().toString());
-        System.out.println("product shipping details" + productResponseDtoForCustomer.getProductShippingDto().toString());
+//        System.out.println("overview details"+productResponseDtoForCustomer.getProductOverViewDto().toString());
+//        System.out.println("image details" + productResponseDtoForCustomer.getProductListImageDto().toString());
+//        System.out.println("product description" + productResponseDtoForCustomer.getProductDescriptionDto().toString());
+//        System.out.println("product details" + productResponseDtoForCustomer.getProductListDetailsDto().toString());
+//        System.out.println("product shipping details" + productResponseDtoForCustomer.getProductShippingDto().toString());
 
 
         return ResponseEntity.status(HttpStatus.OK).body(productResponseDtoForCustomer);

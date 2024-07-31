@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { IoEyeSharp } from "react-icons/io5";
+import { IoIosEyeOff } from "react-icons/io";
 
 const FormContainer = styled.div`
   display: flex;
@@ -81,6 +83,14 @@ const InputContainer = styled.div`
     color: var(--color-grey-600);
     pointer-events: none;
   }
+
+  .icon {
+    position: absolute;
+    top: 50%;
+    right: 0.75rem; /* Adjust position as needed */
+    transform: translateY(-50%);
+    cursor: pointer;
+  }
 `;
 const ErrorMessage = styled.p`
   color: red;
@@ -104,6 +114,10 @@ const Button = styled.button`
   &:hover {
     background-color: var(--color-blue-500);
   }
+  &:disabled {
+    background-color: var(--color-grey-300);
+    cursor: not-allowed;
+  }
 `;
 
 function SignUp() {
@@ -116,6 +130,8 @@ function SignUp() {
   } = useForm();
 
   const [password, setPassword] = useState("");
+  const [confirmedPassword, setConfirmedPassword] = useState("");
+  const [checkPassword, setCheckPassword] = useState(false);
 
   const onSubmit = (data) => {
     console.log(data);
@@ -160,11 +176,22 @@ function SignUp() {
           {/* {errors.password && <ErrorMessage>Password is required</ErrorMessage>} */}
           <input
             {...register("password", { required: true })}
-            type="password"
+            type={checkPassword ? "text" : "password"}
             placeholder=" "
             onChange={(e) => setPassword(e.target.value)}
           />
           <label>Password</label>
+          {checkPassword ? (
+            <IoIosEyeOff
+              className="icon"
+              onClick={() => setCheckPassword(false)}
+            />
+          ) : (
+            <IoEyeSharp
+              className="icon"
+              onClick={() => setCheckPassword(true)}
+            />
+          )}
         </InputContainer>
         <InputContainer>
           {/* {errors.confirmPassword && (
@@ -175,10 +202,13 @@ function SignUp() {
             type="password"
             placeholder=" "
             disabled={password.length === 0}
+            onChange={(e) => setConfirmedPassword(e.target.value)}
           />
           <label>Confirm Password</label>
         </InputContainer>
-        <Button type="submit">Sign Up</Button>
+        <Button type="submit" disabled={password !== confirmedPassword}>
+          Sign Up
+        </Button>
       </Form>
       <h5>
         Already have an account?{" "}

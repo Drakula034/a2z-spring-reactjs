@@ -11,7 +11,7 @@ const Container = styled.div`
   margin-right: 1rem;
   padding-top: 1rem;
   box-sizing: border-box;
-  padding-top: 4rem;
+  /* padding-top: 4rem; */
 `;
 function CategoryPage() {
   const queryParams = new URLSearchParams(useLocation().search);
