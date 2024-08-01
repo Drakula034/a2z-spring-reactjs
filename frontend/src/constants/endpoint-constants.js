@@ -5,6 +5,7 @@ import {
   BRAND_SERVICE_BASE_URL,
   PRODUCT_SERVICE_BASE_URL,
   PRODUCT_SERVICE_BASE_FOR_CUSTOMER,
+  CUSTOMER_SERVICE_BASE_FOR_CUSTOMER,
 } from "./url-constants";
 // user-services
 
@@ -109,3 +110,9 @@ export const GET_PRODUCT_FOR_CUSTOMER_CATEGORY_PAGE = (
 
 export const GET_PRODUCT_BY_PRODUCT_ID = (productId) =>
   `${PRODUCT_SERVICE_BASE_FOR_CUSTOMER}?productId=${productId}`;
+
+// customers
+export const GET_CUSTOMER_FOR_MAIN_PAGE_BY_ID = (customerId) =>
+  `${CUSTOMER_SERVICE_BASE_FOR_CUSTOMER}/${customerId}`;
+
+export const CREATE_CUSTOMER = `${CUSTOMER_SERVICE_BASE_FOR_CUSTOMER}/register`;

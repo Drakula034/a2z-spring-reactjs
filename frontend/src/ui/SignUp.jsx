@@ -1,9 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { IoEyeSharp } from "react-icons/io5";
 import { IoIosEyeOff } from "react-icons/io";
+import useCreateCustomer from "../pages/customer/useCreateCustomer";
+import useGetCustomerInfoByCustomerId from "../pages/customer/useGetCustomerInfoByCustomerId";
+import { useDispatch } from "react-redux";
+import { setCurrentCustomer } from "../redux/customers/customerSlice";
 
 const FormContainer = styled.div`
   display: flex;
@@ -122,6 +126,18 @@ const Button = styled.button`
 
 function SignUp() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [newCustomerId, setNewCustomerId] = useState(() => {
+    const storedCustomerInfo = sessionStorage.getItem("customerInfo");
+    if (storedCustomerInfo) {
+      const customerInfo = JSON.parse(storedCustomerInfo);
+      return customerInfo.customerId;
+    }
+    return null;
+  });
+  const { createNewCustomer } = useCreateCustomer();
+  const { data: customerInfo, isLoading: isCustomerInfoLoading } =
+    useGetCustomerInfoByCustomerId(newCustomerId);
   const {
     register,
     handleSubmit,
@@ -133,12 +149,35 @@ function SignUp() {
   const [confirmedPassword, setConfirmedPassword] = useState("");
   const [checkPassword, setCheckPassword] = useState(false);
 
-  const onSubmit = (data) => {
-    console.log(data);
-    navigate("/");
-    // reset();
+  const onSubmit = async (data) => {
+    const customerData = {
+      firstName: data.firstName,
+      lastName: data.lastName,
+      email: data.email,
+      password: data.password,
+      secondPassword: data.confirmPassword,
+    };
+    console.log("preparedData", customerData);
+    try {
+      const customerId = await createNewCustomer(customerData);
+      console.log("create customerId", customerId);
+      if (customerId) {
+        setNewCustomerId(customerId);
+      }
+    } catch (error) {
+      console.error("Error creating customer:", error);
+    }
   };
 
+  useEffect(() => {
+    if (customerInfo) {
+      dispatch(setCurrentCustomer(customerInfo));
+      sessionStorage.setItem("customerInfo", JSON.stringify(customerInfo));
+      console.log("customerInfo", customerInfo);
+      // Navigate or perform other actions as needed
+    }
+  }, [customerInfo, dispatch]);
+  // console.log("customerInfo", customerInfo);
   return (
     <FormContainer>
       <h2>Create an account</h2>

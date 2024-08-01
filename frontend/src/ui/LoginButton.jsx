@@ -4,8 +4,9 @@ import styled from "styled-components";
 const StyledButton = styled.button`
   display: flex;
   align-items: center;
-  background-color: #007bff; /* Adjust as needed */
-  color: white;
+  background-color: ${(props) => (props.firstName === "" ? "#007bff" : "")};
+  // : "var(--color-grey-200)"}; /* Adjust as needed */
+  color: ${(props) => (props.firstName === "" ? "white" : "black")};
   border: none;
   padding: 0.5rem 1rem;
   border-radius: 4px;
@@ -14,7 +15,8 @@ const StyledButton = styled.button`
   transition: background-color 0.3s;
 
   &:hover {
-    background-color: #0056b3;
+    background-color: ${(props) =>
+      props.firstName === "" ? "#0056b3" : "var(--color-grey-400)"};
     /* <SignInModal /> */
   }
 
@@ -29,13 +31,13 @@ const StyledButton = styled.button`
     height: 1.2rem;
   }
 `;
-function LoginButton() {
+function LoginButton({ firstName }) {
   return (
     <StyledButton>
       <span>
         <RxAvatar />
       </span>
-      Login
+      {firstName ? firstName : "Login"}
     </StyledButton>
   );
 }

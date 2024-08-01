@@ -1,7 +1,7 @@
 package com.a2z.customer_service.mapper;
 
 import com.a2z.customer_service.modal.dto.CustomerRequestDto;
-import com.a2z.customer_service.modal.dto.CustomerRequestDtoForMainPage;
+import com.a2z.customer_service.modal.dto.CustomerResponseDtoForMainPage;
 import com.a2z.customer_service.modal.entity.Customer;
 import org.springframework.context.annotation.Configuration;
 
@@ -16,7 +16,7 @@ public class CustomerMapper {
 
         return customer;
     }
-    public CustomerRequestDtoForMainPage customerMapToCustomerrequestDtoForMainPage(Customer customer, CustomerRequestDtoForMainPage customerRequestDtoForMainPage){
+    public CustomerResponseDtoForMainPage customerMapToCustomerResponseDtoForMainPage(Customer customer, CustomerResponseDtoForMainPage customerRequestDtoForMainPage){
         customerRequestDtoForMainPage.setCustomerId(customer.getId());
         customerRequestDtoForMainPage.setFirstName(customer.getFirstName());
 

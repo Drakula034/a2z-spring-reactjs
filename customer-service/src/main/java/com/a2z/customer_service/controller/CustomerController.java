@@ -2,7 +2,7 @@ package com.a2z.customer_service.controller;
 
 import com.a2z.customer_service.mapper.CustomerMapper;
 import com.a2z.customer_service.modal.dto.CustomerRequestDto;
-import com.a2z.customer_service.modal.dto.CustomerRequestDtoForMainPage;
+import com.a2z.customer_service.modal.dto.CustomerResponseDtoForMainPage;
 import com.a2z.customer_service.modal.entity.Customer;
 import com.a2z.customer_service.services.CustomerService;
 import org.springframework.http.HttpStatus;
@@ -26,26 +26,33 @@ public class CustomerController {
     public ResponseEntity<String> register(@RequestBody CustomerRequestDto customerRequestDto) {
 //        System.out.println(customerRequestDto.toString());
 
-        boolean isSuccessful = false;
+        int customerId = -1;
         if (customerRequestDto.getPassword().equals(customerRequestDto.getSecondPassword())) {
 
             Customer customer = CustomerMapper.customerRequestDtoMapToCustomer(customerRequestDto, new Customer());
-            isSuccessful = customerService.registerCustomer(customer);
+            try {
+                customerId = customerService.registerCustomer(customer);
+
+            } catch (Exception e) {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to register: " + e.getMessage());
+            }
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Passwords do not match");
         }
 
+        String message = customerId > 0 ? Integer.toString(customerId) : "Failed to register";
+        return ResponseEntity.status(customerId > 0 ? HttpStatus.CREATED : HttpStatus.BAD_REQUEST).body(message);
 
-        String message = isSuccessful ? "Successfully registered" : "Failed to register";
-
-        return ResponseEntity.status(isSuccessful ? HttpStatus.CREATED : HttpStatus.BAD_REQUEST).body(message);
     }
+
     @GetMapping("/{customerId}")
-    public ResponseEntity<CustomerRequestDtoForMainPage> getCustomerInfoForMainPage(@PathVariable Integer customerId){
+    public ResponseEntity<CustomerResponseDtoForMainPage> getCustomerInfoForMainPage(@PathVariable Integer customerId) {
         Customer customer = customerService.getCustomerByCustomerId(customerId);
-        if(customer == null){
+        if (customer == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
-        CustomerRequestDtoForMainPage customerRequestDtoForMainPage = customerMapper.customerMapToCustomerrequestDtoForMainPage(customer,
-                new CustomerRequestDtoForMainPage());
+        CustomerResponseDtoForMainPage customerRequestDtoForMainPage = customerMapper.customerMapToCustomerResponseDtoForMainPage(customer,
+                new CustomerResponseDtoForMainPage());
         return ResponseEntity.status(HttpStatus.OK).body(customerRequestDtoForMainPage);
     }
 }

@@ -12,10 +12,10 @@ public class CustomerServiceImpl implements CustomerService {
     @Autowired
     CustomerRepository customerRepository;
     @Override
-    public boolean registerCustomer(Customer customer) {
+    public Integer registerCustomer(Customer customer) {
         Customer savedCustomer = customerRepository.save(customer);
 //        System.out.println(savedCustomer.toString());
-        return savedCustomer.getId() > 0;
+        return savedCustomer.getId();
     }
 
     @Override

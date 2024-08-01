@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class CustomerRequestDtoForMainPage {
+public class CustomerResponseDtoForMainPage {
     private Integer customerId;
     private String firstName;
 

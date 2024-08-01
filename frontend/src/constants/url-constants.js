@@ -10,3 +10,6 @@ export const PRODUCT_SERVICE_BASE_URL =
   "http://localhost:8000/api/admin/products";
 export const PRODUCT_SERVICE_BASE_FOR_CUSTOMER =
   "http://localhost:8000/api/customer/products";
+
+export const CUSTOMER_SERVICE_BASE_FOR_CUSTOMER =
+  "http://localhost:8000/api/customers";

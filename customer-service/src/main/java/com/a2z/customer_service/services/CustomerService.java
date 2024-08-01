@@ -6,6 +6,6 @@ import org.springframework.stereotype.Service;
 @Service
 public interface CustomerService {
 
-    boolean registerCustomer(Customer customer);
+    Integer registerCustomer(Customer customer);
     Customer getCustomerByCustomerId(Integer customerId);
 }

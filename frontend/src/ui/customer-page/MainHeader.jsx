@@ -5,6 +5,9 @@ import { CiSearch } from "react-icons/ci";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import SignInModal from "../SignInModal"; // Import the SigninModal component
+import { useSelector } from "react-redux";
+import { selectCurrentCustomer } from "../../redux/customers/selectors";
+import CustomerProfileModal from "../CustomerProfileModal";
 
 const StyledContainer = styled.div`
   position: ${({ headerPosition }) => headerPosition || "fixed"};
@@ -81,6 +84,8 @@ const DropdownContainer = styled.div`
 
 function MainHeader({ headerPosition }) {
   const navigate = useNavigate();
+  const currentCustomer = useSelector(selectCurrentCustomer);
+  console.log("currentCustomer", currentCustomer);
   return (
     <StyledContainer headerPosition={headerPosition}>
       <StyledHeader>
@@ -94,9 +99,9 @@ function MainHeader({ headerPosition }) {
           <input type="text" placeholder="Search by Product and Brand.." />
         </SearchContainer>
         <LoginButtonContainer>
-          <LoginButton />
+          <LoginButton firstName={currentCustomer?.firstName} />
           <DropdownContainer className="dropdown">
-            <SignInModal />
+            {currentCustomer ? <CustomerProfileModal /> : <SignInModal />}
           </DropdownContainer>
         </LoginButtonContainer>
         <CartButton />
