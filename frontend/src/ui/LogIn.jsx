@@ -3,6 +3,9 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { IoEyeSharp } from "react-icons/io5";
 import { IoIosEyeOff } from "react-icons/io";
+import useLoginCustomer from "../pages/customer/useLoginCustomer";
+import { useDispatch } from "react-redux";
+import { setCurrentCustomer } from "../redux/customers/customerSlice";
 
 const Container = styled.div`
   display: flex;
@@ -109,15 +112,19 @@ const PasswordInputContainer = styled.div`
 `;
 function LogIn() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [logInInfo, setLogInInfo] = useState({ email: "", password: "" });
   const [checkPassword, setCheckPassword] = useState(false);
+  const { loginCustomer } = useLoginCustomer();
 
   const inputChange = (e) => {
     const { name, value } = e.target;
     setLogInInfo((prevState) => ({ ...prevState, [name]: value }));
   };
-  const handleSubmitForm = () => {
-    console.log(logInInfo);
+  const handleSubmitForm = async () => {
+    const customerInfo = await loginCustomer(logInInfo);
+    dispatch(setCurrentCustomer(customerInfo));
+    // console.log(customerInfo);
   };
 
   return (
