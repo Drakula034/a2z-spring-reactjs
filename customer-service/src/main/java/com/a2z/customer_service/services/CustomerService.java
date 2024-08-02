@@ -8,4 +8,5 @@ public interface CustomerService {
 
     Integer registerCustomer(Customer customer);
     Customer getCustomerByCustomerId(Integer customerId);
+    Customer validCustomer(String email, String password);
 }

@@ -116,6 +116,9 @@ function LogIn() {
     const { name, value } = e.target;
     setLogInInfo((prevState) => ({ ...prevState, [name]: value }));
   };
+  const handleSubmitForm = () => {
+    console.log(logInInfo);
+  };
 
   return (
     <Container>
@@ -154,7 +157,7 @@ function LogIn() {
           type="submit"
           disabled={logInInfo.email === "" || logInInfo.password === ""}
           onClick={() => {
-            console.log(logInInfo);
+            handleSubmitForm();
           }}
         >
           Continue

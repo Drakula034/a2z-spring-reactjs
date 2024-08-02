@@ -5,17 +5,28 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class CustomerRequestDto {
+public class CustomerRequestDto extends CustomerRequestDtoForLogin {
 
     private String firstName;
     private String lastName;
-    private String email;
-    private String password;
     private String secondPassword;
+
+    public String getSecondPassword() {
+        return secondPassword;
+    }
+
+    public void setSecondPassword(String secondPassword) {
+        this.secondPassword = secondPassword;
+    }
 
     @Override
     public String toString() {
-        return "CustomerRequestDto [firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
-                + ", password=" + password + ", secondPassword=" + secondPassword + "]";
+        return "CustomerRequestDto{" +
+                "firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + getEmail() + '\'' +
+                ", password='" + getPassword() + '\'' +
+                ", secondPassword='" + secondPassword + '\'' +
+                '}';
     }
 }

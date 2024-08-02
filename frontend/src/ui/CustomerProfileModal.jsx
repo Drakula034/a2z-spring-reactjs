@@ -3,6 +3,9 @@ import { RxAvatar } from "react-icons/rx";
 import { IoLogOutOutline } from "react-icons/io5";
 import { FaBoxOpen } from "react-icons/fa6";
 import { IoMdNotificationsOutline } from "react-icons/io";
+import { useDispatch } from "react-redux";
+import { logout } from "../redux/customers/customerSlice";
+import { useNavigate } from "react-router-dom";
 
 const Container = styled.div`
   height: auto;
@@ -37,6 +40,13 @@ const Item = styled.div`
 `;
 
 function CustomerProfileModal() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const onLogOutClick = () => {
+    // sessionStorage.removeItem("customerInfo");
+    dispatch(logout());
+    navigate("/");
+  };
   return (
     <Container>
       <Item>
@@ -51,7 +61,7 @@ function CustomerProfileModal() {
         <IoMdNotificationsOutline size={24} />
         Notifications
       </Item>
-      <Item onClick={() => console.log("Logout")}>
+      <Item onClick={() => onLogOutClick()}>
         <IoLogOutOutline size={24} />
         Logout
       </Item>

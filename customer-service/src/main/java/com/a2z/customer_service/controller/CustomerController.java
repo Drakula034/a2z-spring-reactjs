@@ -2,6 +2,7 @@ package com.a2z.customer_service.controller;
 
 import com.a2z.customer_service.mapper.CustomerMapper;
 import com.a2z.customer_service.modal.dto.CustomerRequestDto;
+import com.a2z.customer_service.modal.dto.CustomerRequestDtoForLogin;
 import com.a2z.customer_service.modal.dto.CustomerResponseDtoForMainPage;
 import com.a2z.customer_service.modal.entity.Customer;
 import com.a2z.customer_service.services.CustomerService;
@@ -42,6 +43,25 @@ public class CustomerController {
 
         String message = customerId > 0 ? Integer.toString(customerId) : "Failed to register";
         return ResponseEntity.status(customerId > 0 ? HttpStatus.CREATED : HttpStatus.BAD_REQUEST).body(message);
+
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<CustomerResponseDtoForMainPage> login(@RequestBody CustomerRequestDtoForLogin customerRequestDtoForLogin) {
+
+        try {
+            Customer customer = customerService.validCustomer(customerRequestDtoForLogin.getEmail(), customerRequestDtoForLogin.getPassword());
+            if (customer != null) {
+                CustomerResponseDtoForMainPage customerRequestDtoForMainPage = customerMapper.customerMapToCustomerResponseDtoForMainPage(customer,
+                        new CustomerResponseDtoForMainPage());
+                return ResponseEntity.status(HttpStatus.OK).body(customerRequestDtoForMainPage);
+
+            } else {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
 
     }
 

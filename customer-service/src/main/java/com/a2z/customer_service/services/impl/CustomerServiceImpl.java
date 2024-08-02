@@ -23,4 +23,16 @@ public class CustomerServiceImpl implements CustomerService {
         return customerRepository.findById(customerId).orElse(null);
 
     }
+
+    @Override
+    public Customer validCustomer(String email, String password) {
+        Customer customer = customerRepository.findByEmail(email);
+
+        // Validate password (this should be hashed and compared in a real application)
+        if (customer != null && customer.getPassword().equals(password)) {
+            return customer;
+        } else {
+            return null;
+        }
+    }
 }

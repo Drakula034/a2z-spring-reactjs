@@ -101,7 +101,11 @@ function MainHeader({ headerPosition }) {
         <LoginButtonContainer>
           <LoginButton firstName={currentCustomer?.firstName} />
           <DropdownContainer className="dropdown">
-            {currentCustomer ? <CustomerProfileModal /> : <SignInModal />}
+            {currentCustomer?.customerId !== "" ? (
+              <CustomerProfileModal />
+            ) : (
+              <SignInModal />
+            )}
           </DropdownContainer>
         </LoginButtonContainer>
         <CartButton />

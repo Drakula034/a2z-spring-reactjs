@@ -31,6 +31,14 @@ const saveState = (state) => {
     // Ignore write errors
   }
 };
+
+const clearState = () => {
+  try {
+    sessionStorage.removeItem("customerInfo");
+  } catch (err) {
+    // Ignore errors
+  }
+};
 const initialState = loadState();
 
 const customerSlice = createSlice({
@@ -41,15 +49,15 @@ const customerSlice = createSlice({
       state.currentCustomer = action.payload;
       saveState(state); // Save the updated state to sessionStorage
     },
-    // setCurrentCustomer: (state, action) => {
-    //   // Directly mutate the state using action.payload
-    //   state.currentCustomer = {
-    //     customerId: action.payload.customerId,
-    //     firstName: action.payload.firstName,
-    //   };
-    // },
+    logout: (state) => {
+      state.currentCustomer = {
+        customerId: "",
+        firstName: "",
+      };
+      clearState(); // Clear sessionStorage
+    },
   },
 });
 
-export const { setCurrentCustomer } = customerSlice.actions;
+export const { setCurrentCustomer, logout } = customerSlice.actions;
 export default customerSlice.reducer;

@@ -128,13 +128,28 @@ function SignUp() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [newCustomerId, setNewCustomerId] = useState(() => {
-    const storedCustomerInfo = sessionStorage.getItem("customerInfo");
-    if (storedCustomerInfo) {
+    try {
+      const storedCustomerInfo = sessionStorage.getItem("customerInfo");
+
+      // If there's no stored info, return null
+      if (!storedCustomerInfo) return null;
+
       const customerInfo = JSON.parse(storedCustomerInfo);
-      return customerInfo.customerId;
+
+      // Check if customerInfo has the customerId
+      if (customerInfo && customerInfo.customerId) {
+        return customerInfo.customerId;
+      }
+
+      // If customerId is not found, return null
+      return null;
+    } catch (error) {
+      console.error("Error parsing customer info from sessionStorage:", error);
+      // Return null in case of any error
+      return null;
     }
-    return null;
   });
+
   const { createNewCustomer } = useCreateCustomer();
   const { data: customerInfo, isLoading: isCustomerInfoLoading } =
     useGetCustomerInfoByCustomerId(newCustomerId);
