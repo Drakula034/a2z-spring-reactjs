@@ -49,7 +49,7 @@ function CustomerProfileModal() {
   };
   return (
     <Container>
-      <Item>
+      <Item onClick={() => {}}>
         <RxAvatar size={24} /> {/* Increase icon size for better visibility */}
         My Profile
       </Item>

@@ -188,7 +188,7 @@ function SignUp() {
     if (customerInfo) {
       dispatch(setCurrentCustomer(customerInfo));
       sessionStorage.setItem("customerInfo", JSON.stringify(customerInfo));
-      console.log("customerInfo", customerInfo);
+      // console.log("customerInfo", customerInfo);
       // Navigate or perform other actions as needed
     }
   }, [customerInfo, dispatch]);

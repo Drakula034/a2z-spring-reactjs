@@ -124,6 +124,7 @@ function LogIn() {
   const handleSubmitForm = async () => {
     const customerInfo = await loginCustomer(logInInfo);
     dispatch(setCurrentCustomer(customerInfo));
+    navigate("/");
     // console.log(customerInfo);
   };
 
