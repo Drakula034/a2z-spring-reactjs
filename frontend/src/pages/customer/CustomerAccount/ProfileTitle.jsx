@@ -5,6 +5,9 @@ import { IoPersonOutline } from "react-icons/io5";
 import { MdOutlinePayment } from "react-icons/md";
 import { PiFolderSimpleUser } from "react-icons/pi";
 import { IoMdLogOut } from "react-icons/io";
+import { useDispatch } from "react-redux";
+import { logout } from "../../../redux/customers/customerSlice";
+import { NavLink, useNavigate } from "react-router-dom";
 const Container = styled.div`
   /* background-color: #f8f9fa; Light background color */
   display: grid;
@@ -97,20 +100,36 @@ const Details = styled.div`
     margin-left: 3rem;
     margin-bottom: 8px;
     cursor: pointer;
-    /* h4 {
+    /* h4,
+    NavLink {
       color: black;
       font-weight: lighter;
       font-size: 1rem;
+
+      &:hover {
+        color: var(--color-blue-600);
+      }
     } */
   }
   .title {
     color: black;
     font-weight: lighter;
     font-size: 1rem;
+    text-decoration: none;
+    &:hover {
+      color: var(--color-blue-600);
+    }
   }
 `;
 
-function ProfileTitle() {
+function ProfileTitle({ customerName }) {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const onLogOutClick = () => {
+    // sessionStorage.removeItem("customerInfo");
+    dispatch(logout());
+    navigate("/");
+  };
   const handleClick = () => {};
   return (
     <Container>
@@ -120,7 +139,7 @@ function ProfileTitle() {
         </IconWrapper>
         <TextWrapper>
           <h3>Hello,</h3>
-          <h2>Abhishek</h2>
+          <h2>{customerName}</h2>
         </TextWrapper>
       </Title>
       <Details>
@@ -139,12 +158,20 @@ function ProfileTitle() {
             </div>
 
             <div className="information">
-              <h4 className="title" onClick={handleClick}>
+              {/* <h4 className="title" onClick={handleClick}>
                 Profile Information
-              </h4>
+              </h4> */}
+              <NavLink className="title" to={"/account/profile"}>
+                Profile Information
+              </NavLink>
             </div>
             <div className="information" style={{ marginBottom: "18px" }}>
-              <h4 className="title">Manage Address</h4>
+              {/* <h4 className="title" onClick={() => navigate("/address")}>
+                Manage Address
+              </h4> */}
+              <NavLink className="title" to="/account/address">
+                Manage Address
+              </NavLink>
             </div>
             {/* <div className="information">
               <h4 className="title">PAN Card Information</h4>
@@ -197,7 +224,11 @@ function ProfileTitle() {
             <div className="logout-title">
               <IoMdLogOut />
 
-              <h3 className="title" style={{ cursor: "pointer" }}>
+              <h3
+                className="title"
+                style={{ cursor: "pointer" }}
+                onClick={() => onLogOutClick()}
+              >
                 Log Out
               </h3>
             </div>

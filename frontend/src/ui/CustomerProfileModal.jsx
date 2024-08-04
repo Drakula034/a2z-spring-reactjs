@@ -49,7 +49,11 @@ function CustomerProfileModal() {
   };
   return (
     <Container>
-      <Item onClick={() => {}}>
+      <Item
+        onClick={() => {
+          navigate("/account");
+        }}
+      >
         <RxAvatar size={24} /> {/* Increase icon size for better visibility */}
         My Profile
       </Item>

@@ -2,6 +2,7 @@ import {
   CREATE_CUSTOMER,
   GET_CUSTOMER_FOR_MAIN_PAGE_BY_ID,
   CUSTOMER_LOGIN,
+  CUSTOMER_INFO_PERSONAL,
 } from "../../../constants/endpoint-constants";
 
 export async function createNewCustomer(customerData) {
@@ -65,6 +66,26 @@ export async function loginCustomer(customerInfo) {
     }
 
     const data = await res.json();
+    return data;
+  } catch (err) {
+    throw new Error(err.message);
+  }
+}
+
+export async function getCustomerInfo(customerId) {
+  const URL = CUSTOMER_INFO_PERSONAL(customerId);
+  try {
+    const res = await fetch(URL, {
+      method: "GET",
+    });
+
+    if (!res.ok) {
+      const errorResponse = await res.json();
+      throw new Error(errorResponse.message || "Error fetching customer info");
+    }
+
+    const data = await res.json();
+
     return data;
   } catch (err) {
     throw new Error(err.message);

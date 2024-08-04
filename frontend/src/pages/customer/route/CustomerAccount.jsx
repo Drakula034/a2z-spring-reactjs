@@ -7,6 +7,7 @@ function CustomerAccount() {
   return (
     <Routes>
       <Route index element={<AccountPage />} />
+      <Route path="/*" element={<AccountPage />} />
       <Route path="/login/*" element={<LoginPage />} />
     </Routes>
   );

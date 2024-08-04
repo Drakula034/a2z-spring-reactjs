@@ -1,6 +1,7 @@
 package com.a2z.customer_service.controller;
 
 import com.a2z.customer_service.mapper.CustomerMapper;
+import com.a2z.customer_service.modal.dto.CustomerInfoResponseDto;
 import com.a2z.customer_service.modal.dto.CustomerRequestDto;
 import com.a2z.customer_service.modal.dto.CustomerRequestDtoForLogin;
 import com.a2z.customer_service.modal.dto.CustomerResponseDtoForMainPage;
@@ -74,5 +75,18 @@ public class CustomerController {
         CustomerResponseDtoForMainPage customerRequestDtoForMainPage = customerMapper.customerMapToCustomerResponseDtoForMainPage(customer,
                 new CustomerResponseDtoForMainPage());
         return ResponseEntity.status(HttpStatus.OK).body(customerRequestDtoForMainPage);
+    }
+
+    @GetMapping("/info/{customerId}")
+    public ResponseEntity<CustomerInfoResponseDto> getCustomerInfo(@PathVariable Integer customerId) {
+        Customer customer = customerService.getCustomerByCustomerId(customerId);
+        if (customer == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+        CustomerInfoResponseDto customerInfoResponseDto = customerMapper.customerMapToCustomerInfoResponseDto(customer,
+                new CustomerInfoResponseDto());
+
+        return ResponseEntity.status(HttpStatus.OK).body(customerInfoResponseDto);
+
     }
 }
