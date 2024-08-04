@@ -24,9 +24,9 @@ function AccountProfile() {
   const location = useLocation();
   // const selector = useSelector();
   const customerId = useSelector(selectCurrentCustomer).customerId;
-  const queryParams = new URLSearchParams(location.search);
+  // const queryParams = new URLSearchParams(location.search);
   const { data: customerPersonalInfo } = useGetCustomerPersonalInfo(customerId);
-  console.log("customerPersonalInfo :", customerPersonalInfo);
+  // console.log("customerPersonalInfo :", customerPersonalInfo);
   return (
     <Container>
       {/* <MainHeader /> */}

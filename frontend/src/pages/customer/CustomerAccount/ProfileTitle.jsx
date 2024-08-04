@@ -186,13 +186,16 @@ function ProfileTitle({ customerName }) {
               <h3>PAYMENTS</h3>
             </div>
             <div className="information">
-              <h4 className="title">Gift Cards</h4>
+              <NavLink className="title">Gift Cards</NavLink>
+              {/* <h4 className="title">Gift Cards</h4> */}
             </div>
             <div className="information">
-              <h4 className="title">Saved UPI</h4>
+              <NavLink className="title">Saved UPI</NavLink>
+              {/* <h4 className="title">Saved UPI</h4> */}
             </div>
             <div className="information">
-              <h4 className="title">Cards</h4>
+              <NavLink className="title">Cards</NavLink>
+              {/* <h4 className="title">Cards</h4> */}
             </div>
           </div>
           <div className="border"></div>
@@ -205,16 +208,20 @@ function ProfileTitle({ customerName }) {
               <h3>MY STUFF</h3>
             </div>
             <div className="information">
-              <h4 className="title">My Coupans</h4>
+              <NavLink className="title">My Coupans</NavLink>
+              {/* <h4 className="title">My Coupans</h4> */}
             </div>
             <div className="information">
-              <h4 className="title">My Review & Ratings</h4>
+              <NavLink className="title">My Review & Ratings</NavLink>
+              {/* <h4 className="title">My Review & Ratings</h4> */}
             </div>
             <div className="information">
-              <h4 className="title">All Notifications</h4>
+              <NavLink className="title">All Notifications</NavLink>
+              {/* <h4 className="title">All Notifications</h4> */}
             </div>
             <div className="information">
-              <h4 className="title">Mt Wishlist</h4>
+              <NavLink className="title">My Wishlist</NavLink>
+              {/* <h4 className="title">Mt Wishlist</h4> */}
             </div>
           </div>
           <div className="border"></div>
