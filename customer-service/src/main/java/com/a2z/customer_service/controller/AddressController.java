@@ -1,18 +1,17 @@
 package com.a2z.customer_service.controller;
 
-import com.a2z.customer_service.modal.dto.AddressDto;
+import com.a2z.customer_service.mapper.AddressMapper;
+import com.a2z.customer_service.modal.dto.address.AddressDto;
+import com.a2z.customer_service.modal.dto.address.AddressRequestDto;
 import com.a2z.customer_service.modal.entity.Address;
-import com.a2z.customer_service.modal.entity.Customer;
 import com.a2z.customer_service.services.AddressService;
 import com.a2z.customer_service.services.CustomerAuthenticationService;
+import com.netflix.discovery.converters.Auto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,6 +22,7 @@ public class AddressController {
     private AddressService addressService;
     @Autowired
     private CustomerAuthenticationService customerAuthenticationService;
+    @Autowired private AddressMapper addressMapper;
 
 
     @GetMapping("/all")
@@ -34,4 +34,14 @@ public class AddressController {
         return ResponseEntity.status(HttpStatus.OK).body(addresses);
 
     }
+
+    @PostMapping("/add")
+    public ResponseEntity<Integer> addAddress(@RequestBody AddressRequestDto addressRequestDto){
+
+        Address address = addressMapper.addressRequestDtoMapToAddress(addressRequestDto, new Address());
+        Integer savedAddressId = addressService.addAddress(address);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedAddressId);
+    }
+
+
 }

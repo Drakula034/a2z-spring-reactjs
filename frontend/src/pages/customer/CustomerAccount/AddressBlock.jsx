@@ -1,6 +1,8 @@
+import { useState } from "react";
+import { useForm } from "react-hook-form";
 import styled from "styled-components";
 
-const AddressContainer = styled.div`
+const AddressContainer = styled.form`
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -14,6 +16,7 @@ const AddressContainer = styled.div`
   .address-line2,
   .city-state,
   .country {
+    background-color: white;
     display: flex;
     gap: 1rem;
     position: relative; /* Ensure the label is positioned relative to the input */
@@ -118,22 +121,64 @@ const AddressContainer = styled.div`
 `;
 
 function AddressBlock({ handleCancelClick, addressBlockTitle }) {
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useForm();
+  const [address, setAddress] = useState({
+    firstName: "",
+    lastName: "",
+    pinCode: "",
+    mobileNumber: "",
+    addressLine1: "",
+    addressLine2: "",
+    city: "",
+    state: "",
+    country: "",
+    isDefault: false,
+  });
+  const onSubmit = (data) => {
+    console.log(data);
+  };
+
   return (
-    <AddressContainer>
+    <AddressContainer onSubmit={handleSubmit(onSubmit)}>
       <h3>{addressBlockTitle}</h3>
       <div className="name">
-        <input type="text" placeholder="First Name" id="firstName" />
-        <input type="text" placeholder="Last Name" id="lastName" />
+        <input
+          type="text"
+          placeholder="First Name"
+          id="firstName"
+          {...register("firstName")}
+        />
+        <input
+          type="text"
+          placeholder="Last Name"
+          id="lastName"
+          {...register("lastName")}
+        />
       </div>
       <div className="code-mobile">
-        <input type="number" placeholder="Pin Code" id="pinCode" />
-        <input type="number" placeholder="Mobile Number" id="mobileNumber" />
+        <input
+          type="number"
+          placeholder="Pin Code"
+          id="pinCode"
+          {...register("postalCode")}
+        />
+        <input
+          type="number"
+          placeholder="Mobile Number"
+          id="mobileNumber"
+          {...register("mobileNumber")}
+        />
       </div>
       <div className="address-line1">
         <input
           type="text"
           placeholder="Flat, House no., Building, Company, Appartment"
           id="addressLine1"
+          {...register("addressLine1")}
         />
       </div>
       <div className="address-line2">
@@ -141,21 +186,43 @@ function AddressBlock({ handleCancelClick, addressBlockTitle }) {
           type="text"
           placeholder="Area, Street, Sector, Village"
           id="addressLine2"
+          {...register("addressLine2")}
         />
       </div>
       <div className="city-state">
-        <input type="text" placeholder="Town/City" id="city" />
-        <input type="text" placeholder="state" id="state" />
+        <input
+          type="text"
+          placeholder="Town/City"
+          id="city"
+          {...register("city")}
+        />
+        <input
+          type="text"
+          placeholder="state"
+          id="state"
+          {...register("state")}
+        />
       </div>
       <div className="country">
-        <input type="text" placeholder="Country" id="country" />
+        <input
+          type="text"
+          placeholder="Country"
+          id="country"
+          {...register("country")}
+        />
       </div>
       <div className="default-address">
-        <input type="checkbox" id="defaultAddress" />
+        <input
+          type="checkbox"
+          id="defaultAddress"
+          {...register("defaultAddress")}
+        />
         <label htmlFor="defaultAddress">Make this my default address</label>
       </div>
       <div className="button">
-        <button className="save">Save Address</button>
+        <button className="save" type="submit">
+          Save Address
+        </button>
         <button className="cancel" onClick={handleCancelClick}>
           Cancel
         </button>

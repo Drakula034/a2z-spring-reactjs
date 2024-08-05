@@ -1,10 +1,11 @@
 package com.a2z.customer_service.services.impl;
 
 import com.a2z.customer_service.mapper.AddressMapper;
-import com.a2z.customer_service.modal.dto.AddressDto;
+import com.a2z.customer_service.modal.dto.address.AddressDto;
 import com.a2z.customer_service.modal.entity.Address;
 import com.a2z.customer_service.modal.entity.Customer;
 import com.a2z.customer_service.repository.AddressRepository;
+import com.a2z.customer_service.repository.CustomerRepository;
 import com.a2z.customer_service.services.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,8 @@ public class AddressServiceImpl implements AddressService {
     private AddressRepository addressRepository;
     @Autowired
     private AddressMapper addressMapper;
+    @Autowired
+    private CustomerRepository customerRepository;
 
     public List<AddressDto> getAllAddress(String customerId) {
         Customer customer = new Customer(Integer.parseInt(customerId));
@@ -45,5 +48,11 @@ public class AddressServiceImpl implements AddressService {
     @Override
     public boolean setDefaultAddress(Integer defaultAddressId, Integer customerId) {
         return false;
+    }
+
+    @Override
+    public Integer addAddress(Address address) {
+        Address savedAddress = addressRepository.save(address);
+        return savedAddress.getId();
     }
 }

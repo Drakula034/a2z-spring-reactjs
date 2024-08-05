@@ -1,4 +1,4 @@
-package com.a2z.customer_service.modal.dto;
+package com.a2z.customer_service.modal.dto.address;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
