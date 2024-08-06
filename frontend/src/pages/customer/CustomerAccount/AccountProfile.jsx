@@ -45,7 +45,10 @@ function AccountProfile() {
               <ProfileInformation customerPersonalInfo={customerPersonalInfo} />
             }
           />
-          <Route path="address" element={<AddressInformation />} />
+          <Route
+            path="address"
+            element={<AddressInformation customerId={customerId} />}
+          />
           <Route path="*" element={<Navigate to="/account/profile" />} />
         </Routes>
       </div>

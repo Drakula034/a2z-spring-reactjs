@@ -1,6 +1,6 @@
 package com.a2z.customer_service.mapper;
 
-import com.a2z.customer_service.modal.dto.address.AddressDto;
+import com.a2z.customer_service.modal.dto.address.AddressResponseDto;
 import com.a2z.customer_service.modal.dto.address.AddressRequestDto;
 import com.a2z.customer_service.modal.entity.Address;
 import com.a2z.customer_service.modal.entity.Customer;
@@ -8,14 +8,13 @@ import com.a2z.customer_service.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.Optional;
-
 @Component
 public class AddressMapper {
 
     @Autowired private CustomerRepository customerRepository;
 
-    public AddressDto addressmapToAddressDto(Address address, AddressDto addressDto){
+    public AddressResponseDto addressmapToAddressDto(Address address, AddressResponseDto addressDto){
+        addressDto.setAddressId(address.getId());
         addressDto.setAddressLine1(address.getAddressLine1());
         addressDto.setAddressLine2(address.getAddressLine2());
         addressDto.setCity(address.getCity());

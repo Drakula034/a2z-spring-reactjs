@@ -120,7 +120,11 @@ const AddressContainer = styled.form`
   }
 `;
 
-function AddressBlock({ handleCancelClick, addressBlockTitle }) {
+function AddressBlock({
+  handleCancelClick,
+  addressBlockTitle,
+  handleAddressSubmit,
+}) {
   const {
     handleSubmit,
     register,
@@ -139,7 +143,7 @@ function AddressBlock({ handleCancelClick, addressBlockTitle }) {
     isDefault: false,
   });
   const onSubmit = (data) => {
-    console.log(data);
+    handleAddressSubmit(data);
   };
 
   return (

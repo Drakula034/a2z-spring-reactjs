@@ -47,9 +47,8 @@ public class CartServiceImpl implements CartService {
     public List<CartItemDto> getCartItemsOfCustomer(String customerId) {
 
         List<CartItem> carts = cartItemRepository.findByCustomerId(customerId);
-        List<CartItemDto> cartsDto = carts.stream().map(cartItem -> CartItemMapper.cartItemMapToCartItemDto(cartItem, new CartItemDto())).toList();
 
-        return cartsDto;
+        return carts.stream().map(cartItem -> CartItemMapper.cartItemMapToCartItemDto(cartItem, new CartItemDto())).toList();
 
     }
 

@@ -1,12 +1,11 @@
 package com.a2z.customer_service.controller;
 
 import com.a2z.customer_service.mapper.AddressMapper;
-import com.a2z.customer_service.modal.dto.address.AddressDto;
+import com.a2z.customer_service.modal.dto.address.AddressResponseDto;
 import com.a2z.customer_service.modal.dto.address.AddressRequestDto;
 import com.a2z.customer_service.modal.entity.Address;
 import com.a2z.customer_service.services.AddressService;
 import com.a2z.customer_service.services.CustomerAuthenticationService;
-import com.netflix.discovery.converters.Auto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,10 +25,10 @@ public class AddressController {
 
 
     @GetMapping("/all")
-    public ResponseEntity<List<AddressDto>> getAllAddress(@RequestParam String customerId){
+    public ResponseEntity<List<AddressResponseDto>> getAllAddress(@RequestParam String customerId){
 //        Customer customer = new Customer(Integer.parseInt(customerId));
 //        boolean isAuthenticated = customerAuthenticationService.isAuthenticated(customer);
-        List<AddressDto>addresses = addressService.getAllAddress(customerId);
+        List<AddressResponseDto>addresses = addressService.getAllAddress(customerId);
 
         return ResponseEntity.status(HttpStatus.OK).body(addresses);
 

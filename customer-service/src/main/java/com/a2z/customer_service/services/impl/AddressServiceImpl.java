@@ -1,7 +1,7 @@
 package com.a2z.customer_service.services.impl;
 
 import com.a2z.customer_service.mapper.AddressMapper;
-import com.a2z.customer_service.modal.dto.address.AddressDto;
+import com.a2z.customer_service.modal.dto.address.AddressResponseDto;
 import com.a2z.customer_service.modal.entity.Address;
 import com.a2z.customer_service.modal.entity.Customer;
 import com.a2z.customer_service.repository.AddressRepository;
@@ -22,27 +22,27 @@ public class AddressServiceImpl implements AddressService {
     @Autowired
     private CustomerRepository customerRepository;
 
-    public List<AddressDto> getAllAddress(String customerId) {
+    public List<AddressResponseDto> getAllAddress(String customerId) {
         Customer customer = new Customer(Integer.parseInt(customerId));
         List<Address> addresses = addressRepository.findByCustomer(customer);
-        List<AddressDto> addressDtoList = new ArrayList<AddressDto>();
+        List<AddressResponseDto> addressDtoList = new ArrayList<AddressResponseDto>();
         addresses.forEach(address -> {
-            addressDtoList.add(addressMapper.addressmapToAddressDto(address, new AddressDto()));
+            addressDtoList.add(addressMapper.addressmapToAddressDto(address, new AddressResponseDto()));
 
         });
         return addressDtoList;
     }
 
     @Override
-    public AddressDto getDefaultAddress(String customerId) {
+    public AddressResponseDto getDefaultAddress(String customerId) {
         Address address = addressRepository.findDefaultByCustomer(Integer.parseInt(customerId));
-        return addressMapper.addressmapToAddressDto(address, new AddressDto());
+        return addressMapper.addressmapToAddressDto(address, new AddressResponseDto());
     }
 
     @Override
-    public AddressDto getAddress(Integer addressId, Integer customerId) {
+    public AddressResponseDto getAddress(Integer addressId, Integer customerId) {
         Address address = addressRepository.findByAddressIdAndCustomerId(addressId, customerId);
-        return addressMapper.addressmapToAddressDto(address, new AddressDto());
+        return addressMapper.addressmapToAddressDto(address, new AddressResponseDto());
     }
 
     @Override

@@ -89,4 +89,14 @@ public class CustomerController {
         return ResponseEntity.status(HttpStatus.OK).body(customerInfoResponseDto);
 
     }
+
+    @GetMapping("exists/{customerId}")
+    public ResponseEntity<Boolean> isCustomerExists(@PathVariable Integer customerId) {
+        Customer customer = customerService.getCustomerByCustomerId(customerId);
+        if(customer.getId() > 0){
+            return ResponseEntity.status(HttpStatus.OK).body(true);
+        }
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(false);
+    }
 }

@@ -2,6 +2,9 @@ import styled from "styled-components";
 import AddressBlock from "./AddressBlock";
 import { FaPlus } from "react-icons/fa";
 import { useState } from "react";
+import useAddAddress from "../Address/useAddAddress";
+import useGetAllAddress from "../Address/useGetAllAddress";
+import AddressUnit from "./AddressUnit";
 const Container = styled.div`
   background-color: white;
   padding: 20px;
@@ -26,7 +29,11 @@ const AddressSection = styled.div`
     color: var(--color-blue-500);
   }
 `;
-function AddressInformation() {
+function AddressInformation({ customerId }) {
+  const { addAddress } = useAddAddress();
+  console.log("customerId: ", customerId);
+  const { data: addressLists } = useGetAllAddress(customerId);
+  console.log("address data: ", addressLists);
   const [showAddressBlock, setShowAddressBlock] = useState(false);
 
   const handleAddressSectionClick = () => {
@@ -34,6 +41,10 @@ function AddressInformation() {
   };
   const handleCancelClick = () => {
     setShowAddressBlock(false);
+  };
+  const handleAddressSubmit = (data) => {
+    console.log("address data: ", data);
+    // addAddress(data);
   };
 
   return (
@@ -51,8 +62,14 @@ function AddressInformation() {
         <AddressBlock
           handleCancelClick={handleCancelClick}
           addressBlockTitle="Add New Address"
+          handleAddressSubmit={handleAddressSubmit}
         />
       )}
+
+      {addressLists?.length > 0 &&
+        addressLists?.map((address, index) => {
+          return <AddressUnit key={index} address={address} />;
+        })}
     </Container>
   );
 }
