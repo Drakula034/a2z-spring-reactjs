@@ -28,19 +28,19 @@ public class CartServiceImpl implements CartService {
 
     public Integer addProduct(String productId, String customerId, int quantity) {
         CartItem cartItem = cartItemRepository.findByCustomerIdAndProductId(customerId, productId);
+
         if (cartItem != null) {
+            // Product already in cart, increase quantity
             cartItem.setQuantity(cartItem.getQuantity() + quantity);
         } else {
+            // Product not in cart, create new CartItem
             cartItem = new CartItem();
             cartItem.setCustomerId(customerId);
             cartItem.setProductId(productId);
             cartItem.setQuantity(quantity);
-
-
         }
-//        ResponseEntity<ProductRequestDto> product = productServiceClient.getProductByIdForOrderService(productId);
-//        System.out.println(product.getBody());
 
+        // Save the cart item and return the updated quantity
         return cartItemRepository.save(cartItem).getQuantity();
     }
 

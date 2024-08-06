@@ -23,7 +23,6 @@ public class CartController {
     CustomerServiceClient customerServiceClient;
     @Autowired
     CartService cartService;
-//    @Autowired CustomerRepository customerRepository;
 
 //    @PostMapping("/add/{productId}/{quantity}")
 //    public ResponseEntity<String> addProductToCart(@PathVariable(name = "productId") String productId,
@@ -50,6 +49,37 @@ public class CartController {
 //
 //        return ResponseEntity.status(HttpStatus.CREATED).body(message);
 //    }
+
+    @PostMapping("/add/{customerId}/{productId}/{quantity}")
+    public ResponseEntity<String> addProductToCart(@PathVariable(name = "customerId") Integer customerId,
+                                                   @PathVariable(name = "productId") String productId,
+                                                   @PathVariable(name = "quantity") Integer quantity) {
+        try {
+            // Validate quantity
+            if (quantity <= 0) {
+                throw new IllegalArgumentException("Quantity must be greater than zero");
+            }
+
+            // Validate customerId
+            if (!getCustomerAuthentication(customerId)) {
+                throw new CustomerNotFoundException("Customer not found");
+            }
+
+            Integer updatedQuantity = cartService.addProduct(productId, customerId.toString(), quantity);
+            String message = updatedQuantity + " items of this product were added to cart";
+            return ResponseEntity.status(HttpStatus.CREATED).body(message);
+
+        } catch (CustomerNotFoundException ex) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ex.getMessage());
+        } catch (IllegalArgumentException ex) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to add product to cart: " + ex.getMessage());
+        }
+    }
+
+
+
 
     @RequestMapping("/get/{customerId}")
     public ResponseEntity<List<CartItemDto>> getCartItems(@PathVariable Integer customerId) throws CustomerNotFoundException {
