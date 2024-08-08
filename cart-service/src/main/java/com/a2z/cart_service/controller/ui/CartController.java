@@ -24,32 +24,6 @@ public class CartController {
     @Autowired
     CartService cartService;
 
-//    @PostMapping("/add/{productId}/{quantity}")
-//    public ResponseEntity<String> addProductToCart(@PathVariable(name = "productId") String productId,
-//                                                   @PathVariable(name = "quantity") Integer quantity) {
-//        String message = "";
-//        try {
-//            // Validate quantity
-//            if (quantity <= 0) {
-//                throw new IllegalArgumentException("Quantity must be greater than zero");
-//            }
-//            String customerId = "3";
-//            customerId = getCustomerAuthentication(customerId) ? "3" : "";
-//            Integer updatedQuantity = cartService.addProduct(productId, customerId, quantity);
-//            message = updatedQuantity + "items of this product were added to cart";
-//
-//        } catch (CustomerNotFoundException ex) {
-//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ex.getMessage());
-//        } catch (IllegalArgumentException ex) {
-//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
-//        } catch (Exception ex) {
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to add product to cart: " + ex.getMessage());
-//        }
-//
-//
-//        return ResponseEntity.status(HttpStatus.CREATED).body(message);
-//    }
-
     @PostMapping("/add/{customerId}/{productId}/{quantity}")
     public ResponseEntity<String> addProductToCart(@PathVariable(name = "customerId") Integer customerId,
                                                    @PathVariable(name = "productId") String productId,

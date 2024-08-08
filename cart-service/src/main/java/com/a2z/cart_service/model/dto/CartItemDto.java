@@ -7,6 +7,7 @@ import lombok.Setter;
 @Setter
 public class CartItemDto {
 
+    private Integer cartId;
     private String customerId;
     //    for product info
     private String productId;

@@ -19,3 +19,5 @@ export const CUSTOMER_SERVICE_BASE_FOR_CUSTOMER_INFO =
 
 export const CUSTOMER_SERVICE_BASE_FOR_ADDRESS =
   "http://localhost:8000/api/customer/address";
+
+export const CART_SERVICE_BASE_URL = "http://localhost:8000/api/ui/carts";

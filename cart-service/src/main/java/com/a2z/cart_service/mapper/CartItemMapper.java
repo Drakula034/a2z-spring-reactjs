@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Configuration;
 public class CartItemMapper {
 
     public static CartItemDto cartItemMapToCartItemDto(CartItem cartItem, CartItemDto cartItemDto){
+        cartItemDto.setCartId(cartItem.getId());
         cartItemDto.setQuantity(cartItem.getQuantity());
         cartItemDto.setProductId(cartItem.getProductId());
         cartItemDto.setCustomerId(cartItem.getCustomerId());

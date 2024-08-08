@@ -45,7 +45,7 @@ const AddToCartButton = styled.button`
   }
 `;
 
-function ProductOrderContainer({ inStock }) {
+function ProductOrderContainer({ inStock, onSubmit }) {
   const [quantity, setQuantity] = useState(1);
 
   const handleIncrease = () => {
@@ -73,7 +73,7 @@ function ProductOrderContainer({ inStock }) {
       <AddToCartButton
         inStock={inStock}
         disabled={!inStock}
-        onClick={() => console.log(quantity)}
+        onClick={() => onSubmit(quantity)}
       >
         Add to Cart
       </AddToCartButton>

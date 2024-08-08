@@ -1,39 +1,48 @@
 import { IoCartOutline } from "react-icons/io5";
 import styled from "styled-components";
+
 const StyledContainer = styled.div`
   display: flex;
   align-items: center;
-  /* background-color: #007bff; Adjust as needed */
+  position: relative; /* Required for positioning the quantity */
   color: var(--color-grey-700);
   border: none;
-  padding: 0.5rem 0.5rem;
+  padding: 0.5rem;
   border-radius: 4px;
   font-size: 1.2rem;
   cursor: pointer;
   transition: background-color 0.3s;
 
   &:hover {
-    /* background-color: #0056b3; Adjust as needed */
     border: 1px solid blue;
-  }
-
-  span {
-    display: flex;
-    align-items: center;
-    margin-right: 0.5rem; /* Adjust as needed */
   }
 
   svg {
     width: 2rem;
     height: 2rem;
   }
+
+  .quantity {
+    position: absolute;
+    left: 1.2rem; /* Adjust as needed */
+    top: -0.1rem; /* Adjust as needed */
+    background: red; /* Background color of the badge */
+    color: white; /* Text color */
+    border-radius: 50%;
+    width: 1.2rem; /* Size of the badge */
+    height: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem; /* Font size of the quantity */
+  }
 `;
-function CartButton() {
+
+function CartButton({ quantity }) {
   return (
     <StyledContainer>
-      <span>
-        <IoCartOutline />
-      </span>
+      <IoCartOutline />
+      {quantity > 0 && <div className="quantity">{quantity}</div>}
       Cart
     </StyledContainer>
   );

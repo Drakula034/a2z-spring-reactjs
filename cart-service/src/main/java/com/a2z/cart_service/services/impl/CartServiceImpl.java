@@ -27,6 +27,26 @@ public class CartServiceImpl implements CartService {
     private CartItemMapper cartItemMapper;
 
     public Integer addProduct(String productId, String customerId, int quantity) {
+//        CartItem cart = cartItemRepository.findCartByCustomerId(customerId);
+//        if (cart == null) {
+//            cart = new CartItem();
+//            cart.setCustomerId(customerId);
+//            cartItemRepository.save(cart);
+//        }
+//
+//        CartItem cartItem = cartItemRepository.findByCartItemIdAndProductId(cart, productId);
+//        if (cartItem != null) {
+//            cartItem.setQuantity(cartItem.getQuantity() + quantity);
+//        } else {
+//            cartItem = new CartItem();
+//            cartItem.setProductId(productId);
+//            cartItem.setQuantity(quantity);
+//            cartItem.setCart(cart);
+//        }
+//
+//        cartItemRepository.save(cartItem);
+//        return cartItem.getQuantity();
+
         CartItem cartItem = cartItemRepository.findByCustomerIdAndProductId(customerId, productId);
 
         if (cartItem != null) {

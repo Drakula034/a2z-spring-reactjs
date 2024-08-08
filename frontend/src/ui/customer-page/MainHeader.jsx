@@ -3,11 +3,14 @@ import LoginButton from "../LoginButton";
 import CartButton from "../CartButton";
 import { CiSearch } from "react-icons/ci";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SignInModal from "../SignInModal"; // Import the SigninModal component
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { selectCurrentCustomer } from "../../redux/customers/selectors";
 import CustomerProfileModal from "../CustomerProfileModal";
+import useGetItemsFromCartItems from "../../pages/customer/carts/useGetItemsFromCartItems";
+import { totalCartItemQuantity } from "../../redux/carts/selectors";
+import { SET_CART_STATE } from "../../redux/carts/cartSlice";
 
 const StyledContainer = styled.div`
   position: ${({ headerPosition }) => headerPosition || "fixed"};
@@ -85,7 +88,30 @@ const DropdownContainer = styled.div`
 function MainHeader({ headerPosition }) {
   const navigate = useNavigate();
   const currentCustomer = useSelector(selectCurrentCustomer);
-  console.log("currentCustomer", currentCustomer);
+  const customerId = currentCustomer?.customerId;
+  const { data } = useGetItemsFromCartItems(customerId);
+  sessionStorage.setItem("cartState", JSON.stringify(data));
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (data) {
+      sessionStorage.setItem("cartState", JSON.stringify(data));
+      dispatch(
+        SET_CART_STATE({
+          cartItems: data,
+          totalCart: data.reduce((sum, item) => sum + item.quantity, 0),
+        })
+      );
+    }
+  }, [data, dispatch]);
+  // const cartState = useSelector((state) => state.cart);
+  // console.log(cartState); // Should print the cart state
+
+  const totalCartItem = useSelector(totalCartItemQuantity);
+  // console.log("Total Cart Item Quantity: " + totalCartItem); // Should print the total cart quantity
+
+  // console.log("currentCustomer", currentCustomer);
+  // console.log("cartData", data);
   return (
     <StyledContainer headerPosition={headerPosition}>
       <StyledHeader>
@@ -108,7 +134,7 @@ function MainHeader({ headerPosition }) {
             )}
           </DropdownContainer>
         </LoginButtonContainer>
-        <CartButton />
+        <CartButton quantity={totalCartItem} />
       </StyledHeader>
     </StyledContainer>
   );

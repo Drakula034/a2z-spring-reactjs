@@ -8,6 +8,7 @@ import {
   CUSTOMER_SERVICE_BASE_FOR_CUSTOMER,
   CUSTOMER_SERVICE_BASE_FOR_CUSTOMER_INFO,
   CUSTOMER_SERVICE_BASE_FOR_ADDRESS,
+  CART_SERVICE_BASE_URL,
 } from "./url-constants";
 // user-services
 
@@ -125,3 +126,9 @@ export const CUSTOMER_INFO_PERSONAL = (customerId) =>
 export const CREATE_ADDRESS = `${CUSTOMER_SERVICE_BASE_FOR_ADDRESS}/add`;
 export const GET_ALL_ADDRESS_OF_CUSTOMER = (customerId) =>
   `${CUSTOMER_SERVICE_BASE_FOR_ADDRESS}/all?customerId=${customerId}`;
+
+export const ADD_ITEM_TO_CART = (customerId, productId, quantity) =>
+  `${CART_SERVICE_BASE_URL}/${customerId}/${productId}/${quantity}`;
+
+export const GET_CART_ITEMS = (customerId) =>
+  `${CART_SERVICE_BASE_URL}/get/${customerId}`;

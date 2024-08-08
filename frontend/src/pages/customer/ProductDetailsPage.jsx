@@ -5,6 +5,9 @@ import ProductImagesContainer from "../../ui/customer-page/ProductImagesContaine
 import ProductDescriptionContainer from "../../ui/customer-page/ProductDescriptionContainer";
 import ProductOrderContainer from "../../ui/customer-page/ProductOrderContainer";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import customerSlice from "../../redux/customers/customerSlice";
+import { selectCurrentCustomer } from "../../redux/customers/selectors";
 
 // Container for the entire page
 const Container = styled.div`
@@ -33,6 +36,8 @@ const DescriptionContainer = styled.div`
 `;
 
 function ProductDetailsPage({ productId }) {
+  // const selector = useSelector();
+  const customerId = useSelector(selectCurrentCustomer)?.customerId;
   const {
     data: productsData,
     isLoading,
@@ -51,6 +56,7 @@ function ProductDetailsPage({ productId }) {
         productListImageDto,
         productListDetailsDto,
         productOverViewDto,
+        productId,
       } = productsData;
       setProductDescriptionDto(productDescriptionDto);
       setProductListImageDto(productListImageDto);
@@ -60,6 +66,12 @@ function ProductDetailsPage({ productId }) {
   }, [productsData]);
 
   const inStock = productOverViewData?.inStock || false;
+  // console.log("productsData", productId);
+  // console.log("customerId", customerId);
+
+  const handleProductSubmitToCart = (data) => {
+    // console.log("cart", data);
+  };
 
   return (
     <Container>
@@ -70,7 +82,10 @@ function ProductDetailsPage({ productId }) {
           productOverViewData={productOverViewData}
           productListDetailsDto={productListDetailsDto}
         />
-        <ProductOrderContainer inStock={inStock} />
+        <ProductOrderContainer
+          inStock={inStock}
+          onSubmit={handleProductSubmitToCart}
+        />
       </StyledFirstHalf>
       <DescriptionContainer>
         <ProductDescription

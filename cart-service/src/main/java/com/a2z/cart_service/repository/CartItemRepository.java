@@ -14,8 +14,14 @@ public interface CartItemRepository extends JpaRepository<CartItem, Integer> {
 
     List<CartItem> findByCustomerId(String customerId);
 
+
     public CartItem findByCustomerIdAndProductId(String customerId, String productId);
     @Modifying
     @Query("update CartItem c set c.quantity= ?3 where c.customerId = ?1 and c.productId = ?2")
     void updateQuantity(String customerId, String productId, Integer quantity);
+
+//    CartItem findByCartItemIdAndProductId(CartItem cart, String productId);
+
+    @Query("select c from CartItem c where c.customerId = ?1")
+    CartItem findCartByCustomerId(String customerId);
 }
