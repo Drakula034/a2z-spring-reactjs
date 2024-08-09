@@ -31,7 +31,7 @@ const Container = styled.div`
 
 const AddToCartButton = styled.button`
   background-color: ${(props) =>
-    props.inStock ? "var(--color-blue-400);" : "var(--color-grey-400)"};
+    props.inStock ? "var(--color-blue-400)" : "var(--color-grey-400)"};
   color: #fff;
   padding: 0.5rem 1rem;
   border: none;

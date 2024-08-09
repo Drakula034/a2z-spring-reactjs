@@ -24,8 +24,8 @@ const Container = styled.div`
 function ProductContainerInMainPage({ product }) {
   const navigate = useNavigate();
   const handleClick = (e) => {
-    console.log(product.id);
-    navigate(`/products?productId=${product.id}`, { replace: true });
+    // console.log(product.id);
+    navigate(`/products?productId=${product?.id}`, { replace: true });
   };
   return (
     <Container>

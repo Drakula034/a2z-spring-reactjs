@@ -128,7 +128,7 @@ export const GET_ALL_ADDRESS_OF_CUSTOMER = (customerId) =>
   `${CUSTOMER_SERVICE_BASE_FOR_ADDRESS}/all?customerId=${customerId}`;
 
 export const ADD_ITEM_TO_CART = (customerId, productId, quantity) =>
-  `${CART_SERVICE_BASE_URL}/${customerId}/${productId}/${quantity}`;
+  `${CART_SERVICE_BASE_URL}/add/${customerId}/${productId}/${quantity}`;
 
 export const GET_CART_ITEMS = (customerId) =>
   `${CART_SERVICE_BASE_URL}/get/${customerId}`;

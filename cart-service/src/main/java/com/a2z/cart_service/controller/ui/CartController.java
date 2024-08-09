@@ -25,9 +25,13 @@ public class CartController {
     CartService cartService;
 
     @PostMapping("/add/{customerId}/{productId}/{quantity}")
-    public ResponseEntity<String> addProductToCart(@PathVariable(name = "customerId") Integer customerId,
-                                                   @PathVariable(name = "productId") String productId,
-                                                   @PathVariable(name = "quantity") Integer quantity) {
+    public ResponseEntity<String> addProductToCart(
+            @PathVariable(name = "customerId") Integer customerId,
+            @PathVariable(name = "productId") String productId,
+            @PathVariable(name = "quantity") Integer quantity) {
+
+        System.out.println("API is working");
+
         try {
             // Validate quantity
             if (quantity <= 0) {
@@ -40,7 +44,8 @@ public class CartController {
             }
 
             Integer updatedQuantity = cartService.addProduct(productId, customerId.toString(), quantity);
-            String message = updatedQuantity + " items of this product were added to cart";
+            String message = updatedQuantity + " items of this product were added to the cart";
+            System.out.println(message);
             return ResponseEntity.status(HttpStatus.CREATED).body(message);
 
         } catch (CustomerNotFoundException ex) {
@@ -51,6 +56,7 @@ public class CartController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to add product to cart: " + ex.getMessage());
         }
     }
+
 
 
 

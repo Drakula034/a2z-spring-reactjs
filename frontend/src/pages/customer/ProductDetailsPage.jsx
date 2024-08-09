@@ -5,9 +5,10 @@ import ProductImagesContainer from "../../ui/customer-page/ProductImagesContaine
 import ProductDescriptionContainer from "../../ui/customer-page/ProductDescriptionContainer";
 import ProductOrderContainer from "../../ui/customer-page/ProductOrderContainer";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import customerSlice from "../../redux/customers/customerSlice";
 import { selectCurrentCustomer } from "../../redux/customers/selectors";
+import useAddProductToCart from "./carts/useAddProductToCart";
 
 // Container for the entire page
 const Container = styled.div`
@@ -37,12 +38,14 @@ const DescriptionContainer = styled.div`
 
 function ProductDetailsPage({ productId }) {
   // const selector = useSelector();
+  const dispatch = useDispatch();
   const customerId = useSelector(selectCurrentCustomer)?.customerId;
   const {
     data: productsData,
     isLoading,
     error,
   } = useGetProductByProductId(productId);
+  const addProductToCart = useAddProductToCart();
 
   const [productDescriptionDto, setProductDescriptionDto] = useState(null);
   const [productListImageDto, setProductListImageDto] = useState(null);
@@ -69,8 +72,15 @@ function ProductDetailsPage({ productId }) {
   // console.log("productsData", productId);
   // console.log("customerId", customerId);
 
-  const handleProductSubmitToCart = (data) => {
-    // console.log("cart", data);
+  const handleProductSubmitToCart = async (data) => {
+    console.log("cart", data);
+    try {
+      await addProductToCart({ customerId, productId, quantity: data });
+      // Additional logic on successful addition, like showing a success message or updating the cart state.
+    } catch (error) {
+      // Handle error, like showing an error message
+      console.error("Failed to add product to cart:", error);
+    }
   };
 
   return (

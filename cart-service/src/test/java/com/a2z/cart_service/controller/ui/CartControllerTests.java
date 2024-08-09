@@ -39,7 +39,7 @@ public class CartControllerTests {
 
         when(cartService.addProduct(productId, customerId, quantity)).thenReturn(updatedQuantity);
 
-        ResponseEntity<String> response = cartController.addProductToCart(productId, quantity);
+        ResponseEntity<String> response = cartController.addProductToCart(Integer.valueOf(customerId),productId, quantity);
 
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
         assertEquals("2items of this product were added to cart", response.getBody());
@@ -76,9 +76,10 @@ public class CartControllerTests {
         String productId = "2";
         Integer quantity = -1; // Invalid quantity
         String expectedErrorMessage = "Quantity must be greater than zero";
+        String customerId = "1";
 
         // Call controller method under test
-        ResponseEntity<String> response = cartController.addProductToCart(productId, quantity);
+        ResponseEntity<String> response = cartController.addProductToCart(Integer.valueOf(customerId), productId, quantity);
 
         // Assert the response status code
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
