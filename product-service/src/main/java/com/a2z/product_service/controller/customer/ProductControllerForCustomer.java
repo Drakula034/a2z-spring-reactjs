@@ -2,6 +2,7 @@ package com.a2z.product_service.controller.customer;
 
 import com.a2z.product_service.mapper.customer.ProductMapperForCustomer;
 import com.a2z.product_service.model.dto.ProductResponseDtoForCustomer;
+import com.a2z.product_service.model.dto.ProductResponseForCart;
 import com.a2z.product_service.model.dto.ProductResponseForCustomerHomePageDto;
 import com.a2z.product_service.model.entity.Product;
 import com.a2z.product_service.repository.CategoryRepository;
@@ -81,6 +82,19 @@ public class ProductControllerForCustomer {
 
 
         return ResponseEntity.status(HttpStatus.OK).body(productResponseDtoForCustomer);
+
+    }
+
+    @GetMapping("/{productId}")
+    public ResponseEntity<ProductResponseForCart> getProductInfoForCart(@PathVariable Integer productId){
+
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new NotFoundException("Product Id is not found"));
+
+        ProductResponseForCart productResponseForCart = productMapperForCustomer
+                .productMapToProductResponseForCart(product, new ProductResponseForCart());
+
+        return ResponseEntity.status(HttpStatus.OK).body(productResponseForCart);
 
     }
 }

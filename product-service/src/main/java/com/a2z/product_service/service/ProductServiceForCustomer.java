@@ -10,4 +10,5 @@ public interface ProductServiceForCustomer {
     List<Product> getProductForCustomerHomePage(String categoryName, int limit);
     List<Product> getProductForCategoryPage(String categoryName, int limit);
     Product getProductById(Integer productId);
+    Product getProductInfoForCart(Integer productId);
 }

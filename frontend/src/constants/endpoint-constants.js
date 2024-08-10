@@ -132,3 +132,6 @@ export const ADD_ITEM_TO_CART = (customerId, productId, quantity) =>
 
 export const GET_CART_ITEMS = (customerId) =>
   `${CART_SERVICE_BASE_URL}/get/${customerId}`;
+
+export const GET_PRODUCT_INFO_FOR_CART = (productId) =>
+  `${PRODUCT_SERVICE_BASE_FOR_CUSTOMER}/${productId}`;

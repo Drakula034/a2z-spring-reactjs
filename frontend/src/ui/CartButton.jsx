@@ -1,4 +1,5 @@
 import { IoCartOutline } from "react-icons/io5";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const StyledContainer = styled.div`
@@ -39,8 +40,9 @@ const StyledContainer = styled.div`
 `;
 
 function CartButton({ quantity }) {
+  const navigate = useNavigate();
   return (
-    <StyledContainer>
+    <StyledContainer onClick={() => navigate("/viewcart")}>
       <IoCartOutline />
       {quantity > 0 && <div className="quantity">{quantity}</div>}
       Cart

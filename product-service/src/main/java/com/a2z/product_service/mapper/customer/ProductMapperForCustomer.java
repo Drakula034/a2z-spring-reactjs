@@ -3,6 +3,7 @@ package com.a2z.product_service.mapper.customer;
 import com.a2z.product_service.mapper.ProductMapper;
 import com.a2z.product_service.model.dto.ProductOverViewDto;
 import com.a2z.product_service.model.dto.ProductResponseDtoForCustomer;
+import com.a2z.product_service.model.dto.ProductResponseForCart;
 import com.a2z.product_service.model.dto.ProductResponseForCustomerHomePageDto;
 import com.a2z.product_service.model.entity.Product;
 import org.springframework.stereotype.Component;
@@ -53,5 +54,14 @@ public class ProductMapperForCustomer {
 
 
         return productResponseDtoForCustomer;
+    }
+
+    public ProductResponseForCart productMapToProductResponseForCart(Product product, ProductResponseForCart productResponseForCart){
+        productResponseForCart.setProductName(product.getName());
+        productResponseForCart.setPrice(product.getPrice());
+        productResponseForCart.setDiscountPercent(product.getDiscountPercent());
+        productResponseForCart.setMainImage(product.getMainImage());
+
+        return productResponseForCart;
     }
 }

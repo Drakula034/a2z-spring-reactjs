@@ -1,6 +1,7 @@
 import {
   ADD_ITEM_TO_CART,
   GET_CART_ITEMS,
+  GET_PRODUCT_INFO_FOR_CART,
 } from "../../../constants/endpoint-constants";
 
 // export async function addItemToCart(customerId, productId, quantity) {
@@ -82,6 +83,27 @@ export async function getCartItems(customerId) {
     const res = await fetch(URL, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
+    });
+
+    if (!res.ok) {
+      const errorData = await res.json();
+      throw new Error(errorData || "Got an error");
+    }
+
+    const data = await res.json();
+    return data;
+  } catch (err) {
+    throw new Error(err.message);
+  }
+}
+
+export async function getProductInfoForCart(productId) {
+  productId = parseInt(productId, 10);
+  const URL = GET_PRODUCT_INFO_FOR_CART(productId);
+
+  try {
+    const res = await fetch(URL, {
+      method: "GET",
     });
 
     if (!res.ok) {

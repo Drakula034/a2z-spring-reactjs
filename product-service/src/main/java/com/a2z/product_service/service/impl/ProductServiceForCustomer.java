@@ -40,4 +40,9 @@ public class ProductServiceForCustomer implements com.a2z.product_service.servic
         return productRepository.findById(productId).orElse(null);
 //        return null;
     }
+
+    @Override
+    public Product getProductInfoForCart(Integer productId) {
+        return productRepository.findById(productId).orElse(null);
+    }
 }
