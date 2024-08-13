@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import { selectCurrentCustomer } from "../../../redux/customers/selectors";
 import { cartItems } from "../../../redux/carts/selectors";
 import CartItems from "./CartItems";
+import { useState } from "react";
 
 const Container = styled.div`
   margin-top: 4rem;
@@ -36,14 +37,33 @@ function CartInfo() {
   //   console.log("cartItems: " + cartProductItems);
   const customerId = customer?.customerId;
 
+  const [priceDetails, setPriceDetails] = useState({
+    price: 0,
+    discount: 0,
+    quantity: 0,
+  });
+
+  const handlePriceDetails = (details) => {
+    setPriceDetails((prevDetails) => ({
+      price: prevDetails.price + (details.price || 0),
+      discount: parseFloat(
+        (prevDetails.discount + (parseFloat(details.discount) || 0)).toFixed(2)
+      ),
+      quantity: prevDetails.quantity + (details.quantity || 0),
+    }));
+  };
+
   return (
     <Container>
       <InfoContainer>
         <h2>Shopping Cart</h2>
         {/* Add your cart items here */}
-        <CartItems cartProductItems={cartProductItemsArray} />
+        <CartItems
+          cartProductItems={cartProductItemsArray}
+          handlePriceDetails={handlePriceDetails}
+        />
       </InfoContainer>
-      <PriceDetails />
+      <PriceDetails priceDetails={priceDetails} />
     </Container>
   );
 }

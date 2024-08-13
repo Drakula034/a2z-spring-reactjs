@@ -45,8 +45,8 @@ const AddToCartButton = styled.button`
   }
 `;
 
-function ProductOrderContainer({ inStock, onSubmit }) {
-  const [quantity, setQuantity] = useState(1);
+function ProductOrderContainer({ inStock, onSubmit, initialItemCount = 1 }) {
+  const [quantity, setQuantity] = useState(initialItemCount);
 
   const handleIncrease = () => {
     setQuantity(quantity + 1);

@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import customerSlice from "../../redux/customers/customerSlice";
 import { selectCurrentCustomer } from "../../redux/customers/selectors";
 import useAddProductToCart from "./carts/useAddProductToCart";
+import { totalCartItemsOfProduct } from "../../redux/carts/selectors";
 
 // Container for the entire page
 const Container = styled.div`
@@ -67,15 +68,19 @@ function ProductDetailsPage({ productId }) {
       setProductOverViewData(productOverViewDto);
     }
   }, [productsData]);
-
+  const initialItemCount = useSelector((state) =>
+    totalCartItemsOfProduct(productId)(state)
+  );
+  // console.log("initialItemCount", initialItemCount);
   const inStock = productOverViewData?.inStock || false;
   // console.log("productsData", productId);
   // console.log("customerId", customerId);
 
   const handleProductSubmitToCart = async (data) => {
-    console.log("cart", data);
+    // console.log("cart", data);
     try {
-      await addProductToCart({ customerId, productId, quantity: data });
+      const changeInItem = data - initialItemCount;
+      await addProductToCart({ customerId, productId, quantity: changeInItem });
       // Additional logic on successful addition, like showing a success message or updating the cart state.
     } catch (error) {
       // Handle error, like showing an error message
@@ -95,6 +100,7 @@ function ProductDetailsPage({ productId }) {
         <ProductOrderContainer
           inStock={inStock}
           onSubmit={handleProductSubmitToCart}
+          initialItemCount={initialItemCount}
         />
       </StyledFirstHalf>
       <DescriptionContainer>

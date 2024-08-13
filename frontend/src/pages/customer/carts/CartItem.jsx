@@ -4,6 +4,8 @@ import PriceDetails from "./PriceDetails";
 import CartDelivaryDate from "./CartDelivaryDate";
 import { RUPEES } from "../../../constants/symbol-constants";
 import ProductQuantityButton from "../../../ui/ProductQuantityButton";
+import { useCallback, useEffect, useState } from "react";
+import useAddProductToCart from "./useAddProductToCart";
 const Container = styled.div`
   width: 100%;
   height: auto;
@@ -62,7 +64,8 @@ const StyledInfoPartFirst = styled.div`
     margin: 0.5rem 0 0 1rem; /* Top and bottom margin for h3 */
   }
 
-  p {
+  p,
+  section {
     margin: 0;
     margin-left: 1rem;
     margin-top: 1rem;
@@ -112,18 +115,48 @@ const StyledPartThird = styled.div`
   }
 `;
 
-function CartItem({ cartItem }) {
+function CartItem({ cartItem, handlePriceDetails }) {
   const rupees = RUPEES;
-  const { productId, cartId, quantity } = cartItem || [];
+  const { addProductToCart } = useAddProductToCart();
+  const { productId, cartId, quantity, customerId } = cartItem || [];
+  const [initialQuantity, setInitialQuantity] = useState(quantity);
+  // console.log(quantity);
   const { data: product } = useGetProductInfoForCart(productId);
   //   console.log(product);
 
   const { mainImage, productName, discountPercent, price } = product || [];
   //   const mainImage = product?.mainImage;
   const productPriceForCustomer = (
-    (price * (100 - parseFloat(discountPercent))) /
+    (price * (100 - parseFloat(discountPercent || 0))) /
     100
   ).toFixed(2);
+
+  useEffect(() => {
+    if (price && quantity && productPriceForCustomer) {
+      // console.log("Calculating price details");
+      handlePriceDetails({
+        price: price * quantity,
+        discount: (price - productPriceForCustomer) * quantity,
+        quantity: quantity,
+      });
+    }
+  }, [price, quantity, productPriceForCustomer]);
+
+  // useEffect(() => {
+  //   if (initialQuantity !== quantity) {
+  //     let changeQuantity = initialQuantity - quantity;
+  //     addProductToCart(customerId, productId, changeQuantity);
+  //   }
+  // });
+
+  const handleProductQuantityChange = async () => {
+    let changeQuantity = initialQuantity - quantity;
+    try {
+      await addProductToCart({ customerId, productId, changeQuantity });
+    } catch (err) {
+      throw new Error(err.message);
+    }
+  };
 
   return (
     <Container>
@@ -137,7 +170,7 @@ function CartItem({ cartItem }) {
         <StyledInfo>
           <StyledInfoPartFirst>
             <h3>{productName}</h3>
-            <p>
+            <section>
               <span>
                 {rupees}
                 {price}{" "}
@@ -146,13 +179,17 @@ function CartItem({ cartItem }) {
                 {rupees}
                 {productPriceForCustomer} <h4>{discountPercent}% off</h4>
               </span>
-            </p>
+            </section>
           </StyledInfoPartFirst>
           <StyledInfoPartSecond>
             <CartDelivaryDate />
           </StyledInfoPartSecond>
           <StyledPartThird>
-            <ProductQuantityButton initialQuantity={quantity} />
+            <ProductQuantityButton
+              initialQuantity={initialQuantity}
+              setInitialQuantity={setInitialQuantity}
+              handleProductQuantityChange={handleProductQuantityChange}
+            />
             <h5>Delete</h5>
           </StyledPartThird>
         </StyledInfo>

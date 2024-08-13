@@ -30,7 +30,7 @@ public class CartController {
             @PathVariable(name = "productId") String productId,
             @PathVariable(name = "quantity") Integer quantity) {
 
-        System.out.println("API is working");
+//        System.out.println("API is working");
 
         try {
             // Validate quantity
@@ -45,7 +45,7 @@ public class CartController {
 
             Integer updatedQuantity = cartService.addProduct(productId, customerId.toString(), quantity);
             String message = updatedQuantity + " items of this product were added to the cart";
-            System.out.println(message);
+//            System.out.println(message);
             return ResponseEntity.status(HttpStatus.CREATED).body(message);
 
         } catch (CustomerNotFoundException ex) {

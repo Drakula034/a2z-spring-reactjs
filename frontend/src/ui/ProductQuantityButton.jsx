@@ -40,25 +40,32 @@ const QuantityDisplay = styled.span`
   font-size: 1.2rem;
 `;
 
-function ProductQuantityButton({ initialQuantity = 1 }) {
-  const [quantity, setQuantity] = useState(initialQuantity);
+function ProductQuantityButton({
+  initialQuantity = 1,
+  setInitialQuantity,
+  handleProductQuantityChange,
+}) {
+  // const [quantity, setQuantity] = useState(initialQuantity);
 
   const handleIncrease = () => {
-    setQuantity(quantity + 1);
+    // setQuantity(quantity + 1);
+    setInitialQuantity(initialQuantity + 1);
+    handleProductQuantityChange();
   };
 
   const handleDecrease = () => {
-    if (quantity > 1) {
-      setQuantity(quantity - 1);
+    if (initialQuantity > 1) {
+      setInitialQuantity(initialQuantity - 1);
+      handleProductQuantityChange();
     }
   };
 
   return (
     <Container>
-      <Button onClick={handleDecrease} disabled={quantity <= 1}>
+      <Button onClick={handleDecrease} disabled={initialQuantity <= 1}>
         <FaMinus />
       </Button>
-      <QuantityDisplay>{quantity}</QuantityDisplay>
+      <QuantityDisplay>{initialQuantity}</QuantityDisplay>
       <Button onClick={handleIncrease}>
         <FaPlus />
       </Button>
