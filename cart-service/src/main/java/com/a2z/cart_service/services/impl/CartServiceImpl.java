@@ -64,6 +64,32 @@ public class CartServiceImpl implements CartService {
         return cartItemRepository.save(cartItem).getQuantity();
     }
 
+    @Override
+    public Integer decreaseProductCount(String productId, String customerId, int quantity) {
+        CartItem cartItem = cartItemRepository.findByCustomerIdAndProductId(customerId, productId);
+
+        if (cartItem != null) {
+
+            int newQuantity = cartItem.getQuantity() - quantity;
+
+            if (newQuantity > 0) {
+                // Update the cart item with the new quantity
+                cartItem.setQuantity(newQuantity);
+                cartItemRepository.save(cartItem);
+            }
+        }
+//        } else {
+//            // Product not in cart, create new CartItem
+//            cartItem = new CartItem();
+//            cartItem.setCustomerId(customerId);
+//            cartItem.setProductId(productId);
+//            cartItem.setQuantity(quantity);
+//        }
+
+        // Save the cart item and return the updated quantity
+        return cartItemRepository.save(cartItem).getQuantity();
+    }
+
     public List<CartItemDto> getCartItemsOfCustomer(String customerId) {
 
         List<CartItem> carts = cartItemRepository.findByCustomerId(customerId);

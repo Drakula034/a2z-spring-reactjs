@@ -11,5 +11,6 @@ import java.util.List;
 public interface CartService {
 
     Integer addProduct(String productId, String customerId,int quantity);
+    Integer decreaseProductCount(String productId, String customerId, int quantity);
     List<CartItemDto> getCartItemsOfCustomer(String customerId);
 }

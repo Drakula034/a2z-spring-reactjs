@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
@@ -57,15 +58,42 @@ public class CartController {
         }
     }
 
+    @PutMapping("/remove/{customerId}/{productId}/{quantity}")
+    public ResponseEntity<String> decreaseProductCountFromCart(@PathVariable(name = "customerId") Integer customerId,
+                                                                @PathVariable(name = "productId") String productId,
+                                                                @PathVariable(name = "quantity") Integer quantity) {
 
+        try {
+            // Validate quantity
+            if (quantity <= 0) {
+                throw new IllegalArgumentException("Quantity must be greater than zero");
+            }
 
+            // Validate customerId
+            if (!getCustomerAuthentication(customerId)) {
+                throw new CustomerNotFoundException("Customer not found");
+            }
+
+            Integer updatedQuantity = cartService.decreaseProductCount(productId, customerId.toString(), quantity);
+            String message = updatedQuantity + " items of this product are available in the cart";
+//            System.out.println(message);
+            return ResponseEntity.status(HttpStatus.CREATED).body(message);
+
+        } catch (CustomerNotFoundException ex) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ex.getMessage());
+        } catch (IllegalArgumentException ex) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to remove product to cart: " + ex.getMessage());
+        }
+    }
 
 
     @RequestMapping("/get/{customerId}")
     public ResponseEntity<List<CartItemDto>> getCartItems(@PathVariable Integer customerId) throws CustomerNotFoundException {
 
         // Validate customerId
-        if(!getCustomerAuthentication(customerId)){
+        if (!getCustomerAuthentication(customerId)) {
             throw new CustomerNotFoundException("Customer not found with customerId: " + customerId);
         }
         // Get cart items
