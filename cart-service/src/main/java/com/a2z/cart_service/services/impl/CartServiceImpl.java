@@ -98,5 +98,15 @@ public class CartServiceImpl implements CartService {
 
     }
 
+    @Override
+    public boolean deleteProductFromCart(String productId, String customerId) {
+        CartItem cartItem = cartItemRepository.findByCustomerIdAndProductId(customerId, productId);
+        if (cartItem!= null) {
+            cartItemRepository.delete(cartItem);
+            return true;
+        }
+        return false;
+    }
+
 
 }
