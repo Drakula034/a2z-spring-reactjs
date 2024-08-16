@@ -44,13 +44,19 @@ function CartInfo() {
   });
 
   const handlePriceDetails = (details) => {
-    setPriceDetails((prevDetails) => ({
-      price: prevDetails.price + (details.price || 0),
-      discount: parseFloat(
-        (prevDetails.discount + (parseFloat(details.discount) || 0)).toFixed(2)
-      ),
-      quantity: prevDetails.quantity + (details.quantity || 0),
-    }));
+    setPriceDetails((prevDetails) => {
+      // Calculate new values based on current and incoming details
+      const newPrice = details.price || 0;
+      const newDiscount = parseFloat(details.discount) || 0;
+      const newQuantity = details.quantity || 0;
+
+      // Update price details based on the new values
+      return {
+        price: prevDetails.price + newPrice,
+        discount: parseFloat((prevDetails.discount + newDiscount).toFixed(2)),
+        quantity: prevDetails.quantity + newQuantity,
+      };
+    });
   };
 
   return (

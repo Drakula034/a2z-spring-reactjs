@@ -1,4 +1,4 @@
-export const totalCartItemQuantity = (state) => state.cart?.totalCart;
+export const totalCartItemQuantity = (state) => state?.cart?.totalCart;
 export const cartItems = (state) => state.cart?.cartItems;
 // selectors.js
 // export const totalCartItemsOfProduct = (productId) => (state) => {

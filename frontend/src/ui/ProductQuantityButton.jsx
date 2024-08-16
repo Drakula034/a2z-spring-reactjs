@@ -43,20 +43,21 @@ const QuantityDisplay = styled.span`
 function ProductQuantityButton({
   initialQuantity = 1,
   setInitialQuantity,
-  handleProductQuantityChange,
+  handleProductQuantityDecrease,
+  handleProductQuantityIncrease,
 }) {
   // const [quantity, setQuantity] = useState(initialQuantity);
 
   const handleIncrease = () => {
     // setQuantity(quantity + 1);
     setInitialQuantity(initialQuantity + 1);
-    handleProductQuantityChange();
+    handleProductQuantityIncrease(initialQuantity + 1);
   };
 
   const handleDecrease = () => {
     if (initialQuantity > 1) {
       setInitialQuantity(initialQuantity - 1);
-      handleProductQuantityChange();
+      handleProductQuantityDecrease(initialQuantity - 1);
     }
   };
 

@@ -6,6 +6,7 @@ import { RUPEES } from "../../../constants/symbol-constants";
 import ProductQuantityButton from "../../../ui/ProductQuantityButton";
 import { useCallback, useEffect, useState } from "react";
 import useAddProductToCart from "./useAddProductToCart";
+import useDecreaseProductFromCart from "./useDecreaseProductFromCart";
 const Container = styled.div`
   width: 100%;
   height: auto;
@@ -117,7 +118,9 @@ const StyledPartThird = styled.div`
 
 function CartItem({ cartItem, handlePriceDetails }) {
   const rupees = RUPEES;
-  const { addProductToCart } = useAddProductToCart();
+  const addProductToCart = useAddProductToCart();
+  const decreaseProductFromCart = useDecreaseProductFromCart();
+
   const { productId, cartId, quantity, customerId } = cartItem || [];
   const [initialQuantity, setInitialQuantity] = useState(quantity);
   // console.log(quantity);
@@ -131,28 +134,49 @@ function CartItem({ cartItem, handlePriceDetails }) {
     100
   ).toFixed(2);
 
+  let changeInQuantity = 0;
   useEffect(() => {
     if (price && quantity && productPriceForCustomer) {
       // console.log("Calculating price details");
       handlePriceDetails({
-        price: price * quantity,
-        discount: (price - productPriceForCustomer) * quantity,
-        quantity: quantity,
+        price: price * (changeInQuantity > 0 ? changeInQuantity : quantity),
+        discount:
+          (price - productPriceForCustomer) *
+          (changeInQuantity > 0 ? changeInQuantity : quantity),
+        quantity: changeInQuantity > 0 ? changeInQuantity : quantity,
       });
     }
   }, [price, quantity, productPriceForCustomer]);
 
-  // useEffect(() => {
-  //   if (initialQuantity !== quantity) {
-  //     let changeQuantity = initialQuantity - quantity;
-  //     addProductToCart(customerId, productId, changeQuantity);
-  //   }
-  // });
-
-  const handleProductQuantityChange = async () => {
-    let changeQuantity = initialQuantity - quantity;
+  const handleProductQuantityDecrease = async (data) => {
+    let changeQuantity = quantity - data;
+    changeInQuantity = -1 * changeQuantity;
+    // console.log("changeQuantity: " + changeQuantity);
+    // console.log("Quantity: " + data);
+    // console.log("initialQuantity: " + quantity);
     try {
-      await addProductToCart({ customerId, productId, changeQuantity });
+      await decreaseProductFromCart({
+        customerId,
+        productId,
+        changeQuantity, // Make sure the variable name matches here
+      });
+    } catch (err) {
+      throw new Error(err.message);
+    }
+  };
+
+  const handleProductQuantityIncrease = async (data) => {
+    let changeQuantity = data - quantity;
+    changeInQuantity = changeQuantity;
+    // console.log("changeQuantity: " + changeQuantity);
+    // console.log("Quantity: " + data);
+    // console.log("initialQuantity: " + quantity);
+    try {
+      await addProductToCart({
+        customerId,
+        productId,
+        quantity: changeQuantity, // Make sure the variable name matches here
+      });
     } catch (err) {
       throw new Error(err.message);
     }
@@ -188,7 +212,8 @@ function CartItem({ cartItem, handlePriceDetails }) {
             <ProductQuantityButton
               initialQuantity={initialQuantity}
               setInitialQuantity={setInitialQuantity}
-              handleProductQuantityChange={handleProductQuantityChange}
+              handleProductQuantityDecrease={handleProductQuantityDecrease}
+              handleProductQuantityIncrease={handleProductQuantityIncrease}
             />
             <h5>Delete</h5>
           </StyledPartThird>

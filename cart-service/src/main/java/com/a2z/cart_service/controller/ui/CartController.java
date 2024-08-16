@@ -56,9 +56,10 @@ public class CartController {
     }
 
     @PutMapping("/remove/{customerId}/{productId}/{quantity}")
-    public ResponseEntity<String> decreaseProductCountFromCart(@PathVariable(name = "customerId") Integer customerId,
-                                                                @PathVariable(name = "productId") String productId,
-                                                                @PathVariable(name = "quantity") Integer quantity) {
+    public ResponseEntity<String> decreaseProductCountFromCart(
+            @PathVariable(name = "customerId") Integer customerId,
+            @PathVariable(name = "productId") String productId,
+            @PathVariable(name = "quantity") Integer quantity) {
 
         try {
             // Validate quantity
@@ -73,15 +74,15 @@ public class CartController {
 
             Integer updatedQuantity = cartService.decreaseProductCount(productId, customerId.toString(), quantity);
             String message = updatedQuantity + " items of this product are available in the cart";
-//            System.out.println(message);
-            return ResponseEntity.status(HttpStatus.CREATED).body(message);
+            return ResponseEntity.ok(message); // Changed to HttpStatus.OK
 
         } catch (CustomerNotFoundException ex) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ex.getMessage());
         } catch (IllegalArgumentException ex) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
         } catch (Exception ex) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to remove product to cart: " + ex.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Failed to remove product from cart: " + ex.getMessage());
         }
     }
 

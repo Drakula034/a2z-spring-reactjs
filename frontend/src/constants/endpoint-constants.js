@@ -135,3 +135,9 @@ export const GET_CART_ITEMS = (customerId) =>
 
 export const GET_PRODUCT_INFO_FOR_CART = (productId) =>
   `${PRODUCT_SERVICE_BASE_FOR_CUSTOMER}/${productId}`;
+
+export const DECREASE_ITEM_FROM_CART = (customerId, productId, quantity) =>
+  `${CART_SERVICE_BASE_URL}/remove/${customerId}/${productId}/${quantity}`;
+
+export const DELETE_ITEM_FROM_CART = (customerId, productId) =>
+  `${CART_SERVICE_BASE_URL}/delete/${customerId}/${productId}`;
