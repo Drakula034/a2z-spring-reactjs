@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -63,6 +64,7 @@ const InfoContainer = styled.div`
 `;
 
 function PriceDetails({ priceDetails }) {
+  const navigate = useNavigate();
   const { price, discount, quantity } = priceDetails || {};
   const deliveryCharges = 120;
   return (
@@ -90,7 +92,9 @@ function PriceDetails({ priceDetails }) {
           </div>
         </div>
         <div className="button">
-          <button>Proceed to Buy</button>
+          <button onClick={() => navigate("/checkout/addressselect")}>
+            Proceed to Buy
+          </button>
         </div>
       </InfoContainer>
     </Container>
