@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -11,6 +12,7 @@ const Container = styled.div`
   img {
     height: 100%; /* Make the image fill the container's height */
     margin-left: 15rem;
+    cursor: pointer;
   }
 
   h1 {
@@ -22,9 +24,14 @@ const Container = styled.div`
 `;
 
 function CheckoutHeader() {
+  const navigate = useNavigate();
   return (
     <Container>
-      <img src="/public/assets/a2z-transparent.png" alt="a2z.com" />
+      <img
+        src="/public/assets/a2z-transparent.png"
+        alt="a2z.com"
+        onClick={() => navigate("/")}
+      />
       <h1>Checkout</h1>
     </Container>
   );
